@@ -12,6 +12,7 @@ import WhyChooseUsSection from "./components/WhyChooseUsSection";
 import EngineeringRoadmapSection from "./components/EngineeringRoadmapSection";
 import ResponsiveShowcaseSection from "./components/ResponsiveShowcaseSection";
 import TestimonialsSection from "./components/TestimonialsSection";
+import ContactCtaSection from "./components/ContactCtaSection";
 
 export default function Home() {
   return (
@@ -59,6 +60,9 @@ export default function Home() {
 
       {/* Social Proof / What Our Clients Say Carousel Section */}
       <TestimonialsSection />
+
+      {/* Direct Intake & Interactive Archives 2x2 Call-To-Action Section */}
+      <ContactCtaSection />
     </main>
   );
 }
