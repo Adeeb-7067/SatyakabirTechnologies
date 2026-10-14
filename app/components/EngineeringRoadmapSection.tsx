@@ -1,8 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { Clock } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface RoadmapStep {
   id: number;
@@ -122,12 +129,46 @@ export default function EngineeringRoadmapSection() {
   // Hidden by default; appears when user hovers any step
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
   const [activeStepId, setActiveStepId] = useState<number>(1);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.from(headerRef.current, {
+        y: 35,
+        opacity: 0,
+        duration: 0.85,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
+      gsap.from(stageRef.current, {
+        scale: 0.88,
+        opacity: 0,
+        duration: 1.1,
+        ease: "back.out(1.3)",
+        delay: 0.15,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+          once: true,
+        },
+      });
+    },
+    { scope: sectionRef }
+  );
 
   const currentStep = steps.find((s) => s.id === activeStepId) || steps[0];
   const isPanelVisible = hoveredStep !== null;
 
   return (
     <section
+      ref={sectionRef}
       id="engineering-roadmap"
       className="w-full bg-[#050810] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative z-10 text-white select-none overflow-hidden"
     >
@@ -161,7 +202,7 @@ export default function EngineeringRoadmapSection() {
       {/* Main Container matching project standard max-w-[1240px] */}
       <div className="max-w-[1240px] mx-auto relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-14">
+        <div ref={headerRef} className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-14">
           <div className="max-w-[620px]">
             <p className="font-[family-name:var(--font-space-grotesk)] text-[11.5px] sm:text-[12.5px] font-bold tracking-[0.24em] text-[#8e98aa] uppercase mb-2.5 sm:mb-3 block">
               HOW WE WORK
@@ -184,7 +225,10 @@ export default function EngineeringRoadmapSection() {
           onMouseLeave={() => setHoveredStep(null)}
         >
           {/* Generously sized 1100px x 580px Stage with responsive scaling */}
-          <div className="relative w-[1100px] h-[580px] shrink-0 scale-[0.34] min-[420px]:scale-[0.42] xs:scale-[0.54] sm:scale-[0.68] md:scale-[0.84] lg:scale-100 origin-center transition-transform duration-300">
+          <div
+            ref={stageRef}
+            className="relative w-[1100px] h-[580px] shrink-0 scale-[0.34] min-[420px]:scale-[0.42] xs:scale-[0.54] sm:scale-[0.68] md:scale-[0.84] lg:scale-100 origin-center transition-transform duration-300"
+          >
             
             {/* Connecting Circle Wireframe SVG (cx=550, cy=290, r=138) */}
             <svg

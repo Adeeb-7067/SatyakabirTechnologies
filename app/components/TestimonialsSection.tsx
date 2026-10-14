@@ -3,6 +3,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface Testimonial {
   id: number;
@@ -159,8 +166,43 @@ export default function TestimonialsSection() {
     setActiveIndex(idx);
   };
 
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.from(headerRef.current, {
+        y: 35,
+        opacity: 0,
+        duration: 0.85,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
+      gsap.from(carouselRef.current, {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: "power2.out",
+        delay: 0.15,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+          once: true,
+        },
+      });
+    },
+    { scope: sectionRef }
+  );
+
   return (
     <section
+      ref={sectionRef}
       id="testimonials"
       className="w-full bg-[#050810] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative z-10 text-white select-none overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
@@ -178,7 +220,7 @@ export default function TestimonialsSection() {
 
       <div className="max-w-[1240px] mx-auto relative z-10">
         {/* Section Header matching reference */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div ref={headerRef} className="text-center mb-12 sm:mb-16">
           <p className="font-mono text-[11px] sm:text-[12px] font-bold tracking-[0.28em] uppercase mb-3 inline-flex items-center gap-1.5">
             <span className="text-[#3b82f6]">SOCIAL</span>
             <span className="text-[#f97316]">PROOF</span>
@@ -191,6 +233,7 @@ export default function TestimonialsSection() {
 
         {/* Carousel Viewport with Real-Time Drag & Scroll */}
         <div
+          ref={carouselRef}
           className={`relative w-full overflow-visible py-6 sm:py-8 touch-pan-y ${
             isDragging ? "cursor-grabbing" : "cursor-grab"
           }`}

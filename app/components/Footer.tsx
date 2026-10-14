@@ -1,8 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 import { Mail } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 function FacebookIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -82,10 +89,47 @@ const legalLinks = [
 ];
 
 export default function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const watermarkRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.from(contentRef.current, {
+        y: 35,
+        opacity: 0,
+        duration: 0.9,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top 85%",
+          once: true,
+        },
+      });
+
+      gsap.from(watermarkRef.current, {
+        y: 45,
+        opacity: 0,
+        duration: 1.1,
+        ease: "power2.out",
+        delay: 0.1,
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top 85%",
+          once: true,
+        },
+      });
+    },
+    { scope: footerRef }
+  );
+
   return (
-    <footer className="w-full bg-[#050810] text-white relative overflow-hidden select-none border-t border-[#131b2e] pt-14 sm:pt-16 md:pt-20 pb-4">
+    <footer
+      ref={footerRef}
+      className="w-full bg-[#050810] text-white relative overflow-hidden select-none border-t border-[#131b2e] pt-14 sm:pt-16 md:pt-20 pb-4"
+    >
       {/* Container matching project standard max-w-[1240px] */}
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div ref={contentRef} className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Section: Email & Socials on Left, 4 Navigation Columns on Right */}
         <div className="flex flex-col lg:flex-row justify-between gap-10 lg:gap-12 mb-12 sm:mb-16">
@@ -262,7 +306,7 @@ export default function Footer() {
       </div>
 
       {/* Giant Architectural Watermark: SATYAKABIR TECHNOLOGIES in brand font Squada One */}
-      <div className="w-full overflow-hidden select-none pointer-events-none mt-2 sm:mt-4">
+      <div ref={watermarkRef} className="w-full overflow-hidden select-none pointer-events-none mt-2 sm:mt-4">
         <h2 className="text-[9.5vw] font-[family-name:var(--font-squada-one)] uppercase text-[#101728] leading-none text-center whitespace-nowrap select-none tracking-normal">
           SATYAKABIR TECHNOLOGIES
         </h2>

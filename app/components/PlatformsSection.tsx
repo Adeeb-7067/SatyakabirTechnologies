@@ -3,6 +3,13 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowRight, ArrowUpRight, Activity } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface PlatformCard {
   id: string;
@@ -49,7 +56,43 @@ const platforms: PlatformCard[] = [
 
 export default function PlatformsSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const cardsTrackRef = useRef<HTMLDivElement>(null);
   const [, setActiveSlide] = useState(0);
+
+  useGSAP(
+    () => {
+      gsap.from(headerRef.current, {
+        y: 35,
+        opacity: 0,
+        duration: 0.85,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
+      if (cardsTrackRef.current) {
+        const cards = cardsTrackRef.current.children;
+        gsap.from(cards, {
+          y: 45,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.14,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+            once: true,
+          },
+        });
+      }
+    },
+    { scope: sectionRef }
+  );
 
   const handleNext = () => {
     if (scrollRef.current) {
@@ -65,7 +108,10 @@ export default function PlatformsSection() {
   };
 
   return (
-    <section className="w-full bg-[#050810] py-20 sm:py-24 lg:py-28 px-4 sm:px-6 lg:px-10 relative z-10 text-white overflow-hidden selection:bg-blue-600 selection:text-white">
+    <section
+      ref={sectionRef}
+      className="w-full bg-[#050810] py-20 sm:py-24 lg:py-28 px-4 sm:px-6 lg:px-10 relative z-10 text-white overflow-hidden selection:bg-blue-600 selection:text-white"
+    >
       {/* Background Architectural Dashed Wave Curve */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <svg
@@ -87,7 +133,7 @@ export default function PlatformsSection() {
       <div className="max-w-[1240px] mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
+        <div ref={headerRef} className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
           {/* Left: Category Tag & Main Headline */}
           <div className="max-w-[620px]">
             <p className="font-[family-name:var(--font-space-grotesk)] text-[11.5px] sm:text-[12.5px] font-bold tracking-[0.24em] text-[#8e98aa] uppercase mb-2.5 sm:mb-3">
@@ -120,7 +166,10 @@ export default function PlatformsSection() {
 
           {/* Cards Flex Container (Scrollable on mobile/tablet, proportional row on desktop) */}
           <div
-            ref={scrollRef}
+            ref={(el) => {
+              (scrollRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
+              (cardsTrackRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
+            }}
             className="flex flex-row gap-4 sm:gap-5 lg:gap-6 overflow-x-auto md:overflow-visible scrollbar-none snap-x snap-mandatory pt-2 pb-6 px-1"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >

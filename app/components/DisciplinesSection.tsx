@@ -1,7 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface DisciplineCard {
   id: string;
@@ -50,6 +57,47 @@ const disciplines: DisciplineCard[] = [
 ];
 
 export default function DisciplinesSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useGSAP(
+    () => {
+      // Header Animation
+      gsap.from(headerRef.current, {
+        y: 40,
+        opacity: 0,
+        duration: 0.9,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
+      // Individual Card ScrollTriggers for the stepped zig-zag flow
+      cardsRef.current.forEach((cardEl, idx) => {
+        if (!cardEl) return;
+        const isEven = idx % 2 === 1;
+
+        gsap.from(cardEl, {
+          y: 50,
+          x: isEven ? 25 : -25,
+          opacity: 0,
+          duration: 0.85,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: cardEl,
+            start: "top 85%",
+            once: true,
+          },
+        });
+      });
+    },
+    { scope: containerRef }
+  );
+
   const renderCard = (card: DisciplineCard) => (
     <div className="group relative w-full aspect-[391/465] rounded-[16px] p-6 border border-[#c6d7ff]/80 shadow-[0_0_7px_0_#91a7ff] backdrop-blur-[4px] transition-all duration-300 hover:shadow-[0_0_16px_2px_#91a7ff] hover:-translate-y-1.5 hover:border-blue-400/90 flex flex-col justify-between overflow-hidden bg-white select-none">
       {/* High-Definition Fluted Glass Background with Rose/Cyan Sheen */}
@@ -68,7 +116,7 @@ export default function DisciplinesSection() {
         </span>
       </div>
 
-      {/* Center 3D Illustration Graphic (Matching scale & tactile presence) */}
+      {/* Center 3D Illustration Graphic */}
       <div className="relative z-10 w-full flex-1 flex items-center justify-center my-auto py-2">
         <div className="relative w-[230px] h-[230px] sm:w-[250px] sm:h-[250px] md:w-[270px] md:h-[270px]">
           <Image
@@ -92,11 +140,14 @@ export default function DisciplinesSection() {
   );
 
   return (
-    <section className="w-full bg-[#efefff] py-16 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 relative z-10 text-slate-900 overflow-hidden">
+    <section
+      ref={containerRef}
+      className="w-full bg-[#efefff] py-16 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 relative z-10 text-slate-900 overflow-hidden"
+    >
       <div className="max-w-[880px] mx-auto">
         
         {/* Section Header: Positioned with desktop offset matching reference image */}
-        <div className="ml-0 md:ml-[26%] lg:ml-[28%] max-w-[580px] mb-12 sm:mb-16">
+        <div ref={headerRef} className="ml-0 md:ml-[26%] lg:ml-[28%] max-w-[580px] mb-12 sm:mb-16">
           {/* Category Tag */}
           <p className="font-[family-name:var(--font-space-grotesk)] text-[12px] sm:text-[13px] font-bold tracking-[0.22em] text-[#333338] uppercase block mb-3 sm:mb-4">
             OUR SERVICES
@@ -121,32 +172,62 @@ export default function DisciplinesSection() {
         <div className="flex flex-col gap-6 sm:gap-8">
           
           {/* Card 01: Left */}
-          <div className="w-full sm:max-w-[360px] md:max-w-[390px] mr-auto">
+          <div
+            ref={(el) => {
+              cardsRef.current[0] = el;
+            }}
+            className="w-full sm:max-w-[360px] md:max-w-[390px] mr-auto"
+          >
             {renderCard(disciplines[0])}
           </div>
 
           {/* Card 02: Right, Stepped Down */}
-          <div className="w-full sm:max-w-[360px] md:max-w-[390px] ml-auto sm:-mt-16 md:-mt-24 lg:-mt-28">
+          <div
+            ref={(el) => {
+              cardsRef.current[1] = el;
+            }}
+            className="w-full sm:max-w-[360px] md:max-w-[390px] ml-auto sm:-mt-16 md:-mt-24 lg:-mt-28"
+          >
             {renderCard(disciplines[1])}
           </div>
 
           {/* Card 03: Left, Stepped Down */}
-          <div className="w-full sm:max-w-[360px] md:max-w-[390px] mr-auto sm:-mt-16 md:-mt-24 lg:-mt-28">
+          <div
+            ref={(el) => {
+              cardsRef.current[2] = el;
+            }}
+            className="w-full sm:max-w-[360px] md:max-w-[390px] mr-auto sm:-mt-16 md:-mt-24 lg:-mt-28"
+          >
             {renderCard(disciplines[2])}
           </div>
 
           {/* Card 04: Right, Stepped Down */}
-          <div className="w-full sm:max-w-[360px] md:max-w-[390px] ml-auto sm:-mt-16 md:-mt-24 lg:-mt-28">
+          <div
+            ref={(el) => {
+              cardsRef.current[3] = el;
+            }}
+            className="w-full sm:max-w-[360px] md:max-w-[390px] ml-auto sm:-mt-16 md:-mt-24 lg:-mt-28"
+          >
             {renderCard(disciplines[3])}
           </div>
 
           {/* Card 05: Left, Stepped Down */}
-          <div className="w-full sm:max-w-[360px] md:max-w-[390px] mr-auto sm:-mt-16 md:-mt-24 lg:-mt-28">
+          <div
+            ref={(el) => {
+              cardsRef.current[4] = el;
+            }}
+            className="w-full sm:max-w-[360px] md:max-w-[390px] mr-auto sm:-mt-16 md:-mt-24 lg:-mt-28"
+          >
             {renderCard(disciplines[4])}
           </div>
 
           {/* Card 06: Right, Stepped Down */}
-          <div className="w-full sm:max-w-[360px] md:max-w-[390px] ml-auto sm:-mt-16 md:-mt-24 lg:-mt-28">
+          <div
+            ref={(el) => {
+              cardsRef.current[5] = el;
+            }}
+            className="w-full sm:max-w-[360px] md:max-w-[390px] ml-auto sm:-mt-16 md:-mt-24 lg:-mt-28"
+          >
             {renderCard(disciplines[5])}
           </div>
 

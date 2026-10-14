@@ -1,16 +1,106 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { Users, Archive, RotateCcw, Heart, Award, DollarSign } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function WhyChooseUsSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const leftColRef = useRef<HTMLDivElement>(null);
+  const centerPillarRef = useRef<HTMLDivElement>(null);
+  const rightColRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      // Header Animation
+      gsap.from(headerRef.current, {
+        y: 35,
+        opacity: 0,
+        duration: 0.85,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
+      // Left Column Cards Stagger from Left
+      if (leftColRef.current) {
+        gsap.from(leftColRef.current.children, {
+          x: -35,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.12,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 75%",
+            once: true,
+          },
+        });
+      }
+
+      // Center Pillar Sculpture Entrance + Continuous subtle breathing float
+      gsap.from(centerPillarRef.current, {
+        scale: 0.88,
+        y: 40,
+        opacity: 0,
+        duration: 1.1,
+        ease: "power2.out",
+        delay: 0.1,
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 75%",
+          once: true,
+        },
+      });
+
+      gsap.to(centerPillarRef.current, {
+        y: -10,
+        duration: 3.8,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: 1.2,
+      });
+
+      // Right Column Cards Stagger from Right
+      if (rightColRef.current) {
+        gsap.from(rightColRef.current.children, {
+          x: 35,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.12,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 75%",
+            once: true,
+          },
+        });
+      }
+    },
+    { scope: containerRef }
+  );
+
   return (
-    <section className="w-full bg-[#efefff] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative z-10 text-slate-900 select-none overflow-hidden">
+    <section
+      ref={containerRef}
+      className="w-full bg-[#efefff] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative z-10 text-slate-900 select-none overflow-hidden"
+    >
       <div className="max-w-[1240px] mx-auto">
         
         {/* Section Header */}
-        <div className="mb-10 sm:mb-12">
+        <div ref={headerRef} className="mb-10 sm:mb-12">
           <span className="text-[11px] sm:text-[12px] font-bold tracking-[0.22em] text-[#64748b] uppercase font-mono block mb-2 sm:mb-2.5">
             ADVANTAGES
           </span>
@@ -23,8 +113,10 @@ export default function WhyChooseUsSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-6 items-stretch relative">
           
           {/* Left Column: 3 Feature Cards */}
-          <div className="lg:col-span-4 flex flex-col justify-between gap-3.5 sm:gap-4 z-10 order-1">
-            
+          <div
+            ref={leftColRef}
+            className="lg:col-span-4 flex flex-col justify-between gap-3.5 sm:gap-4 z-10 order-1"
+          >
             {/* Card 1 (Blue) - Expert Team */}
             <div className="flex-1 bg-[#1d4ed8] text-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_20px_rgba(29,78,216,0.18)] hover:shadow-[0_12px_28px_rgba(29,78,216,0.25)] hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/20 flex items-center justify-center mb-3 backdrop-blur-sm group-hover:scale-105 transition-transform duration-300">
@@ -63,11 +155,13 @@ export default function WhyChooseUsSection() {
                 Rigorous weekly sprint reviews and constant deployments.
               </p>
             </div>
-
           </div>
 
           {/* Center Column: 3D Pillar Sculpture with exact Figma alignment */}
-          <div className="md:col-span-2 lg:col-span-4 flex items-end justify-center relative self-stretch min-h-[360px] sm:min-h-[420px] lg:min-h-[460px] order-3 lg:order-2 overflow-visible">
+          <div
+            ref={centerPillarRef}
+            className="md:col-span-2 lg:col-span-4 flex items-end justify-center relative self-stretch min-h-[360px] sm:min-h-[420px] lg:min-h-[460px] order-3 lg:order-2 overflow-visible"
+          >
             <Image
               src="/images/why-choose-us-pillars.png"
               alt="Architectural Foundation 3D Pillars"
@@ -79,8 +173,10 @@ export default function WhyChooseUsSection() {
           </div>
 
           {/* Right Column: 3 Feature Cards */}
-          <div className="lg:col-span-4 flex flex-col justify-between gap-3.5 sm:gap-4 z-10 order-2 lg:order-3">
-            
+          <div
+            ref={rightColRef}
+            className="lg:col-span-4 flex flex-col justify-between gap-3.5 sm:gap-4 z-10 order-2 lg:order-3"
+          >
             {/* Card 4 (White) - 24/7 Support */}
             <div className="flex-1 bg-white text-slate-900 border border-[#c6d3f5] rounded-2xl p-5 sm:p-6 shadow-[0_2px_12px_rgba(29,78,216,0.04)] hover:shadow-[0_8px_24px_rgba(29,78,216,0.08)] hover:border-blue-400 hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#eef2ff] text-[#1d4ed8] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
@@ -119,7 +215,6 @@ export default function WhyChooseUsSection() {
                 Clear itemized billing tables. No hidden surprises.
               </p>
             </div>
-
           </div>
 
         </div>

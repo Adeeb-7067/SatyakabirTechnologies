@@ -1,9 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface NodeTooltip {
   id: string;
@@ -23,13 +30,84 @@ const hotspots: NodeTooltip[] = [
 
 export default function PopularIndustriesSection() {
   const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const topLabelRef = useRef<HTMLDivElement>(null);
+  const col1Ref = useRef<HTMLDivElement>(null);
+  const col2Ref = useRef<HTMLDivElement>(null);
+  const col3Ref = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      // Top Label
+      gsap.from(topLabelRef.current, {
+        y: 20,
+        opacity: 0,
+        duration: 0.7,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
+      // Column 1 Stats Stagger from Left
+      if (col1Ref.current) {
+        gsap.from(col1Ref.current.children, {
+          x: -30,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 75%",
+            once: true,
+          },
+        });
+      }
+
+      // Column 2 Card Rise
+      gsap.from(col2Ref.current, {
+        y: 40,
+        opacity: 0,
+        duration: 0.85,
+        ease: "power2.out",
+        delay: 0.1,
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 75%",
+          once: true,
+        },
+      });
+
+      // Column 3 Image Card Reveal
+      gsap.from(col3Ref.current, {
+        scale: 0.95,
+        y: 30,
+        opacity: 0,
+        duration: 0.9,
+        ease: "power2.out",
+        delay: 0.2,
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 75%",
+          once: true,
+        },
+      });
+    },
+    { scope: containerRef }
+  );
 
   return (
-    <section className="w-full bg-[#050810] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative z-10 text-white select-none overflow-hidden">
+    <section
+      ref={containerRef}
+      className="w-full bg-[#050810] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative z-10 text-white select-none overflow-hidden"
+    >
       <div className="max-w-[1240px] mx-auto">
         
         {/* Section Top Label */}
-        <div className="mb-6 sm:mb-8">
+        <div ref={topLabelRef} className="mb-6 sm:mb-8">
           <span className="text-[11px] sm:text-[12px] font-bold tracking-[0.22em] text-[#7884a4] uppercase font-mono inline-block">
             MOST POPULAR INDUSTRIES
           </span>
@@ -39,8 +117,10 @@ export default function PopularIndustriesSection() {
         <div className="flex flex-col lg:flex-row gap-3.5 sm:gap-4 items-stretch">
           
           {/* Column 1: Stacked Stat Cards */}
-          <div className="w-full lg:w-[175px] xl:w-[190px] shrink-0 flex flex-col justify-between gap-3 sm:gap-3.5">
-            
+          <div
+            ref={col1Ref}
+            className="w-full lg:w-[175px] xl:w-[190px] shrink-0 flex flex-col justify-between gap-3 sm:gap-3.5"
+          >
             {/* Stat 1 */}
             <div className="flex-1 min-h-[110px] bg-[#14171e] rounded-xl sm:rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center border border-white/[0.05] hover:border-white/10 hover:bg-[#181c26] transition-all duration-300 group shadow-lg">
               <span className="text-[34px] sm:text-[38px] lg:text-[42px] font-bold text-white tracking-tight leading-none font-sans group-hover:scale-105 transition-transform duration-300">
@@ -70,11 +150,13 @@ export default function PopularIndustriesSection() {
                 Farmers Onboarded
               </span>
             </div>
-
           </div>
 
           {/* Column 2: Product Showcase Feature Card */}
-          <div className="w-full lg:w-[360px] xl:w-[390px] shrink-0 bg-[#14171e] rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-9 flex flex-col justify-between border border-white/[0.05] shadow-xl hover:border-white/10 transition-colors duration-300">
+          <div
+            ref={col2Ref}
+            className="w-full lg:w-[360px] xl:w-[390px] shrink-0 bg-[#14171e] rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-9 flex flex-col justify-between border border-white/[0.05] shadow-xl hover:border-white/10 transition-colors duration-300"
+          >
             <div>
               {/* Product Showcase Eyebrow */}
               <div className="text-[11px] sm:text-[12px] font-bold tracking-[0.22em] text-slate-400 uppercase font-mono leading-tight mb-4 sm:mb-6">
@@ -107,7 +189,10 @@ export default function PopularIndustriesSection() {
           </div>
 
           {/* Column 3: Agricultural In-Field Showcase Photo Card */}
-          <div className="w-full flex-1 min-h-[350px] sm:min-h-[380px] lg:min-h-[400px] relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/[0.05] shadow-2xl group bg-[#14171e]">
+          <div
+            ref={col3Ref}
+            className="w-full flex-1 min-h-[350px] sm:min-h-[380px] lg:min-h-[400px] relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/[0.05] shadow-2xl group bg-[#14171e]"
+          >
             {/* Full High-Resolution In-Field Photo with Drones, Nodes & Farmers */}
             <Image
               src="/images/agri-showcase-photo.jpg"

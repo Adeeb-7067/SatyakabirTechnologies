@@ -1,11 +1,53 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Play, X } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function ShowreelSection() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const borderRef = useRef<HTMLDivElement>(null);
+  const playBtnRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      // Wireframe border entrance
+      gsap.from(borderRef.current, {
+        scale: 0.95,
+        opacity: 0,
+        duration: 1.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 75%",
+          once: true,
+        },
+      });
+
+      // Play button pop entrance
+      gsap.from(playBtnRef.current, {
+        scale: 0.6,
+        opacity: 0,
+        duration: 0.9,
+        delay: 0.25,
+        ease: "back.out(1.6)",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 75%",
+          once: true,
+        },
+      });
+    },
+    { scope: containerRef }
+  );
 
   // Close modal on Escape key press
   useEffect(() => {
@@ -25,7 +67,10 @@ export default function ShowreelSection() {
   }, [isPlaying]);
 
   return (
-    <section className="relative w-full h-[75vh] sm:h-[85vh] lg:h-screen min-h-[520px] overflow-hidden bg-black text-white group cursor-pointer select-none">
+    <section
+      ref={containerRef}
+      className="relative w-full h-[75vh] sm:h-[85vh] lg:h-screen min-h-[520px] overflow-hidden bg-black text-white group cursor-pointer select-none"
+    >
       {/* Fullscreen High-Resolution Background Mockup Asset */}
       <Image
         src="/images/showreel-clean-hq.png"
@@ -38,6 +83,7 @@ export default function ShowreelSection() {
 
       {/* Inset Architectural White Wireframe Border */}
       <div
+        ref={borderRef}
         className="absolute inset-4 sm:inset-8 md:inset-12 lg:inset-16 xl:inset-20 border border-white/45 pointer-events-none z-10 transition-colors duration-300 group-hover:border-white/70"
         aria-hidden="true"
       />
@@ -56,7 +102,7 @@ export default function ShowreelSection() {
         }}
       >
         {/* Concentric Pulsing Ripple Rings on Hover */}
-        <div className="relative flex items-center justify-center">
+        <div ref={playBtnRef} className="relative flex items-center justify-center">
           <span className="absolute w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-white/20 animate-ping opacity-75 group-hover:opacity-100 duration-1000" />
           <span className="absolute w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-white/30 backdrop-blur-sm group-hover:scale-125 transition-transform duration-300" />
           

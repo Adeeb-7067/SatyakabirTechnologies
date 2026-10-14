@@ -1,18 +1,49 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function ContactCtaSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (gridRef.current) {
+        gsap.from(gridRef.current.children, {
+          y: 40,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.14,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 78%",
+            once: true,
+          },
+        });
+      }
+    },
+    { scope: containerRef }
+  );
+
   return (
     <section
+      ref={containerRef}
       id="contact-cta"
       className="w-full bg-[#050810] py-14 sm:py-18 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative z-10 text-white select-none overflow-hidden"
     >
       <div className="max-w-[1240px] mx-auto relative z-10">
         {/* 2x2 Checkerboard Grid matching reference exactly */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
           
           {/* Top-Left: Blue Action Card (Start a Project) */}
           <div className="rounded-2xl sm:rounded-[22px] bg-[#1d52e8] p-7 sm:p-9 md:p-10 flex flex-col justify-between min-h-[260px] sm:min-h-[290px] shadow-[0_20px_48px_rgba(29,82,232,0.35)] border border-blue-400/30 transition-transform duration-300 hover:-translate-y-0.5">

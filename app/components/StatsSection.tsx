@@ -1,4 +1,13 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface StatItem {
   value: string;
@@ -25,14 +34,41 @@ const stats: StatItem[] = [
 ];
 
 export default function StatsSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useGSAP(
+    () => {
+      const validItems = itemsRef.current.filter(Boolean);
+      if (validItems.length === 0) return;
+
+      gsap.from(validItems, {
+        y: 25,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 88%",
+          once: true,
+        },
+      });
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section className="w-full bg-[#131622] relative z-20">
+    <section ref={sectionRef} className="w-full bg-[#131622] relative z-20">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#2e3447]">
           {stats.map((stat, index) => (
             <div
               key={stat.label}
-              className={`flex flex-col justify-center py-5 md:py-2 ${
+              ref={(el) => {
+                itemsRef.current[index] = el;
+              }}
+              className={`flex flex-col justify-center py-5 md:py-2 transition-transform duration-300 hover:-translate-y-1 ${
                 index === 0
                   ? "md:pr-8 lg:pr-10"
                   : index === stats.length - 1

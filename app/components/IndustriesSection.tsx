@@ -4,6 +4,13 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Activity, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface IndustryItem {
   id: string;
@@ -143,8 +150,44 @@ export default function IndustriesSection() {
     return diff;
   };
 
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.from(headerRef.current, {
+        y: 35,
+        opacity: 0,
+        duration: 0.85,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
+      gsap.from(stageRef.current, {
+        scale: 0.94,
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        ease: "power2.out",
+        delay: 0.15,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+          once: true,
+        },
+      });
+    },
+    { scope: sectionRef }
+  );
+
   return (
     <section
+      ref={sectionRef}
       className="w-full bg-[#050c14] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative z-20 text-white overflow-hidden select-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -161,7 +204,7 @@ export default function IndustriesSection() {
 
       <div className="max-w-[1240px] mx-auto relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+        <div ref={headerRef} className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           {/* Category Tag */}
           <span className="text-[11px] sm:text-[12px] font-semibold tracking-[0.2em] text-[#f472b6] uppercase inline-block mb-3.5">
             DOMAIN EXPERTISE
@@ -181,6 +224,7 @@ export default function IndustriesSection() {
 
         {/* 3D Animated Showcase Stage */}
         <div
+          ref={stageRef}
           className="relative w-full h-[480px] sm:h-[510px] md:h-[530px] flex items-center justify-center"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}

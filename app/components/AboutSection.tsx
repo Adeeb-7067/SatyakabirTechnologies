@@ -1,5 +1,14 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface ComplianceCard {
   id: number;
@@ -57,11 +66,72 @@ const panels: PanelItem[] = [
 ];
 
 export default function AboutSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const panelsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useGSAP(
+    () => {
+      // Header Animation
+      gsap.from(headerRef.current, {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
+      // Left Compliance Cards Stagger from Left
+      const validCards = cardsRef.current.filter(Boolean);
+      if (validCards.length > 0) {
+        gsap.from(validCards, {
+          x: -35,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.15,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 75%",
+            once: true,
+          },
+        });
+      }
+
+      // Right Triptych Panels Stagger from Bottom with subtle scale
+      const validPanels = panelsRef.current.filter(Boolean);
+      if (validPanels.length > 0) {
+        gsap.from(validPanels, {
+          y: 40,
+          opacity: 0,
+          scale: 0.95,
+          duration: 0.9,
+          stagger: 0.12,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 75%",
+            once: true,
+          },
+        });
+      }
+    },
+    { scope: containerRef }
+  );
+
   return (
-    <section className="w-full bg-[#efefff] py-14 sm:py-18 lg:py-24 px-4 sm:px-6 lg:px-8 relative z-10 text-slate-900">
+    <section
+      ref={containerRef}
+      className="w-full bg-[#efefff] py-14 sm:py-18 lg:py-24 px-4 sm:px-6 lg:px-8 relative z-10 text-slate-900"
+    >
       <div className="max-w-[1240px] mx-auto">
         {/* Section Header */}
-        <div className="mb-8 sm:mb-10 lg:mb-12">
+        <div ref={headerRef} className="mb-8 sm:mb-10 lg:mb-12">
           {/* Top Tag */}
           <span className="text-[12px] sm:text-[13px] font-bold tracking-widest text-[#1d4ed8] uppercase inline-block mb-3">
             ABOUT US
@@ -84,10 +154,13 @@ export default function AboutSection() {
           
           {/* Left Column: 3 Compliance / Trust Cards */}
           <div className="lg:col-span-7 flex flex-col justify-between gap-4 sm:gap-5">
-            {complianceCards.map((card) => (
+            {complianceCards.map((card, idx) => (
               <div
                 key={card.id}
-                className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-100 border-l-[4px] border-l-[#2563eb] transition-all duration-200 hover:shadow-md"
+                ref={(el) => {
+                  cardsRef.current[idx] = el;
+                }}
+                className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-100 border-l-[4px] border-l-[#2563eb] transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
               >
                 {/* Card Top Row: Number + Title + Category Badge */}
                 <div className="flex items-center justify-between gap-3">
@@ -120,9 +193,12 @@ export default function AboutSection() {
           {/* Right Column: 3 Tall Rounded Panels (Triptych) */}
           <div className="lg:col-span-5 flex items-center">
             <div className="w-full grid grid-cols-3 gap-2.5 sm:gap-3.5 h-[380px] sm:h-[430px] lg:h-[470px]">
-              {panels.map((panel) => (
+              {panels.map((panel, idx) => (
                 <div
                   key={panel.id}
+                  ref={(el) => {
+                    panelsRef.current[idx] = el;
+                  }}
                   className="relative h-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-md group bg-slate-900"
                 >
                   {/* Panel Image */}
