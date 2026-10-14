@@ -11,9 +11,13 @@ interface RoadmapStep {
   description: string;
   cardLine1: string;
   cardLine2: string;
-  // Proportional offsets from center (cx=480, cy=300 in 960x580 canvas)
+  // Offset from center (cx=550, cy=290 in 1100x580 canvas)
   dx: number;
   dy: number;
+  panelLeft: number;
+  panelTop: number;
+  glyphSide: "left" | "right";
+  glyphTop?: string;
 }
 
 const steps: RoadmapStep[] = [
@@ -28,6 +32,10 @@ const steps: RoadmapStep[] = [
     cardLine2: "Scope",
     dx: 0,
     dy: -134, // Top Center (12 o'clock)
+    panelLeft: 616,
+    panelTop: 60,
+    glyphSide: "left",
+    glyphTop: "32px",
   },
   {
     id: 2,
@@ -36,10 +44,14 @@ const steps: RoadmapStep[] = [
     title: "Architecture & Design",
     description:
       "System architecture blueprint, database schema modeling, and interactive clickable prototypes.",
-    cardLine1: "Discover",
-    cardLine2: "Scope",
+    cardLine1: "Architecture",
+    cardLine2: "Design",
     dx: 158,
     dy: -26, // Right (~2 o'clock)
+    panelLeft: 774,
+    panelTop: 190,
+    glyphSide: "left",
+    glyphTop: "50%",
   },
   {
     id: 3,
@@ -48,10 +60,14 @@ const steps: RoadmapStep[] = [
     title: "Agile Development",
     description:
       "Sprint-based rapid development, production-grade microservices, and continuous integration.",
-    cardLine1: "Discover",
-    cardLine2: "Scope",
+    cardLine1: "Agile",
+    cardLine2: "Development",
     dx: 98,
     dy: 126, // Bottom Right (~4:30)
+    panelLeft: 720,
+    panelTop: 342,
+    glyphSide: "left",
+    glyphTop: "50%",
   },
   {
     id: 4,
@@ -60,10 +76,14 @@ const steps: RoadmapStep[] = [
     title: "QA & Hardening",
     description:
       "Automated test coverage, vulnerability pentesting, performance load tests, and security audits.",
-    cardLine1: "Discover",
-    cardLine2: "Scope",
+    cardLine1: "QA &",
+    cardLine2: "Hardening",
     dx: -98,
     dy: 128, // Bottom Left (~7:30)
+    panelLeft: 60,
+    panelTop: 344,
+    glyphSide: "right",
+    glyphTop: "50%",
   },
   {
     id: 5,
@@ -72,10 +92,14 @@ const steps: RoadmapStep[] = [
     title: "Deployment & Scale",
     description:
       "Zero-downtime cloud migration, multi-region container orchestration, and 24/7 SLA telemetry.",
-    cardLine1: "Discover",
-    cardLine2: "Scope",
+    cardLine1: "Deploy &",
+    cardLine2: "Scale",
     dx: -158,
     dy: -26, // Left (~10 o'clock)
+    panelLeft: 6,
+    panelTop: 190,
+    glyphSide: "right",
+    glyphTop: "50%",
   },
 ];
 
@@ -94,11 +118,12 @@ const scatteredGlyphs = [
 ];
 
 export default function EngineeringRoadmapSection() {
-  // Starts with Step 1 highlighted to mirror the reference image demonstration
-  const [hoveredStep, setHoveredStep] = useState<number | null>(1);
+  // Hidden by default; appears when user hovers any step
+  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
   const [activeStepId, setActiveStepId] = useState<number>(1);
 
   const currentStep = steps.find((s) => s.id === activeStepId) || steps[0];
+  const isPanelVisible = hoveredStep !== null;
 
   return (
     <section
@@ -154,23 +179,22 @@ export default function EngineeringRoadmapSection() {
 
         {/* Circular Workflow Diagram Stage Wrapper */}
         <div
-          className="relative w-full flex items-center justify-center overflow-hidden min-h-[380px] sm:min-h-[460px] md:min-h-[540px] lg:min-h-[600px]"
+          className="relative w-full flex items-center justify-center overflow-hidden min-h-[380px] sm:min-h-[460px] md:min-h-[540px] lg:min-h-[600px] py-4"
           onMouseLeave={() => setHoveredStep(null)}
         >
-          {/* Generously sized 960px x 580px Stage with smooth responsive scaling */}
-          <div className="relative w-[960px] h-[580px] shrink-0 scale-[0.52] xs:scale-[0.66] sm:scale-[0.8] md:scale-[0.9] lg:scale-100 origin-center transition-transform duration-300">
+          {/* Generously sized 1100px x 580px Stage with responsive scaling */}
+          <div className="relative w-[1100px] h-[580px] shrink-0 scale-[0.34] min-[420px]:scale-[0.42] xs:scale-[0.54] sm:scale-[0.68] md:scale-[0.84] lg:scale-100 origin-center transition-transform duration-300">
             
-            {/* Connecting Circle Wireframe SVG */}
+            {/* Connecting Circle Wireframe SVG (cx=550, cy=290, r=138) */}
             <svg
-              className="absolute inset-0 w-[960px] h-[580px] pointer-events-none z-10"
-              viewBox="0 0 960 580"
+              className="absolute inset-0 w-[1100px] h-[580px] pointer-events-none z-10"
+              viewBox="0 0 1100 580"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {/* Exact Connecting Circle passing through lower corners of cards (cx=480, cy=300, r=138) */}
               <circle
-                cx="480"
-                cy="300"
+                cx="550"
+                cy="290"
                 r="138"
                 stroke="rgba(255, 255, 255, 0.25)"
                 strokeWidth="1.5"
@@ -182,8 +206,8 @@ export default function EngineeringRoadmapSection() {
             <div
               className="absolute z-20 flex items-center justify-center"
               style={{
-                left: "480px",
-                top: "300px",
+                left: "550px",
+                top: "290px",
                 transform: "translate(-50%, -50%)",
               }}
             >
@@ -199,21 +223,45 @@ export default function EngineeringRoadmapSection() {
               </div>
             </div>
 
-            {/* Interactive Information Panel (Upper-Right Quadrant, perfectly cleared of Top Card) */}
+            {/* Dynamic Interactive Information Panel */}
             <div
-              className="absolute z-15 pointer-events-auto transition-all duration-300"
+              className={`absolute z-30 transition-all duration-300 ease-out ${
+                isPanelVisible
+                  ? "opacity-100 scale-100 pointer-events-auto"
+                  : "opacity-0 scale-95 pointer-events-none"
+              }`}
               style={{
-                left: "542px",
-                top: "60px",
-                width: "318px",
+                left: `${currentStep.panelLeft}px`,
+                top: `${currentStep.panelTop}px`,
+                width: "320px",
                 height: "148px",
               }}
+              onMouseEnter={() => setHoveredStep(currentStep.id)}
+              onMouseLeave={() => setHoveredStep(null)}
             >
               <div className="relative w-full h-full rounded-2xl bg-[#0c0d1a]/95 backdrop-blur-md border border-[#1e2338] p-5 shadow-[0_16px_40px_rgba(0,0,0,0.85)] flex flex-col justify-between">
-                {/* Embedded Left Border Glyph */}
-                <div className="absolute -left-[7px] top-[24px] w-3.5 h-3.5 rounded-[3px] p-[2px] bg-gradient-to-tr from-green-500 via-blue-600 to-orange-500 shadow-[0_0_8px_rgba(37,99,235,0.5)]">
-                  <div className="w-full h-full bg-[#050810] rounded-[1px]" />
-                </div>
+                {/* Embedded Border Glyph connecting to active card */}
+                {currentStep.glyphSide === "left" ? (
+                  <div
+                    className="absolute -left-[7px] w-3.5 h-3.5 rounded-[3px] p-[2px] bg-gradient-to-tr from-green-500 via-blue-600 to-orange-500 shadow-[0_0_8px_rgba(37,99,235,0.5)] z-20 pointer-events-none"
+                    style={{
+                      top: currentStep.glyphTop || "50%",
+                      transform: currentStep.glyphTop === "50%" ? "translateY(-50%)" : "none",
+                    }}
+                  >
+                    <div className="w-full h-full bg-[#050810] rounded-[1px]" />
+                  </div>
+                ) : (
+                  <div
+                    className="absolute -right-[7px] w-3.5 h-3.5 rounded-[3px] p-[2px] bg-gradient-to-tr from-green-500 via-blue-600 to-orange-500 shadow-[0_0_8px_rgba(37,99,235,0.5)] z-20 pointer-events-none"
+                    style={{
+                      top: currentStep.glyphTop || "50%",
+                      transform: currentStep.glyphTop === "50%" ? "translateY(-50%)" : "none",
+                    }}
+                  >
+                    <div className="w-full h-full bg-[#050810] rounded-[1px]" />
+                  </div>
+                )}
 
                 {/* Header: Step Number + Week & Title */}
                 <div className="flex items-start gap-3.5">
@@ -238,10 +286,10 @@ export default function EngineeringRoadmapSection() {
               </div>
             </div>
 
-            {/* 5 Step Cards (generous 120px x 90px dimensions with legible copy) */}
+            {/* 5 Step Cards (120px x 90px dimensions with distinct hover states) */}
             {steps.map((step) => {
-              const posX = 480 + step.dx;
-              const posY = 300 + step.dy;
+              const posX = 550 + step.dx;
+              const posY = 290 + step.dy;
               const isHovered = hoveredStep === step.id;
 
               return (
@@ -253,7 +301,7 @@ export default function EngineeringRoadmapSection() {
                     transform: "translate(-50%, -50%)",
                   }}
                   className={`absolute z-20 cursor-pointer transition-all duration-300 ${
-                    isHovered ? "z-30 scale-105" : "hover:scale-102"
+                    isHovered ? "z-35 scale-105" : "hover:scale-102"
                   }`}
                   onMouseEnter={() => {
                     setHoveredStep(step.id);
@@ -283,12 +331,12 @@ export default function EngineeringRoadmapSection() {
                       <Clock className="w-4 h-4 stroke-[1.8]" />
                     </div>
 
-                    {/* Step Label Line 1: Discover */}
+                    {/* Step Label Line 1 */}
                     <span className="text-[13px] font-semibold text-white tracking-tight leading-none mb-1 block">
                       {step.cardLine1}
                     </span>
 
-                    {/* Step Label Line 2: Scope */}
+                    {/* Step Label Line 2 */}
                     <span className="text-[12px] font-medium text-[#7c9bf5] tracking-tight leading-none block">
                       {step.cardLine2}
                     </span>
