@@ -68,58 +68,66 @@ const panels: PanelItem[] = [
 export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const panelsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(
     () => {
       // Header Animation
-      gsap.from(headerRef.current, {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-          once: true,
-        },
-      });
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power2.out",
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
 
       // Left Compliance Cards Stagger from Left
-      const validCards = cardsRef.current.filter(Boolean);
-      if (validCards.length > 0) {
-        gsap.from(validCards, {
-          x: -35,
-          opacity: 0,
+      gsap.fromTo(
+        ".compliance-card",
+        { x: -30, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
           duration: 0.85,
-          stagger: 0.15,
+          stagger: 0.14,
           ease: "power2.out",
+          clearProps: "all",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 75%",
+            start: "top 92%",
             once: true,
           },
-        });
-      }
+        }
+      );
 
       // Right Triptych Panels Stagger from Bottom with subtle scale
-      const validPanels = panelsRef.current.filter(Boolean);
-      if (validPanels.length > 0) {
-        gsap.from(validPanels, {
-          y: 40,
-          opacity: 0,
-          scale: 0.95,
-          duration: 0.9,
+      gsap.fromTo(
+        ".triptych-panel",
+        { y: 35, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.85,
           stagger: 0.12,
           ease: "power2.out",
+          clearProps: "all",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 75%",
+            start: "top 92%",
             once: true,
           },
-        });
-      }
+        }
+      );
     },
     { scope: containerRef }
   );
@@ -153,14 +161,11 @@ export default function AboutSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
           
           {/* Left Column: 3 Compliance / Trust Cards */}
-          <div className="lg:col-span-7 flex flex-col justify-between gap-4 sm:gap-5">
-            {complianceCards.map((card, idx) => (
+          <div className="compliance-cards-container lg:col-span-7 flex flex-col justify-between gap-4 sm:gap-5">
+            {complianceCards.map((card) => (
               <div
                 key={card.id}
-                ref={(el) => {
-                  cardsRef.current[idx] = el;
-                }}
-                className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-100 border-l-[4px] border-l-[#2563eb] transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
+                className="compliance-card bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-100 border-l-[4px] border-l-[#2563eb] transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
               >
                 {/* Card Top Row: Number + Title + Category Badge */}
                 <div className="flex items-center justify-between gap-3">
@@ -191,15 +196,12 @@ export default function AboutSection() {
           </div>
 
           {/* Right Column: 3 Tall Rounded Panels (Triptych) */}
-          <div className="lg:col-span-5 flex items-center">
+          <div className="triptych-container lg:col-span-5 flex items-center">
             <div className="w-full grid grid-cols-3 gap-2.5 sm:gap-3.5 h-[380px] sm:h-[430px] lg:h-[470px]">
-              {panels.map((panel, idx) => (
+              {panels.map((panel) => (
                 <div
                   key={panel.id}
-                  ref={(el) => {
-                    panelsRef.current[idx] = el;
-                  }}
-                  className="relative h-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-md group bg-slate-900"
+                  className="triptych-panel relative h-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-md group bg-slate-900"
                 >
                   {/* Panel Image */}
                   <Image

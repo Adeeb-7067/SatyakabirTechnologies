@@ -19,7 +19,14 @@ export default function HeroSection() {
   useGSAP(
     () => {
       // Entrance Timeline for left content
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        onComplete: () => {
+          gsap.set([headlineRef.current, subtitleRef.current, buttonsRef.current], {
+            clearProps: "all",
+          });
+        },
+      });
 
       tl.from(headlineRef.current, {
         y: 40,
@@ -45,25 +52,28 @@ export default function HeroSection() {
           "-=0.5"
         );
 
-      // Entrance for 3D cubes graphic
-      gsap.from(cubesRef.current, {
-        scale: 0.9,
-        y: 40,
-        opacity: 0,
-        duration: 1.2,
-        ease: "power2.out",
-        delay: 0.2,
-      });
-
-      // Subtle continuous floating micro-animation for the 3D cubes
-      gsap.to(cubesRef.current, {
-        y: -12,
-        duration: 3.6,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        delay: 1.4,
-      });
+      // Entrance for 3D cubes graphic with clearProps on entrance
+      gsap.fromTo(
+        cubesRef.current,
+        { scale: 0.9, y: 40, opacity: 0 },
+        {
+          scale: 1,
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: "power2.out",
+          delay: 0.2,
+          onComplete: () => {
+            gsap.to(cubesRef.current, {
+              y: -12,
+              duration: 3.6,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            });
+          },
+        }
+      );
 
       // Subtle atmospheric pulsing for radial glows
       if (glow1Ref.current) {

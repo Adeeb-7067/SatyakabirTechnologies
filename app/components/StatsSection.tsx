@@ -35,25 +35,26 @@ const stats: StatItem[] = [
 
 export default function StatsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(
     () => {
-      const validItems = itemsRef.current.filter(Boolean);
-      if (validItems.length === 0) return;
-
-      gsap.from(validItems, {
-        y: 25,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.12,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 88%",
-          once: true,
-        },
-      });
+      gsap.fromTo(
+        ".stat-item",
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power2.out",
+          clearProps: "all",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 95%",
+            once: true,
+          },
+        }
+      );
     },
     { scope: sectionRef }
   );
@@ -65,10 +66,7 @@ export default function StatsSection() {
           {stats.map((stat, index) => (
             <div
               key={stat.label}
-              ref={(el) => {
-                itemsRef.current[index] = el;
-              }}
-              className={`flex flex-col justify-center py-5 md:py-2 transition-transform duration-300 hover:-translate-y-1 ${
+              className={`stat-item flex flex-col justify-center py-5 md:py-2 transition-transform duration-300 hover:-translate-y-1 ${
                 index === 0
                   ? "md:pr-8 lg:pr-10"
                   : index === stats.length - 1

@@ -1,4 +1,8 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import StatsSection from "./components/StatsSection";
@@ -15,6 +19,19 @@ import TestimonialsSection from "./components/TestimonialsSection";
 import ContactCtaSection from "./components/ContactCtaSection";
 
 export default function Home() {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      gsap.registerPlugin(ScrollTrigger);
+      const refreshST = () => ScrollTrigger.refresh();
+      window.addEventListener("load", refreshST);
+      const timer = setTimeout(refreshST, 600);
+      return () => {
+        window.removeEventListener("load", refreshST);
+        clearTimeout(timer);
+      };
+    }
+  }, []);
+
   return (
     <main className="min-h-screen flex flex-col bg-[#080d1a] text-white selection:bg-blue-600 selection:text-white">
       {/* Hero Container with Deep Navy Gradient & Lighting */}

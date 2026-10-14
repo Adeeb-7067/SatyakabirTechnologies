@@ -17,20 +17,23 @@ export default function ContactCtaSection() {
 
   useGSAP(
     () => {
-      if (gridRef.current) {
-        gsap.from(gridRef.current.children, {
-          y: 40,
-          opacity: 0,
+      gsap.fromTo(
+        ".cta-grid-card",
+        { y: 35, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
           duration: 0.85,
-          stagger: 0.14,
+          stagger: 0.12,
           ease: "power2.out",
+          clearProps: "all",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 78%",
+            start: "top 92%",
             once: true,
           },
-        });
-      }
+        }
+      );
     },
     { scope: containerRef }
   );
@@ -46,7 +49,7 @@ export default function ContactCtaSection() {
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
           
           {/* Top-Left: Blue Action Card (Start a Project) */}
-          <div className="rounded-2xl sm:rounded-[22px] bg-[#1d52e8] p-7 sm:p-9 md:p-10 flex flex-col justify-between min-h-[260px] sm:min-h-[290px] shadow-[0_20px_48px_rgba(29,82,232,0.35)] border border-blue-400/30 transition-transform duration-300 hover:-translate-y-0.5">
+          <div className="cta-grid-card rounded-2xl sm:rounded-[22px] bg-[#1d52e8] p-7 sm:p-9 md:p-10 flex flex-col justify-between min-h-[260px] sm:min-h-[290px] shadow-[0_20px_48px_rgba(29,82,232,0.35)] border border-blue-400/30 transition-transform duration-300 hover:-translate-y-0.5">
             <div>
               <p className="font-mono text-[10.5px] sm:text-[11px] font-bold tracking-[0.24em] text-blue-100/90 uppercase block mb-2 sm:mb-2.5">
                 DIRECT ENGINEERING INTAKE
@@ -70,7 +73,7 @@ export default function ContactCtaSection() {
           </div>
 
           {/* Top-Right: Photo Card (Team Strategy Boardroom) */}
-          <div className="relative rounded-2xl sm:rounded-[22px] overflow-hidden min-h-[260px] sm:min-h-[290px] border border-slate-800/60 shadow-lg group">
+          <div className="cta-grid-card relative rounded-2xl sm:rounded-[22px] overflow-hidden min-h-[260px] sm:min-h-[290px] border border-slate-800/60 shadow-lg group">
             <Image
               src="/images/cta-boardroom-hq.jpg"
               alt="Engineering team strategy session at Satya Kabir Technologies"
@@ -82,7 +85,7 @@ export default function ContactCtaSection() {
           </div>
 
           {/* Bottom-Left: Photo Card (Executive Handshake Partnership) */}
-          <div className="relative rounded-2xl sm:rounded-[22px] overflow-hidden min-h-[260px] sm:min-h-[290px] border border-slate-800/60 shadow-lg group">
+          <div className="cta-grid-card relative rounded-2xl sm:rounded-[22px] overflow-hidden min-h-[260px] sm:min-h-[290px] border border-slate-800/60 shadow-lg group">
             <Image
               src="/images/cta-handshake-hq.jpg"
               alt="Executive partnership and strategic collaboration"
@@ -94,7 +97,7 @@ export default function ContactCtaSection() {
           </div>
 
           {/* Bottom-Right: Dark Slate Action Card (Let's Connect) */}
-          <div className="rounded-2xl sm:rounded-[22px] bg-[#131b2e] p-7 sm:p-9 md:p-10 flex flex-col justify-between min-h-[260px] sm:min-h-[290px] shadow-[0_20px_48px_rgba(0,0,0,0.5)] border border-[#212d4a]/85 transition-transform duration-300 hover:-translate-y-0.5">
+          <div className="cta-grid-card rounded-2xl sm:rounded-[22px] bg-[#131b2e] p-7 sm:p-9 md:p-10 flex flex-col justify-between min-h-[260px] sm:min-h-[290px] shadow-[0_20px_48px_rgba(0,0,0,0.5)] border border-[#212d4a]/85 transition-transform duration-300 hover:-translate-y-0.5">
             <div>
               <p className="font-mono text-[10.5px] sm:text-[11px] font-bold tracking-[0.24em] text-sky-400/90 uppercase block mb-2 sm:mb-2.5">
                 INTERACTIVE DESIGN ARCHIVES

@@ -59,41 +59,47 @@ const disciplines: DisciplineCard[] = [
 export default function DisciplinesSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(
     () => {
       // Header Animation
-      gsap.from(headerRef.current, {
-        y: 40,
-        opacity: 0,
-        duration: 0.9,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-          once: true,
-        },
-      });
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current,
+          { y: 35, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.85,
+            ease: "power2.out",
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
 
-      // Individual Card ScrollTriggers for the stepped zig-zag flow
-      cardsRef.current.forEach((cardEl, idx) => {
-        if (!cardEl) return;
-        const isEven = idx % 2 === 1;
-
-        gsap.from(cardEl, {
-          y: 50,
-          x: isEven ? 25 : -25,
-          opacity: 0,
+      // Cards Stagger with clearProps
+      gsap.fromTo(
+        ".discipline-card-col",
+        { y: 35, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
           duration: 0.85,
+          stagger: 0.1,
           ease: "power2.out",
+          clearProps: "all",
           scrollTrigger: {
-            trigger: cardEl,
-            start: "top 85%",
+            trigger: containerRef.current,
+            start: "top 92%",
             once: true,
           },
-        });
-      });
+        }
+      );
     },
     { scope: containerRef }
   );
@@ -169,65 +175,35 @@ export default function DisciplinesSection() {
         </div>
 
         {/* Alternating Step-Ladder Zig-Zag Flow */}
-        <div className="flex flex-col gap-6 sm:gap-8">
+        <div className="disciplines-grid-container flex flex-col gap-6 sm:gap-8">
           
           {/* Card 01: Left */}
-          <div
-            ref={(el) => {
-              cardsRef.current[0] = el;
-            }}
-            className="w-full sm:max-w-[360px] md:max-w-[390px] mr-auto"
-          >
+          <div className="discipline-card-col w-full sm:max-w-[360px] md:max-w-[390px] mr-auto">
             {renderCard(disciplines[0])}
           </div>
 
           {/* Card 02: Right, Stepped Down */}
-          <div
-            ref={(el) => {
-              cardsRef.current[1] = el;
-            }}
-            className="w-full sm:max-w-[360px] md:max-w-[390px] ml-auto sm:-mt-16 md:-mt-24 lg:-mt-28"
-          >
+          <div className="discipline-card-col w-full sm:max-w-[360px] md:max-w-[390px] ml-auto sm:-mt-16 md:-mt-24 lg:-mt-28">
             {renderCard(disciplines[1])}
           </div>
 
           {/* Card 03: Left, Stepped Down */}
-          <div
-            ref={(el) => {
-              cardsRef.current[2] = el;
-            }}
-            className="w-full sm:max-w-[360px] md:max-w-[390px] mr-auto sm:-mt-16 md:-mt-24 lg:-mt-28"
-          >
+          <div className="discipline-card-col w-full sm:max-w-[360px] md:max-w-[390px] mr-auto sm:-mt-16 md:-mt-24 lg:-mt-28">
             {renderCard(disciplines[2])}
           </div>
 
           {/* Card 04: Right, Stepped Down */}
-          <div
-            ref={(el) => {
-              cardsRef.current[3] = el;
-            }}
-            className="w-full sm:max-w-[360px] md:max-w-[390px] ml-auto sm:-mt-16 md:-mt-24 lg:-mt-28"
-          >
+          <div className="discipline-card-col w-full sm:max-w-[360px] md:max-w-[390px] ml-auto sm:-mt-16 md:-mt-24 lg:-mt-28">
             {renderCard(disciplines[3])}
           </div>
 
           {/* Card 05: Left, Stepped Down */}
-          <div
-            ref={(el) => {
-              cardsRef.current[4] = el;
-            }}
-            className="w-full sm:max-w-[360px] md:max-w-[390px] mr-auto sm:-mt-16 md:-mt-24 lg:-mt-28"
-          >
+          <div className="discipline-card-col w-full sm:max-w-[360px] md:max-w-[390px] mr-auto sm:-mt-16 md:-mt-24 lg:-mt-28">
             {renderCard(disciplines[4])}
           </div>
 
           {/* Card 06: Right, Stepped Down */}
-          <div
-            ref={(el) => {
-              cardsRef.current[5] = el;
-            }}
-            className="w-full sm:max-w-[360px] md:max-w-[390px] ml-auto sm:-mt-16 md:-mt-24 lg:-mt-28"
-          >
+          <div className="discipline-card-col w-full sm:max-w-[360px] md:max-w-[390px] ml-auto sm:-mt-16 md:-mt-24 lg:-mt-28">
             {renderCard(disciplines[5])}
           </div>
 

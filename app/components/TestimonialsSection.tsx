@@ -172,30 +172,44 @@ export default function TestimonialsSection() {
 
   useGSAP(
     () => {
-      gsap.from(headerRef.current, {
-        y: 35,
-        opacity: 0,
-        duration: 0.85,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          once: true,
-        },
-      });
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power2.out",
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
 
-      gsap.from(carouselRef.current, {
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        ease: "power2.out",
-        delay: 0.15,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-          once: true,
-        },
-      });
+      if (carouselRef.current) {
+        gsap.fromTo(
+          carouselRef.current,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.85,
+            ease: "power2.out",
+            delay: 0.1,
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
     },
     { scope: sectionRef }
   );

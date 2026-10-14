@@ -21,73 +21,92 @@ export default function WhyChooseUsSection() {
   useGSAP(
     () => {
       // Header Animation
-      gsap.from(headerRef.current, {
-        y: 35,
-        opacity: 0,
-        duration: 0.85,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-          once: true,
-        },
-      });
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power2.out",
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
 
       // Left Column Cards Stagger from Left
-      if (leftColRef.current) {
-        gsap.from(leftColRef.current.children, {
-          x: -35,
-          opacity: 0,
+      gsap.fromTo(
+        ".why-left-card",
+        { x: -30, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
           duration: 0.85,
-          stagger: 0.12,
+          stagger: 0.1,
           ease: "power2.out",
+          clearProps: "all",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 75%",
+            start: "top 92%",
             once: true,
           },
-        });
-      }
+        }
+      );
 
       // Center Pillar Sculpture Entrance + Continuous subtle breathing float
-      gsap.from(centerPillarRef.current, {
-        scale: 0.88,
-        y: 40,
-        opacity: 0,
-        duration: 1.1,
-        ease: "power2.out",
-        delay: 0.1,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 75%",
-          once: true,
-        },
-      });
-
-      gsap.to(centerPillarRef.current, {
-        y: -10,
-        duration: 3.8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        delay: 1.2,
-      });
+      if (centerPillarRef.current) {
+        gsap.fromTo(
+          centerPillarRef.current,
+          { scale: 0.9, y: 30, opacity: 0 },
+          {
+            scale: 1,
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "power2.out",
+            delay: 0.1,
+            onComplete: () => {
+              gsap.to(centerPillarRef.current, {
+                y: -10,
+                duration: 3.8,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut",
+              });
+            },
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
 
       // Right Column Cards Stagger from Right
-      if (rightColRef.current) {
-        gsap.from(rightColRef.current.children, {
-          x: 35,
-          opacity: 0,
+      gsap.fromTo(
+        ".why-right-card",
+        { x: 30, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
           duration: 0.85,
-          stagger: 0.12,
+          stagger: 0.1,
           ease: "power2.out",
+          clearProps: "all",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 75%",
+            start: "top 92%",
             once: true,
           },
-        });
-      }
+        }
+      );
     },
     { scope: containerRef }
   );
@@ -118,7 +137,7 @@ export default function WhyChooseUsSection() {
             className="lg:col-span-4 flex flex-col justify-between gap-3.5 sm:gap-4 z-10 order-1"
           >
             {/* Card 1 (Blue) - Expert Team */}
-            <div className="flex-1 bg-[#1d4ed8] text-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_20px_rgba(29,78,216,0.18)] hover:shadow-[0_12px_28px_rgba(29,78,216,0.25)] hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
+            <div className="why-left-card flex-1 bg-[#1d4ed8] text-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_20px_rgba(29,78,216,0.18)] hover:shadow-[0_12px_28px_rgba(29,78,216,0.25)] hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/20 flex items-center justify-center mb-3 backdrop-blur-sm group-hover:scale-105 transition-transform duration-300">
                 <Users className="w-4.5 h-4.5 text-white" />
               </div>
@@ -131,7 +150,7 @@ export default function WhyChooseUsSection() {
             </div>
 
             {/* Card 2 (White) - Scalable Solutions */}
-            <div className="flex-1 bg-white text-slate-900 border border-[#c6d3f5] rounded-2xl p-5 sm:p-6 shadow-[0_2px_12px_rgba(29,78,216,0.04)] hover:shadow-[0_8px_24px_rgba(29,78,216,0.08)] hover:border-blue-400 hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
+            <div className="why-left-card flex-1 bg-white text-slate-900 border border-[#c6d3f5] rounded-2xl p-5 sm:p-6 shadow-[0_2px_12px_rgba(29,78,216,0.04)] hover:shadow-[0_8px_24px_rgba(29,78,216,0.08)] hover:border-blue-400 hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#eef2ff] text-[#1d4ed8] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
                 <Archive className="w-4.5 h-4.5 text-[#1d4ed8]" />
               </div>
@@ -144,7 +163,7 @@ export default function WhyChooseUsSection() {
             </div>
 
             {/* Card 3 (Blue) - Agile Process */}
-            <div className="flex-1 bg-[#1d4ed8] text-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_20px_rgba(29,78,216,0.18)] hover:shadow-[0_12px_28px_rgba(29,78,216,0.25)] hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
+            <div className="why-left-card flex-1 bg-[#1d4ed8] text-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_20px_rgba(29,78,216,0.18)] hover:shadow-[0_12px_28px_rgba(29,78,216,0.25)] hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/20 flex items-center justify-center mb-3 backdrop-blur-sm group-hover:scale-105 transition-transform duration-300">
                 <RotateCcw className="w-4.5 h-4.5 text-white" />
               </div>
@@ -178,7 +197,7 @@ export default function WhyChooseUsSection() {
             className="lg:col-span-4 flex flex-col justify-between gap-3.5 sm:gap-4 z-10 order-2 lg:order-3"
           >
             {/* Card 4 (White) - 24/7 Support */}
-            <div className="flex-1 bg-white text-slate-900 border border-[#c6d3f5] rounded-2xl p-5 sm:p-6 shadow-[0_2px_12px_rgba(29,78,216,0.04)] hover:shadow-[0_8px_24px_rgba(29,78,216,0.08)] hover:border-blue-400 hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
+            <div className="why-right-card flex-1 bg-white text-slate-900 border border-[#c6d3f5] rounded-2xl p-5 sm:p-6 shadow-[0_2px_12px_rgba(29,78,216,0.04)] hover:shadow-[0_8px_24px_rgba(29,78,216,0.08)] hover:border-blue-400 hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#eef2ff] text-[#1d4ed8] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
                 <Heart className="w-4.5 h-4.5 text-[#1d4ed8]" />
               </div>
@@ -191,7 +210,7 @@ export default function WhyChooseUsSection() {
             </div>
 
             {/* Card 5 (Blue) - Proven Results */}
-            <div className="flex-1 bg-[#1d4ed8] text-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_20px_rgba(29,78,216,0.18)] hover:shadow-[0_12px_28px_rgba(29,78,216,0.25)] hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
+            <div className="why-right-card flex-1 bg-[#1d4ed8] text-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_20px_rgba(29,78,216,0.18)] hover:shadow-[0_12px_28px_rgba(29,78,216,0.25)] hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/20 flex items-center justify-center mb-3 backdrop-blur-sm group-hover:scale-105 transition-transform duration-300">
                 <Award className="w-4.5 h-4.5 text-white" />
               </div>
@@ -204,7 +223,7 @@ export default function WhyChooseUsSection() {
             </div>
 
             {/* Card 6 (White) - Transparent Pricing */}
-            <div className="flex-1 bg-white text-slate-900 border border-[#c6d3f5] rounded-2xl p-5 sm:p-6 shadow-[0_2px_12px_rgba(29,78,216,0.04)] hover:shadow-[0_8px_24px_rgba(29,78,216,0.08)] hover:border-blue-400 hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
+            <div className="why-right-card flex-1 bg-white text-slate-900 border border-[#c6d3f5] rounded-2xl p-5 sm:p-6 shadow-[0_2px_12px_rgba(29,78,216,0.04)] hover:shadow-[0_8px_24px_rgba(29,78,216,0.08)] hover:border-blue-400 hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#eef2ff] text-[#1d4ed8] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
                 <DollarSign className="w-4.5 h-4.5 text-[#1d4ed8]" />
               </div>

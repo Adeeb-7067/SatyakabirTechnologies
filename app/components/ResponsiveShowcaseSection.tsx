@@ -32,18 +32,25 @@ export default function ResponsiveShowcaseSection() {
       }
 
       // Main Showcase Graphic Entrance
-      gsap.from(graphicRef.current, {
-        scale: 0.94,
-        y: 40,
-        opacity: 0,
-        duration: 1.05,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-          once: true,
-        },
-      });
+      if (graphicRef.current) {
+        gsap.fromTo(
+          graphicRef.current,
+          { scale: 0.95, y: 30, opacity: 0 },
+          {
+            scale: 1,
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: "power2.out",
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
     },
     { scope: sectionRef }
   );

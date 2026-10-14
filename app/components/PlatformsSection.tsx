@@ -63,33 +63,42 @@ export default function PlatformsSection() {
 
   useGSAP(
     () => {
-      gsap.from(headerRef.current, {
-        y: 35,
-        opacity: 0,
-        duration: 0.85,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          once: true,
-        },
-      });
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power2.out",
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
 
-      if (cardsTrackRef.current) {
-        const cards = cardsTrackRef.current.children;
-        gsap.from(cards, {
-          y: 45,
-          opacity: 0,
+      gsap.fromTo(
+        ".platform-card-wrap",
+        { y: 35, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
           duration: 0.85,
-          stagger: 0.14,
+          stagger: 0.12,
           ease: "power2.out",
+          clearProps: "all",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 75%",
+            start: "top 92%",
             once: true,
           },
-        });
-      }
+        }
+      );
     },
     { scope: sectionRef }
   );
@@ -176,7 +185,7 @@ export default function PlatformsSection() {
             {platforms.map((card, idx) => (
               <div
                 key={card.id}
-                className={`group relative min-w-[290px] sm:min-w-[340px] md:min-w-0 ${card.flexClass} ${card.aspectClass} rounded-[22px] sm:rounded-[26px] overflow-hidden border border-white/10 hover:border-blue-500/50 shadow-[0_16px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_24px_50px_rgba(20,60,180,0.25)] transition-all duration-300 hover:-translate-y-2 flex flex-col justify-end snap-center cursor-pointer select-none bg-[#07060b]`}
+                className={`platform-card-wrap group relative min-w-[290px] sm:min-w-[340px] md:min-w-0 ${card.flexClass} ${card.aspectClass} rounded-[22px] sm:rounded-[26px] overflow-hidden border border-white/10 hover:border-blue-500/50 shadow-[0_16px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_24px_50px_rgba(20,60,180,0.25)] transition-all duration-300 hover:-translate-y-2 flex flex-col justify-end snap-center cursor-pointer select-none bg-[#07060b]`}
               >
                 {/* Full Fidelity Background Image with Top Mockup */}
                 <div className="absolute inset-0 z-0">

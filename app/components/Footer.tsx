@@ -95,30 +95,44 @@ export default function Footer() {
 
   useGSAP(
     () => {
-      gsap.from(contentRef.current, {
-        y: 35,
-        opacity: 0,
-        duration: 0.9,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: "top 85%",
-          once: true,
-        },
-      });
+      if (contentRef.current) {
+        gsap.fromTo(
+          contentRef.current,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.85,
+            ease: "power2.out",
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: "top 95%",
+              once: true,
+            },
+          }
+        );
+      }
 
-      gsap.from(watermarkRef.current, {
-        y: 45,
-        opacity: 0,
-        duration: 1.1,
-        ease: "power2.out",
-        delay: 0.1,
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: "top 85%",
-          once: true,
-        },
-      });
+      if (watermarkRef.current) {
+        gsap.fromTo(
+          watermarkRef.current,
+          { y: 35, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: "power2.out",
+            delay: 0.1,
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: "top 95%",
+              once: true,
+            },
+          }
+        );
+      }
     },
     { scope: footerRef }
   );

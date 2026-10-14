@@ -20,31 +20,45 @@ export default function ShowreelSection() {
   useGSAP(
     () => {
       // Wireframe border entrance
-      gsap.from(borderRef.current, {
-        scale: 0.95,
-        opacity: 0,
-        duration: 1.1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 75%",
-          once: true,
-        },
-      });
+      if (borderRef.current) {
+        gsap.fromTo(
+          borderRef.current,
+          { scale: 0.96, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.9,
+            ease: "power2.out",
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
 
       // Play button pop entrance
-      gsap.from(playBtnRef.current, {
-        scale: 0.6,
-        opacity: 0,
-        duration: 0.9,
-        delay: 0.25,
-        ease: "back.out(1.6)",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 75%",
-          once: true,
-        },
-      });
+      if (playBtnRef.current) {
+        gsap.fromTo(
+          playBtnRef.current,
+          { scale: 0.6, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.8,
+            delay: 0.15,
+            ease: "back.out(1.6)",
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
     },
     { scope: containerRef }
   );

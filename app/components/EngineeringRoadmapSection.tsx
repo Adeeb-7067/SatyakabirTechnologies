@@ -135,30 +135,44 @@ export default function EngineeringRoadmapSection() {
 
   useGSAP(
     () => {
-      gsap.from(headerRef.current, {
-        y: 35,
-        opacity: 0,
-        duration: 0.85,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          once: true,
-        },
-      });
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power2.out",
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
 
-      gsap.from(stageRef.current, {
-        scale: 0.88,
-        opacity: 0,
-        duration: 1.1,
-        ease: "back.out(1.3)",
-        delay: 0.15,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-          once: true,
-        },
-      });
+      if (stageRef.current) {
+        gsap.fromTo(
+          stageRef.current,
+          { scale: 0.92, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.9,
+            ease: "back.out(1.2)",
+            delay: 0.1,
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
     },
     { scope: sectionRef }
   );

@@ -39,62 +39,86 @@ export default function PopularIndustriesSection() {
   useGSAP(
     () => {
       // Top Label
-      gsap.from(topLabelRef.current, {
-        y: 20,
-        opacity: 0,
-        duration: 0.7,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-          once: true,
-        },
-      });
-
-      // Column 1 Stats Stagger from Left
-      if (col1Ref.current) {
-        gsap.from(col1Ref.current.children, {
-          x: -30,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.12,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 75%",
-            once: true,
-          },
-        });
+      if (topLabelRef.current) {
+        gsap.fromTo(
+          topLabelRef.current,
+          { y: 20, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: "power2.out",
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
       }
 
+      // Column 1 Stats Stagger from Left
+      gsap.fromTo(
+        ".pop-stat-card",
+        { x: -25, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power2.out",
+          clearProps: "all",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 92%",
+            once: true,
+          },
+        }
+      );
+
       // Column 2 Card Rise
-      gsap.from(col2Ref.current, {
-        y: 40,
-        opacity: 0,
-        duration: 0.85,
-        ease: "power2.out",
-        delay: 0.1,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 75%",
-          once: true,
-        },
-      });
+      if (col2Ref.current) {
+        gsap.fromTo(
+          col2Ref.current,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.85,
+            ease: "power2.out",
+            delay: 0.1,
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
 
       // Column 3 Image Card Reveal
-      gsap.from(col3Ref.current, {
-        scale: 0.95,
-        y: 30,
-        opacity: 0,
-        duration: 0.9,
-        ease: "power2.out",
-        delay: 0.2,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 75%",
-          once: true,
-        },
-      });
+      if (col3Ref.current) {
+        gsap.fromTo(
+          col3Ref.current,
+          { scale: 0.96, y: 25, opacity: 0 },
+          {
+            scale: 1,
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: "power2.out",
+            delay: 0.15,
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      }
     },
     { scope: containerRef }
   );
@@ -122,7 +146,7 @@ export default function PopularIndustriesSection() {
             className="w-full lg:w-[175px] xl:w-[190px] shrink-0 flex flex-col justify-between gap-3 sm:gap-3.5"
           >
             {/* Stat 1 */}
-            <div className="flex-1 min-h-[110px] bg-[#14171e] rounded-xl sm:rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center border border-white/[0.05] hover:border-white/10 hover:bg-[#181c26] transition-all duration-300 group shadow-lg">
+            <div className="pop-stat-card flex-1 min-h-[110px] bg-[#14171e] rounded-xl sm:rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center border border-white/[0.05] hover:border-white/10 hover:bg-[#181c26] transition-all duration-300 group shadow-lg">
               <span className="text-[34px] sm:text-[38px] lg:text-[42px] font-bold text-white tracking-tight leading-none font-sans group-hover:scale-105 transition-transform duration-300">
                 20
               </span>
@@ -132,7 +156,7 @@ export default function PopularIndustriesSection() {
             </div>
 
             {/* Stat 2 */}
-            <div className="flex-1 min-h-[110px] bg-[#14171e] rounded-xl sm:rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center border border-white/[0.05] hover:border-white/10 hover:bg-[#181c26] transition-all duration-300 group shadow-lg">
+            <div className="pop-stat-card flex-1 min-h-[110px] bg-[#14171e] rounded-xl sm:rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center border border-white/[0.05] hover:border-white/10 hover:bg-[#181c26] transition-all duration-300 group shadow-lg">
               <span className="text-[34px] sm:text-[38px] lg:text-[42px] font-bold text-white tracking-tight leading-none font-sans group-hover:scale-105 transition-transform duration-300">
                 120+
               </span>
@@ -142,7 +166,7 @@ export default function PopularIndustriesSection() {
             </div>
 
             {/* Stat 3 */}
-            <div className="flex-1 min-h-[110px] bg-[#14171e] rounded-xl sm:rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center border border-white/[0.05] hover:border-white/10 hover:bg-[#181c26] transition-all duration-300 group shadow-lg">
+            <div className="pop-stat-card flex-1 min-h-[110px] bg-[#14171e] rounded-xl sm:rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center border border-white/[0.05] hover:border-white/10 hover:bg-[#181c26] transition-all duration-300 group shadow-lg">
               <span className="text-[34px] sm:text-[38px] lg:text-[42px] font-bold text-white tracking-tight leading-none font-sans group-hover:scale-105 transition-transform duration-300">
                 50%
               </span>
