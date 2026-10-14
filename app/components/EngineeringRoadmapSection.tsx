@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { Clock } from "lucide-react";
 
 interface RoadmapStep {
@@ -211,15 +212,17 @@ export default function EngineeringRoadmapSection() {
                 transform: "translate(-50%, -50%)",
               }}
             >
-              <div className="w-[104px] h-[104px] rounded-full bg-[#050812] border-2 border-blue-500/80 shadow-[0_0_36px_rgba(37,99,235,0.5)] flex items-center justify-center select-none transition-transform duration-300 hover:scale-105">
-                <span className="text-[36px] font-black tracking-tight font-sans flex items-center">
-                  <span className="bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent">
-                    S
-                  </span>
-                  <span className="bg-gradient-to-r from-lime-400 via-yellow-400 to-amber-500 bg-clip-text text-transparent">
-                    K
-                  </span>
-                </span>
+              <div className="w-[104px] h-[104px] rounded-full bg-[#050812] border-2 border-blue-500/80 shadow-[0_0_36px_rgba(37,99,235,0.5)] flex items-center justify-center select-none transition-transform duration-300 hover:scale-105 p-3.5">
+                <div className="relative w-full h-full flex items-center justify-center">
+                  <Image
+                    src="/images/sk-logo.png"
+                    alt="Satya Kabir Technologies Logo"
+                    fill
+                    sizes="104px"
+                    className="object-contain p-1 drop-shadow-[0_0_14px_rgba(59,130,246,0.5)]"
+                    priority
+                  />
+                </div>
               </div>
             </div>
 
