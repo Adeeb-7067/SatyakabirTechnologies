@@ -11,6 +11,7 @@ import PopularIndustriesSection from "./components/PopularIndustriesSection";
 import WhyChooseUsSection from "./components/WhyChooseUsSection";
 import EngineeringRoadmapSection from "./components/EngineeringRoadmapSection";
 import ResponsiveShowcaseSection from "./components/ResponsiveShowcaseSection";
+import TestimonialsSection from "./components/TestimonialsSection";
 
 export default function Home() {
   return (
@@ -55,6 +56,9 @@ export default function Home() {
 
       {/* Omnichannel Responsive Architecture & Conversion Rate Section */}
       <ResponsiveShowcaseSection />
+
+      {/* Social Proof / What Our Clients Say Carousel Section */}
+      <TestimonialsSection />
     </main>
   );
 }
