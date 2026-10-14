@@ -261,9 +261,9 @@ export default function Footer() {
 
       </div>
 
-      {/* Giant Architectural Watermark: SATYAKABIR TECHNOLOGIES */}
+      {/* Giant Architectural Watermark: SATYAKABIR TECHNOLOGIES in brand font Squada One */}
       <div className="w-full overflow-hidden select-none pointer-events-none mt-2 sm:mt-4">
-        <h2 className="text-[9.5vw] font-black tracking-[-0.03em] uppercase text-[#0d1424] leading-none text-center whitespace-nowrap select-none">
+        <h2 className="text-[9.5vw] font-[family-name:var(--font-squada-one)] uppercase text-[#101728] leading-none text-center whitespace-nowrap select-none tracking-normal">
           SATYAKABIR TECHNOLOGIES
         </h2>
       </div>

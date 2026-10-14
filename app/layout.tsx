@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
+import { Geist, Geist_Mono, Space_Grotesk, Squada_One } from "next/font/google";
 import "./globals.css";
 import Footer from "./components/Footer";
 
@@ -19,6 +19,12 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["400", "500", "600", "700"],
 });
 
+const squadaOne = Squada_One({
+  variable: "--font-squada-one",
+  subsets: ["latin"],
+  weight: "400",
+});
+
 export const metadata: Metadata = {
   title: "Satya Kabir Technologies | Build Better Products",
   description:
@@ -36,7 +42,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} h-full antialiased dark`}
+      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${squadaOne.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-[#080d1a] text-white">
         <div className="flex-1 flex flex-col">{children}</div>

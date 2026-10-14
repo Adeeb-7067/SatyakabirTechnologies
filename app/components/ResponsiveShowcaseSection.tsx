@@ -23,7 +23,7 @@ export default function ResponsiveShowcaseSection() {
           <div className="flex gap-12 whitespace-nowrap text-[60px] sm:text-[84px] md:text-[110px] font-black tracking-tighter text-black uppercase -ml-40">
             <span>20% HIGHER</span>
             <span>CONVERSION RATE</span>
-            <span>RESPONSIVE ARCHITECTURE</span>
+            <span>RESPONSIVE ARCHITECTURE</span> 
           </div>
           <div className="flex gap-12 whitespace-nowrap text-[60px] sm:text-[84px] md:text-[110px] font-black tracking-tighter text-black uppercase -ml-16">
             <span>Businesses with responsive websites see a 20% higher</span>
