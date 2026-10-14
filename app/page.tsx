@@ -10,6 +10,7 @@ import ShowreelSection from "./components/ShowreelSection";
 import PopularIndustriesSection from "./components/PopularIndustriesSection";
 import WhyChooseUsSection from "./components/WhyChooseUsSection";
 import EngineeringRoadmapSection from "./components/EngineeringRoadmapSection";
+import ResponsiveShowcaseSection from "./components/ResponsiveShowcaseSection";
 
 export default function Home() {
   return (
@@ -51,6 +52,9 @@ export default function Home() {
 
       {/* 5-Step Engineering Roadmap Section */}
       <EngineeringRoadmapSection />
+
+      {/* Omnichannel Responsive Architecture & Conversion Rate Section */}
+      <ResponsiveShowcaseSection />
     </main>
   );
 }
