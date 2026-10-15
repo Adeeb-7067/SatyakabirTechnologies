@@ -58,7 +58,7 @@ const workLinks = [
 ];
 
 const industryLinks = [
-  { label: "Agriculture", href: "#industries" },
+  { label: "Agriculture", href: "/industries/agriculture" },
   { label: "Tour & Travels", href: "#industries" },
   { label: "Security & manpower", href: "#industries" },
   { label: "Live Streaming & dating", href: "#industries" },

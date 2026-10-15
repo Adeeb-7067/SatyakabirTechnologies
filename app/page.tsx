@@ -3,7 +3,6 @@
 import React, { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import StatsSection from "./components/StatsSection";
 import AboutSection from "./components/AboutSection";
@@ -36,9 +35,6 @@ export default function Home() {
     <main className="min-h-screen flex flex-col bg-[#080d1a] text-white selection:bg-blue-600 selection:text-white">
       {/* Hero Container with Deep Navy Gradient & Lighting */}
       <div className="relative w-full flex-1 flex flex-col justify-between bg-gradient-to-b from-[#070b16] via-[#091126] to-[#0b132b]">
-        {/* Navbar */}
-        <Navbar />
-
         {/* Hero Section */}
         <div className="flex-1 flex items-center">
           <HeroSection />

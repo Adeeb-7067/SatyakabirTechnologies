@@ -48,14 +48,14 @@ const industries: IndustryItem[] = [
   },
   {
     id: "agriculture",
-    title: "Agriculture",
-    reg: "REG: HIPAA / NABH",
+    title: "Agriculture & AgriTech",
+    reg: "REG: AGMARKNET / DBT",
     description:
-      "Encrypted doctor-patient teleconsultation, integrated EHR repositories, real-time vitals monitoring, and diagnostic laboratory dispatch grids.",
-    linkText: "Explore Telehealth Grid",
-    linkHref: "#agriculture",
+      "Precision crop and soil telemetry, farm-to-mandi supply chain logistics, multi-language voice advisory, and rural offline PWA architectures.",
+    linkText: "Explore Agriculture Grid",
+    linkHref: "/industries/agriculture",
     image: "/images/hq-industry-agri.png",
-    topGradient: "from-blue-600 via-indigo-500 to-orange-500",
+    topGradient: "from-emerald-600 via-teal-500 to-amber-500",
   },
   {
     id: "datacenter",

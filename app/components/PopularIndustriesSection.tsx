@@ -203,10 +203,10 @@ export default function PopularIndustriesSection() {
             {/* Call to Action Button */}
             <div>
               <Link
-                href="#contact"
+                href="/industries/agriculture"
                 className="bg-white text-[#2563eb] hover:bg-slate-100 active:scale-95 transition-all font-semibold text-[13px] sm:text-[14px] px-5 py-2.5 rounded-lg inline-flex items-center gap-2 shadow-sm w-fit group/btn cursor-pointer"
               >
-                <span>Start a Project</span>
+                <span>Explore Agriculture</span>
                 <ArrowRight className="w-4 h-4 text-[#2563eb] group-hover/btn:translate-x-1 transition-transform" />
               </Link>
             </div>

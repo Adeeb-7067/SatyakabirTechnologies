@@ -130,7 +130,7 @@ const industryItems: IndustryItem[] = [
     id: "agriculture",
     title: "Agriculture",
     subtitle: "From farm to marketplace",
-    href: "#industries",
+    href: "/industries/agriculture",
     image: "/images/nav/agriculture.jpg",
     previewTitle: "SMART AGRICULTURE SOLUTIONS",
     previewHeadline: "Serving farms & agribusiness across the globe",
@@ -308,7 +308,7 @@ export default function Navbar() {
     : defaultServingLocations.previewLinkText;
 
   return (
-    <header className="w-full pt-4 sm:pt-6 px-4 sm:px-6 lg:px-8 relative z-50">
+    <header className="sticky top-0 z-50 w-full pt-3 sm:pt-4 pb-2.5 px-4 sm:px-6 lg:px-8 transition-all duration-300 backdrop-blur-md bg-[#070b16]/80">
       <div
         ref={navContainerRef}
         className="max-w-[1240px] mx-auto relative"
@@ -504,6 +504,7 @@ export default function Navbar() {
                           <Link
                             key={item.id}
                             href={item.href}
+                            onClick={() => setActiveDropdown(null)}
                             onMouseEnter={() => setHoveredIndustry(item)}
                             className="flex items-start gap-3.5 group cursor-pointer focus:outline-none"
                           >
