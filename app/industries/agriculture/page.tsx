@@ -29,6 +29,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import AgriCaseStudySection from "@/app/components/AgriCaseStudySection";
+import AgriDevelopmentProcessSection from "@/app/components/AgriDevelopmentProcessSection";
+import AgriCtaSection from "@/app/components/AgriCtaSection";
+import AgriAppointmentSection from "@/app/components/AgriAppointmentSection";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -86,63 +89,63 @@ const agricultureSolutions = [
     title: "Agriculture Marketplace",
     description:
       "Next-gen multi-vendor hub connecting input suppliers, farmers, certified seeds/fertilizer dealers, and bulk commodity procurement firms.",
-    href: "/#contact-cta",
+    href: "/industries/agriculture/agriculture-marketplace",
   },
   {
     icon: <ShoppingCart className="w-5 h-5 text-emerald-400" />,
     title: "Single-Vendor Agri Commerce",
     description:
       "Turnkey enterprise eCommerce application built for agricultural seed, pesticide, and hardware brands aiming for direct-to-farm channels.",
-    href: "/#contact-cta",
+    href: "/industries/agriculture/single-vendor-agri-commerce",
   },
   {
     icon: <MapPin className="w-5 h-5 text-emerald-400" />,
     title: "Farmer Mobile Application",
     description:
       "Voice-enabled mobile console giving growers hyper-local weather alerts, mandi crop spot prices, diagnostics, and subsidized govt schemes.",
-    href: "/#contact-cta",
+    href: "/industries/agriculture/farmer-mobile-application",
   },
   {
     icon: <Package className="w-5 h-5 text-emerald-400" />,
     title: "Seller / Vendor Application",
     description:
       "Streamlined vendor portal to update inventory SKU levels, handle regional dispatch slots, process farmer credit, and automate invoice settlements.",
-    href: "/#contact-cta",
+    href: "/industries/agriculture/seller-vendor-application",
   },
   {
     icon: <Mountain className="w-5 h-5 text-emerald-400" />,
     title: "Farm Land CRM",
     description:
       "Specialized agro-realty and managed farmland CRM for spatial plot allocations, GIS telemetry, channel partners, and lease monetization.",
-    href: "/#contact-cta",
+    href: "/industries/agriculture/farm-land-crm",
   },
   {
     icon: <BadgeCheck className="w-5 h-5 text-emerald-400" />,
     title: "Agri Workforce Management",
     description:
       "Automated seasonal harvester booking, field agent GPS geofencing, daily biometric attendance, and direct Aadhaar/UPI wage distribution.",
-    href: "/#contact-cta",
+    href: "/industries/agriculture/agri-workforce-management",
   },
   {
     icon: <Network className="w-5 h-5 text-emerald-400" />,
     title: "Dealer & Distributor Network",
     description:
       "Multi-tiered distribution command managing stock replenishment quotas, territorial limits, credit guarantees, and incentive payouts.",
-    href: "/#contact-cta",
+    href: "/industries/agriculture/dealer-distributor-network",
   },
   {
     icon: <Building2 className="w-5 h-5 text-emerald-400" />,
     title: "Franchise Management",
     description:
       "Rapid rural Kendra and franchise onboarding, hardware kit provisioning, revenue sharing matrices, and real-time revenue audits.",
-    href: "/#contact-cta",
+    href: "/industries/agriculture/franchise-management",
   },
   {
     icon: <Sprout className="w-5 h-5 text-emerald-400" />,
     title: "Farm Management (FMS)",
     description:
       "End-to-end farm life cycle tracking: sowing dates, fertilizer dosage schedules, input expenditures, drone telemetry, and harvest ledgers.",
-    href: "/#contact-cta",
+    href: "/industries/agriculture/farm-management-fms",
   },
 ];
 
@@ -622,6 +625,7 @@ export default function AgriculturePage() {
           (Matching user reference screenshot exactly)
       ========================================================================== */}
       <section
+        id="catalog"
         ref={catalogRef}
         className="relative w-full bg-[#030d07] py-16 sm:py-20 lg:py-28 overflow-hidden border-t border-emerald-950/40"
         style={{
@@ -733,7 +737,7 @@ export default function AgriculturePage() {
         />
 
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center min-w-0 w-full">
             {/* Left Column: Heading, Subtitle, Bullet points & Scroll controls */}
             <div className="lg:col-span-5 text-left">
               {/* Eyebrow Label */}
@@ -812,7 +816,7 @@ export default function AgriculturePage() {
             </div>
 
             {/* Right Column: Horizontally Scrollable Cards Track with Mouse Drag-to-Scroll */}
-            <div className="lg:col-span-7 overflow-hidden relative">
+            <div className="lg:col-span-7 w-full min-w-0 max-w-full overflow-hidden relative">
               <div
                 ref={scrollContainerRef}
                 onScroll={handleScroll}
@@ -888,6 +892,21 @@ export default function AgriculturePage() {
           PINNED SCROLL-TRIGGERED CASE STUDY SECTION (KisanConnect Agri Marketplace)
       ========================================================================== */}
       <AgriCaseStudySection />
+
+      {/* =========================================================================
+          OUR DEVELOPMENT PROCESS & SECURITY SECTION (Safe. Smart. Social.)
+      ========================================================================== */}
+      <AgriDevelopmentProcessSection />
+
+      {/* =========================================================================
+          AGRI TECH IDEA CALL TO ACTION BANNER
+      ========================================================================== */}
+      <AgriCtaSection />
+
+      {/* =========================================================================
+          GET STARTED & APPOINTMENT CTA SECTION (Sync / Satya Kabir)
+      ========================================================================== */}
+      <AgriAppointmentSection />
     </div>
   );
 }

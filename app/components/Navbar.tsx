@@ -351,7 +351,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-7 lg:gap-9">
+          <div className="hidden lg:flex items-center gap-5 xl:gap-8">
             {/* Home */}
             <Link
               href="/"
@@ -444,11 +444,11 @@ export default function Navbar() {
           </div>
 
           {/* Right Action: Phone & Request a Demo CTA */}
-          <div className="hidden sm:flex items-center gap-4 lg:gap-6">
-            {/* Phone Number with Phone Icon */}
+          <div className="hidden sm:flex items-center gap-3 lg:gap-6">
+            {/* Phone Number with Phone Icon - only on xl+ to prevent tablet squishing */}
             <a
               href="tel:+91234567890"
-              className="flex items-center gap-2 text-slate-200 hover:text-white text-[13px] lg:text-[14px] font-medium transition-colors group focus:outline-none"
+              className="hidden xl:flex items-center gap-2 text-slate-200 hover:text-white text-[13px] lg:text-[14px] font-medium transition-colors group focus:outline-none"
             >
               <Phone className="w-3.5 h-3.5 text-slate-200 group-hover:text-blue-400 transition-colors" />
               <span>+91 234 567890</span>
@@ -464,8 +464,8 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex md:hidden items-center gap-2">
+          {/* Mobile Menu Button - shows on < lg */}
+          <div className="flex lg:hidden items-center gap-2">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
