@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight, Activity } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import TiltCard from "./ui/TiltCard";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -183,64 +184,72 @@ export default function PlatformsSection() {
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {platforms.map((card, idx) => (
-              <div
+              <TiltCard
                 key={card.id}
-                className={`platform-card-wrap group relative min-w-[290px] sm:min-w-[340px] md:min-w-0 ${card.flexClass} ${card.aspectClass} rounded-[22px] sm:rounded-[26px] overflow-hidden border border-white/10 hover:border-blue-500/50 shadow-[0_16px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_24px_50px_rgba(20,60,180,0.25)] transition-all duration-300 hover:-translate-y-2 flex flex-col justify-end snap-center cursor-pointer select-none bg-[#07060b]`}
+                maxTilt={6}
+                scale={1.02}
+                glare={true}
+                glareOpacity={0.15}
+                className={`platform-card-wrap min-w-[290px] sm:min-w-[340px] md:min-w-0 ${card.flexClass} ${card.aspectClass} rounded-[22px] sm:rounded-[26px] snap-center`}
               >
-                {/* Full Fidelity Background Image with Top Mockup */}
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src={card.image}
-                    alt={card.title}
-                    fill
-                    sizes="(max-width: 768px) 85vw, (max-width: 1200px) 45vw, 520px"
-                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105 pointer-events-none select-none"
-                    priority={idx === 0}
-                  />
+                <div
+                  className="group relative w-full h-full rounded-[22px] sm:rounded-[26px] overflow-hidden border border-white/10 hover:border-blue-500/50 shadow-[0_16px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_24px_50px_rgba(20,60,180,0.25)] transition-colors duration-300 flex flex-col justify-end cursor-pointer select-none bg-[#07060b]"
+                >
+                  {/* Full Fidelity Background Image with Top Mockup */}
+                  <div className="absolute inset-0 z-0">
+                    <Image
+                      src={card.image}
+                      alt={card.title}
+                      fill
+                      sizes="(max-width: 768px) 85vw, (max-width: 1200px) 45vw, 520px"
+                      className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105 pointer-events-none select-none"
+                      priority={idx === 0}
+                    />
 
-                  {/* Dark Gradient Overlay for text contrast: fades from transparent to deep obsidian black */}
-                  <div
-                    className="absolute inset-0 bg-gradient-to-t from-[#06050a] from-22% via-[#06050a]/92 via-48% to-transparent to-75% pointer-events-none"
-                    aria-hidden="true"
-                  />
-                </div>
-
-                {/* Interactive Top-Right Diagonal Arrow Glass Button */}
-                <div className="absolute top-4 right-4 z-20">
-                  <div
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-md border border-white/25 flex items-center justify-center text-white shadow-md transition-all duration-300 hover:scale-110 active:scale-95 group-hover:bg-white/30"
-                    aria-label={`Open ${card.title}`}
-                  >
-                    <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-white transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </div>
-                </div>
-
-                {/* Bottom Content Area: Live Vector Text & Icons */}
-                <div className="relative z-20 p-5 sm:p-6 lg:p-7 flex flex-col justify-end text-left mt-auto">
-                  {/* Frosted Glass Activity / Pulse Icon */}
-                  <div className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md border border-white/15 flex items-center justify-center text-white/95 mb-3.5 shadow-sm transition-transform duration-300 group-hover:scale-108">
-                    <Activity className="w-4 h-4 text-white" />
+                    {/* Dark Gradient Overlay for text contrast: fades from transparent to deep obsidian black */}
+                    <div
+                      className="absolute inset-0 bg-gradient-to-t from-[#06050a] from-22% via-[#06050a]/92 via-48% to-transparent to-75% pointer-events-none"
+                      aria-hidden="true"
+                    />
                   </div>
 
-                  {/* Title: Space Grotesk */}
-                  <h3 className="font-[family-name:var(--font-space-grotesk)] text-[20px] sm:text-[22px] md:text-[24px] font-bold text-white tracking-tight leading-snug mb-2 transition-colors group-hover:text-blue-300">
-                    {card.title}
-                  </h3>
+                  {/* Interactive Top-Right Diagonal Arrow Glass Button */}
+                  <div className="absolute top-4 right-4 z-20">
+                    <div
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-md border border-white/25 flex items-center justify-center text-white shadow-md transition-all duration-300 hover:scale-110 active:scale-95 group-hover:bg-white/30"
+                      aria-label={`Open ${card.title}`}
+                    >
+                      <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-white transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </div>
+                  </div>
 
-                  {/* Description */}
-                  <p className="text-[12px] sm:text-[13px] md:text-[13.5px] text-[#9b9aa6] leading-[1.55] font-normal mb-5 line-clamp-2">
-                    {card.description}
-                  </p>
+                  {/* Bottom Content Area: Live Vector Text & Icons */}
+                  <div className="relative z-20 p-5 sm:p-6 lg:p-7 flex flex-col justify-end text-left mt-auto">
+                    {/* Frosted Glass Activity / Pulse Icon */}
+                    <div className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md border border-white/15 flex items-center justify-center text-white/95 mb-3.5 shadow-sm transition-transform duration-300 group-hover:scale-108">
+                      <Activity className="w-4 h-4 text-white" />
+                    </div>
 
-                  {/* Footer Link: Explore Industries */}
-                  <div className="flex items-center justify-between pt-3.5 border-t border-white/10 group/link">
-                    <span className="text-[12px] sm:text-[13px] text-white/90 font-medium tracking-tight group-hover/link:text-white transition-colors">
-                      {card.linkText}
-                    </span>
-                    <ArrowRight className="w-4 h-4 text-white/80 group-hover:translate-x-1.5 transition-transform duration-300" />
+                    {/* Title: Space Grotesk */}
+                    <h3 className="font-[family-name:var(--font-space-grotesk)] text-[20px] sm:text-[22px] md:text-[24px] font-bold text-white tracking-tight leading-snug mb-2 transition-colors group-hover:text-blue-300">
+                      {card.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-[12px] sm:text-[13px] md:text-[13.5px] text-[#9b9aa6] leading-[1.55] font-normal mb-5 line-clamp-2">
+                      {card.description}
+                    </p>
+
+                    {/* Footer Link: Explore Industries */}
+                    <div className="flex items-center justify-between pt-3.5 border-t border-white/10 group/link">
+                      <span className="text-[12px] sm:text-[13px] text-white/90 font-medium tracking-tight group-hover/link:text-white transition-colors">
+                        {card.linkText}
+                      </span>
+                      <ArrowRight className="w-4 h-4 text-white/80 group-hover:translate-x-1.5 transition-transform duration-300" />
+                    </div>
                   </div>
                 </div>
-              </div>
+              </TiltCard>
             ))}
           </div>
 

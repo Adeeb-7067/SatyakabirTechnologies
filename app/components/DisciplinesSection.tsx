@@ -5,6 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import TiltCard from "./ui/TiltCard";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -105,44 +106,46 @@ export default function DisciplinesSection() {
   );
 
   const renderCard = (card: DisciplineCard) => (
-    <div className="group relative w-full aspect-[391/465] rounded-[16px] p-6 border border-[#c6d7ff]/80 shadow-[0_0_7px_0_#91a7ff] backdrop-blur-[4px] transition-all duration-300 hover:shadow-[0_0_16px_2px_#91a7ff] hover:-translate-y-1.5 hover:border-blue-400/90 flex flex-col justify-between overflow-hidden bg-white select-none">
-      {/* High-Definition Fluted Glass Background with Rose/Cyan Sheen */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/images/fluted-card-bg-2x.png')",
-        }}
-        aria-hidden="true"
-      />
+    <TiltCard maxTilt={7} scale={1.02} glare={true} glareOpacity={0.12} className="w-full rounded-[16px]">
+      <div className="group relative w-full aspect-[391/465] rounded-[16px] p-6 border border-[#c6d7ff]/80 shadow-[0_0_7px_0_#91a7ff] backdrop-blur-[4px] transition-colors duration-300 hover:shadow-[0_0_16px_2px_#91a7ff] hover:border-blue-400/90 flex flex-col justify-between overflow-hidden bg-white select-none h-full">
+        {/* High-Definition Fluted Glass Background with Rose/Cyan Sheen */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: "url('/images/fluted-card-bg-2x.png')",
+          }}
+          aria-hidden="true"
+        />
 
-      {/* Top-Left Number */}
-      <div className="relative z-10 text-left">
-        <span className="text-[28px] sm:text-[30px] font-bold text-[#0038e0] font-[family-name:var(--font-space-grotesk)] tracking-tight leading-none">
-          {card.number}
-        </span>
-      </div>
+        {/* Top-Left Number */}
+        <div className="relative z-10 text-left">
+          <span className="text-[28px] sm:text-[30px] font-bold text-[#0038e0] font-[family-name:var(--font-space-grotesk)] tracking-tight leading-none">
+            {card.number}
+          </span>
+        </div>
 
-      {/* Center 3D Illustration Graphic */}
-      <div className="relative z-10 w-full flex-1 flex items-center justify-center my-auto py-2">
-        <div className="relative w-[230px] h-[230px] sm:w-[250px] sm:h-[250px] md:w-[270px] md:h-[270px]">
-          <Image
-            src={card.image}
-            alt={card.title}
-            fill
-            sizes="(max-width: 768px) 100vw, 420px"
-            className="object-contain drop-shadow-[0_16px_28px_rgba(20,50,150,0.16)] transition-transform duration-500 ease-out group-hover:scale-106 group-hover:-translate-y-1 select-none pointer-events-none"
-            priority={card.id === "01" || card.id === "02"}
-          />
+        {/* Center 3D Illustration Graphic */}
+        <div className="relative z-10 w-full flex-1 flex items-center justify-center my-auto py-2">
+          <div className="relative w-[230px] h-[230px] sm:w-[250px] sm:h-[250px] md:w-[270px] md:h-[270px]">
+            <Image
+              src={card.image}
+              alt={card.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 420px"
+              className="object-contain drop-shadow-[0_16px_28px_rgba(20,50,150,0.16)] transition-transform duration-500 ease-out group-hover:scale-106 group-hover:-translate-y-1 select-none pointer-events-none"
+              priority={card.id === "01" || card.id === "02"}
+            />
+          </div>
+        </div>
+
+        {/* Bottom-Left Title */}
+        <div className="relative z-10 text-left">
+          <h3 className="text-[20px] sm:text-[22px] font-bold text-[#0038e0] font-[family-name:var(--font-space-grotesk)] tracking-tight leading-snug transition-colors group-hover:text-blue-700">
+            {card.title}
+          </h3>
         </div>
       </div>
-
-      {/* Bottom-Left Title */}
-      <div className="relative z-10 text-left">
-        <h3 className="text-[20px] sm:text-[22px] font-bold text-[#0038e0] font-[family-name:var(--font-space-grotesk)] tracking-tight leading-snug transition-colors group-hover:text-blue-700">
-          {card.title}
-        </h3>
-      </div>
-    </div>
+    </TiltCard>
   );
 
   return (

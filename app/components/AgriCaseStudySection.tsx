@@ -1,21 +1,26 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import TiltCard from "./ui/TiltCard";
+import AnimatedMetric from "./ui/AnimatedMetric";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
-  (window as any).ScrollTrigger = ScrollTrigger;
 }
 
 // 3 Case Studies matching the reference cards
 const caseStudies = [
   {
     id: "kisan-connect",
+    title: "KisanConnect Marketplace",
+    shortLabel: "01 • KisanConnect Marketplace",
+    category: "CASE STUDY — KISANCONNECT AGRI MARKETPLACE",
     heroImage: "/images/case-study-hero-2x.png",
     alt: "KisanConnect Agri Marketplace Case Study",
     cards: [
@@ -43,6 +48,9 @@ const caseStudies = [
   },
   {
     id: "smart-irrigation",
+    title: "Smart Drone & Irrigation",
+    shortLabel: "02 • Smart Drone & Irrigation",
+    category: "CASE STUDY — SMART DRONE FLEET & IRRIGATION",
     heroImage: "/images/case-study-card-1.png",
     alt: "Smart Drone Fleet & Autonomous Irrigation Case Study",
     cards: [
@@ -70,6 +78,9 @@ const caseStudies = [
   },
   {
     id: "crop-diagnostics",
+    title: "AI Crop Health & Diagnostics",
+    shortLabel: "03 • AI Crop Health",
+    category: "CASE STUDY — AI CROP HEALTH & DIAGNOSTICS",
     heroImage: "/images/case-study-card-2.png",
     alt: "AI Crop Health & Foliar Diagnostics Case Study",
     cards: [
@@ -99,142 +110,92 @@ const caseStudies = [
 
 export default function AgriCaseStudySection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const stackWrapperRef = useRef<HTMLDivElement>(null);
+  const cardContainerRef = useRef<HTMLDivElement>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
+  // Smooth entrance on scroll into view (NO PINNING, NO SCROLL TRAPPING)
   useGSAP(
     () => {
       const section = sectionRef.current;
-      const stackWrapper = stackWrapperRef.current;
-      if (!section || !stackWrapper) return;
+      if (!section) return;
 
-      const mm = gsap.matchMedia();
-
-      // =========================================================================
-      // DESKTOP & TABLET: Pinned Scroll-Driven Card Stacking Animation
-      // Card 0 active -> Card 1 rises & overlaps -> Card 2 rises & overlaps
-      // =========================================================================
-      mm.add("(min-width: 768px)", () => {
-        // Check for reduced motion preference
-        const isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (isReducedMotion) return;
-
-        const tl = gsap.timeline({
-          scrollTrigger: {     
-            trigger: stackWrapper,     
-            start: "top 80px", // Pin screen right on the picture below navbar
-            end: "+=2200", // Smooth scroll distance for 2 card transitions
-            pin: true,
-            pinSpacing: true,
-            scrub: 0.8,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
+      gsap.fromTo(
+        ".agri-case-study-fade",
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          stagger: 0.12,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            once: true,
           },
-        });
-
-        // Phase 1: Card 1 rises from translateY(120%) to translateY(0%) over Card 0 (0.05 -> 0.45)
-        tl.fromTo(
-          ".stack-card-1",
-          { yPercent: 120, scale: 1 },
-          {
-            yPercent: 0,
-            duration: 0.4,
-            ease: "power2.inOut",
-          },
-          0.05
-        );
-        // Card 0 recedes subtly behind Card 1 with top edge remaining visible
-        tl.to(
-          ".stack-card-0",
-          {
-            scale: 0.96,
-            y: -18,
-            opacity: 0.9,
-            filter: "brightness(0.85)",
-            duration: 0.4,
-            ease: "power2.inOut",
-          },
-          0.05
-        );
-
-        // Pause / Dwell with Card 1 dominant (0.45 -> 0.55)
-        tl.to({}, { duration: 0.1 }, 0.45);
-
-        // Phase 2: Card 2 rises from translateY(120%) to translateY(0%) over Card 1 (0.55 -> 0.95)
-        tl.fromTo(
-          ".stack-card-2",
-          { yPercent: 120, scale: 1 },
-          {
-            yPercent: 0,
-            duration: 0.4,
-            ease: "power2.inOut",
-          },
-          0.55
-        );
-        // Card 1 recedes subtly behind Card 2
-        tl.to(
-          ".stack-card-1",
-          {
-            scale: 0.96,
-            y: -18,
-            opacity: 0.9,
-            filter: "brightness(0.85)",
-            duration: 0.4,
-            ease: "power2.inOut",
-          },
-          0.55
-        );
-        // Card 0 recedes further
-        tl.to(
-          ".stack-card-0",
-          {
-            scale: 0.92,
-            y: -36,
-            opacity: 0.75,
-            filter: "brightness(0.7)",
-            duration: 0.4,
-            ease: "power2.inOut",
-          },
-          0.55
-        );
-
-        // Final hold window (0.95 -> 1.00)
-        tl.to({}, { duration: 0.05 }, 0.95);
-      });
-
-      // =========================================================================
-      // MOBILE (< 768px): Accessible natural vertical flow without forced pin
-      // =========================================================================
-      mm.add("(max-width: 767px)", () => {
-        const cards = gsap.utils.toArray<HTMLElement>(".stack-card");
-        cards.forEach((card) => {
-          gsap.fromTo(
-            card,
-            { opacity: 0, y: 30 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.65,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 85%",
-                once: true,
-              },
-            }
-          );
-        });
-      });
-
-      return () => mm.revert();
+          clearProps: "all",
+        }
+      );
     },
     { scope: sectionRef }
   );
+
+  // Transition animation when active index changes
+  const switchCaseStudy = (newIdx: number) => {
+    if (newIdx === activeIdx) return;
+    const cardEl = cardContainerRef.current;
+    if (!cardEl) {
+      setActiveIdx(newIdx);
+      return;
+    }
+
+    // Quick cinematic fade out & fade in
+    gsap.to(cardEl, {
+      opacity: 0.35,
+      scale: 0.985,
+      y: 8,
+      duration: 0.22,
+      ease: "power2.in",
+      onComplete: () => {
+        setActiveIdx(newIdx);
+        gsap.to(cardEl, {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.35,
+          ease: "power2.out",
+        });
+      },
+    });
+  };
+
+  const handlePrev = () => {
+    const prev = (activeIdx - 1 + caseStudies.length) % caseStudies.length;
+    switchCaseStudy(prev);
+  };
+
+  const handleNext = () => {
+    const next = (activeIdx + 1) % caseStudies.length;
+    switchCaseStudy(next);
+  };
+
+  // Gentle auto-rotation every 7 seconds, pauses on hover
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setActiveIdx((curr) => (curr + 1) % caseStudies.length);
+    }, 7000);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const currentStudy = caseStudies[activeIdx];
 
   return (
     <section
       ref={sectionRef}
       id="case-study-showcase"
-      className="relative w-full bg-[#031008] text-white pt-16 sm:pt-20 lg:pt-22 pb-12 sm:pb-16 border-t border-emerald-950/40 select-none overflow-hidden"
+      className="relative w-full bg-[#031008] text-white pt-14 sm:pt-18 lg:pt-20 pb-16 sm:pb-20 border-t border-emerald-950/40 select-none overflow-x-clip"
     >
       {/* Soft atmospheric ambient glow */}
       <div
@@ -249,24 +210,23 @@ export default function AgriCaseStudySection() {
       <div className="max-w-[1240px] w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* =====================================================================
-            1. SECTION HEADER (100% Match with Figma Reference)
+            1. SECTION HEADER
         ====================================================================== */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-3 sm:gap-4 pb-3 sm:pb-5">
-          <div>
-            {/* Eyebrow Label with Green Indicator */}
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] flex-shrink-0" />
-              <span className="text-[11px] sm:text-[12px] font-mono tracking-[0.16em] text-emerald-400 font-semibold uppercase">
-                20+ Pre-Engineered Platforms Ready to Deploy
-              </span>
-            </div>
+        <div className="agri-case-study-fade mb-5 sm:mb-6">
+          <div className="flex items-center gap-2 mb-2 sm:mb-2.5">
+            <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
+            <span className="text-[11px] sm:text-[12px] font-mono tracking-[0.24em] text-emerald-400 font-semibold uppercase">
+              20+ PRE-ENGINEERED PLATFORMS READY TO DEPLOY
+            </span>
+          </div>
+        </div>
 
-            {/* Main Headline */}
-            <h2 className="text-[26px] sm:text-[34px] md:text-[38px] lg:text-[42px] font-bold text-white tracking-[-0.03em] leading-[1.12] font-sans">
+        {/* Headline + Subtext Row */}
+        <div className="agri-case-study-fade flex flex-col lg:flex-row lg:items-end justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
+          <div>
+            <h2 className="text-[32px] sm:text-[42px] md:text-[50px] lg:text-[54px] font-bold text-white tracking-[-0.03em] leading-[1.08] font-sans">
               We Build Digital Experiences That Matter
             </h2>
-
-            {/* Italic Serif Subtitle */}
             <p className="text-[22px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-serif italic font-normal text-white tracking-tight mt-0.5">
               Launch in 7 days.
             </p>
@@ -284,107 +244,157 @@ export default function AgriCaseStudySection() {
         </div>
 
         {/* =====================================================================
-            2. STACKING CARDS STAGE
-            In desktop/tablet: Card 0 is relative (defines height), Cards 1 & 2
-            are layered absolutes that smoothly rise and overlap on scroll!
+            2. INTERACTIVE CASE STUDY SELECTOR TABS & CONTROLS
+        ====================================================================== */}
+        <div className="agri-case-study-fade flex flex-wrap items-center justify-between gap-3 mb-4 sm:mb-5">
+          {/* Navigation Selector Pills */}
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+            {caseStudies.map((study, idx) => {
+              const isCurrent = idx === activeIdx;
+              return (
+                <button
+                  key={study.id}
+                  onClick={() => switchCaseStudy(idx)}
+                  className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11.5px] sm:text-[12px] font-medium transition-all duration-300 cursor-pointer flex items-center gap-2 ${
+                    isCurrent
+                      ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 shadow-[0_0_15px_rgba(34,197,94,0.25)]"
+                      : "bg-[#07190f]/80 text-[#8fa89b] border border-emerald-950/60 hover:text-white hover:border-emerald-800/60 hover:bg-[#0a2215]"
+                  }`}
+                >
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                      isCurrent ? "bg-emerald-400 shadow-[0_0_8px_#34d399]" : "bg-emerald-900"
+                    }`}
+                  />
+                  <span>{study.shortLabel}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Prev / Next Buttons & Counter */}
+          <div className="flex items-center gap-2 ml-auto">
+            <span className="font-mono text-[11.5px] text-[#8fa89b] mr-2">
+              <span className="text-emerald-400 font-bold">{String(activeIdx + 1).padStart(2, "0")}</span>
+              <span className="opacity-40 mx-1">/</span>
+              <span>{String(caseStudies.length).padStart(2, "0")}</span>
+            </span>
+
+            <button
+              onClick={handlePrev}
+              aria-label="Previous Case Study"
+              className="w-8 h-8 rounded-full bg-[#07190f] hover:bg-[#0d2a1a] text-slate-300 hover:text-white border border-emerald-900/50 hover:border-emerald-600/50 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={handleNext}
+              aria-label="Next Case Study"
+              className="w-8 h-8 rounded-full bg-[#07190f] hover:bg-[#0d2a1a] text-slate-300 hover:text-white border border-emerald-900/50 hover:border-emerald-600/50 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* =====================================================================
+            3. MAIN SHOWCASE CARD (NO PIN JAILING, 100% VISIBLE & NATURAL SCROLL)
         ====================================================================== */}
         <div
-          ref={stackWrapperRef}
-          className="relative w-full mt-3 sm:mt-5 flex flex-col md:block"
+          ref={cardContainerRef}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          className="agri-case-study-fade relative w-full transition-transform duration-300"
         >
-          {caseStudies.map((item, index) => (
-            <div
-              key={item.id}
-              className={`stack-card stack-card-${index} w-full will-change-transform ${
-                index === 0
-                  ? "relative md:relative"
-                  : "relative md:absolute md:inset-x-0 md:top-0 mt-8 md:mt-0"
-              }`}
-              style={{
-                zIndex: (index + 1) * 10,
-              }}
+          {/* Emerald Container Frame: OPAQUE, ENCLOSES BANNER + 3 INFO CARDS + 3 METRICS */}
+          <div
+            className="rounded-[22px] sm:rounded-[28px] lg:rounded-[32px] p-3.5 sm:p-5 lg:p-6 border border-emerald-800/60 shadow-[0_-12px_35px_rgba(0,0,0,0.7),0_25px_60px_rgba(0,0,0,0.85)] relative overflow-hidden"
+            style={{
+              background: "linear-gradient(180deg, #012811 0%, #011b0c 100%)",
+            }}
+          >
+            {/* Hero Banner Image */}
+            <Link
+              href="/#contact-cta"
+              className="block relative w-full aspect-[3.26/1] min-h-[170px] sm:min-h-[210px] md:min-h-[250px] lg:min-h-[285px] rounded-xl sm:rounded-2xl overflow-hidden shadow-xl border border-emerald-500/25 group/hero cursor-pointer"
+              aria-label={`${currentStudy.alt} - Contact Us`}
             >
-              {/* Emerald Container Frame: OPAQUE, ENCLOSES BANNER + 3 INFO CARDS + 3 METRICS */}
-              <div
-                className="rounded-[22px] sm:rounded-[28px] lg:rounded-[32px] p-3.5 sm:p-5 lg:p-6 border border-emerald-800/60 shadow-[0_-12px_35px_rgba(0,0,0,0.7),0_25px_60px_rgba(0,0,0,0.85)] relative overflow-hidden"
-                style={{
-                  background: "linear-gradient(180deg, #012811 0%, #011b0c 100%)",
-                }}
-              >
-                {/* Hero Banner Image (Exact Figma aspect ratio & artwork) */}
-                <Link
-                  href="/#contact-cta"
-                  className="block relative w-full aspect-[3.26/1] min-h-[160px] sm:min-h-[200px] md:min-h-[240px] lg:min-h-[275px] rounded-xl sm:rounded-2xl overflow-hidden shadow-xl border border-emerald-500/25 group/hero cursor-pointer"
-                  aria-label={`${item.alt} - Contact Us`}
-                >
-                  <Image
-                    src={item.heroImage}
-                    alt={item.alt}
-                    fill
-                    priority={index === 0}
-                    sizes="(max-width: 1240px) 100vw, 1240px"
-                    className="object-cover object-center group-hover/hero:scale-[1.008] transition-transform duration-500"
-                  />
-                  {index > 0 && (
-                    <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 bg-black/60 backdrop-blur-md border border-emerald-400/30 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono tracking-wider text-emerald-300">
-                      {index === 1
-                        ? "• CASE STUDY — SMART DRONE FLEET & IRRIGATION"
-                        : "• CASE STUDY — AI CROP HEALTH & DIAGNOSTICS"}
-                    </div>
-                  )}
-                </Link>
+              <Image
+                src={currentStudy.heroImage}
+                alt={currentStudy.alt}
+                fill
+                sizes="(max-width: 1240px) 100vw, 1240px"
+                className="object-cover object-center group-hover/hero:scale-[1.012] transition-transform duration-500"
+                priority
+              />
 
-                {/* Three Information Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mt-3 sm:mt-4">
-                  {item.cards.map((card, cIdx) => (
-                    <div
-                      key={cIdx}
-                      className="rounded-xl sm:rounded-2xl p-3.5 sm:p-4 bg-[#032310]/80 border border-emerald-900/50 hover:border-emerald-700/60 transition-colors flex flex-col justify-between"
-                    >
-                      {/* Top Badge & Tag Row */}
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="bg-[#02180b] border border-emerald-800/50 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10.5px] sm:text-[11px] font-medium text-slate-200">
-                          {card.badge}
-                        </span>
-                        {card.tag && (
-                          <span className="text-emerald-400 font-medium text-[10.5px] sm:text-[11px]">
-                            {card.tag}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Card Description */}
-                      <p className="text-[#a0c5b0] text-[11.5px] sm:text-[12px] leading-[1.55] font-normal">
-                        {card.text}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Three Impact Metrics INSIDE the Emerald Container */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mt-4 sm:mt-5 pt-3 sm:pt-4 px-2 sm:px-3">
-                  {item.metrics.map((metric, mIdx) => (
-                    <div key={mIdx} className="flex flex-col text-left">
-                      {/* Metric Value with Cyan-Blue to Orange gradient matching Figma screenshot */}
-                      <div className="text-[24px] sm:text-[28px] lg:text-[34px] font-bold tracking-tight leading-none font-sans flex items-baseline">
-                        <span className="bg-gradient-to-r from-[#2563eb] via-[#00c596] to-[#e07538] bg-clip-text text-transparent">
-                          {metric.number}
-                        </span>
-                        <span className="text-[#e07538] font-bold ml-0.5">
-                          {metric.plus}
-                        </span>
-                      </div>
-
-                      {/* Metric Label */}
-                      <span className="text-[11.5px] sm:text-[12px] text-slate-300 font-medium leading-tight mt-1">
-                        {metric.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+              {/* Dynamic Case Study Badge Overlay */}
+              <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 bg-black/65 backdrop-blur-md border border-emerald-400/35 px-3 sm:px-3.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono tracking-wider text-emerald-300 flex items-center gap-1.5 shadow-lg">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span>{currentStudy.category}</span>
               </div>
+
+              {/* Top-Right Contact Us Floating Pill */}
+              <div className="absolute top-3 sm:top-4 right-3 sm:right-4 z-20 hidden sm:flex items-center gap-1 bg-[#16a34a] hover:bg-[#15803d] text-white text-[11px] font-semibold px-3 py-1 rounded-full shadow-md transition-colors">
+                <span>Explore Project</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </div>
+            </Link>
+
+            {/* Three Information Cards with 3D Tilt Perspective */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mt-3 sm:mt-4">
+              {currentStudy.cards.map((card, cIdx) => (
+                <TiltCard
+                  key={cIdx}
+                  maxTilt={6}
+                  scale={1.018}
+                  glare={true}
+                  glareOpacity={0.12}
+                  className="h-full rounded-xl sm:rounded-2xl"
+                >
+                  <div className="rounded-xl sm:rounded-2xl p-3.5 sm:p-4 bg-[#032310]/80 border border-emerald-900/50 hover:border-emerald-600/60 transition-colors flex flex-col justify-between h-full">
+                    {/* Top Badge & Tag Row */}
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="bg-[#02180b] border border-emerald-800/50 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10.5px] sm:text-[11px] font-medium text-slate-200">
+                        {card.badge}
+                      </span>
+                      {card.tag && (
+                        <span className="text-emerald-400 font-medium text-[10.5px] sm:text-[11px]">
+                          {card.tag}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Card Description */}
+                    <p className="text-[#a0c5b0] text-[11.5px] sm:text-[12px] leading-[1.55] font-normal">
+                      {card.text}
+                    </p>
+                  </div>
+                </TiltCard>
+              ))}
             </div>
-          ))}
+
+            {/* Three Impact Metrics INSIDE the Emerald Container with AnimatedMetric */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mt-4 sm:mt-5 pt-3 sm:pt-4 px-2 sm:px-3 border-t border-emerald-900/35">
+              {currentStudy.metrics.map((metric, mIdx) => (
+                <div key={`${currentStudy.id}-${mIdx}`} className="flex flex-col text-left">
+                  {/* Metric Value with Cyan-Blue to Orange gradient matching Figma screenshot */}
+                  <div className="text-[24px] sm:text-[28px] lg:text-[34px] font-bold tracking-tight leading-none font-sans flex items-baseline">
+                    <AnimatedMetric
+                      number={metric.number}
+                      suffix={metric.plus}
+                      className="bg-gradient-to-r from-[#2563eb] via-[#00c596] to-[#e07538] bg-clip-text text-transparent font-sans"
+                    />
+                  </div>
+
+                  {/* Metric Label */}
+                  <span className="text-[11.5px] sm:text-[12px] text-slate-300 font-medium leading-tight mt-1">
+                    {metric.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
       </div>

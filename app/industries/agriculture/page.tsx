@@ -32,6 +32,8 @@ import AgriCaseStudySection from "@/app/components/AgriCaseStudySection";
 import AgriDevelopmentProcessSection from "@/app/components/AgriDevelopmentProcessSection";
 import AgriCtaSection from "@/app/components/AgriCtaSection";
 import AgriAppointmentSection from "@/app/components/AgriAppointmentSection";
+import TiltCard from "@/app/components/ui/TiltCard";
+import AnimatedMetric from "@/app/components/ui/AnimatedMetric";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -532,9 +534,10 @@ export default function AgriculturePage() {
 
                   {/* Value & Label */}
                   <div className="flex flex-col text-left">
-                    <span className="text-[22px] sm:text-[26px] lg:text-[28px] font-bold text-white tracking-tight leading-none font-sans">
-                      {stat.value}
-                    </span>
+                    <AnimatedMetric
+                      value={stat.value}
+                      className="text-[22px] sm:text-[26px] lg:text-[28px] font-bold text-white tracking-tight leading-none font-sans"
+                    />
                     <span className="text-[12px] sm:text-[12.5px] text-[#8fa89b] font-medium leading-tight mt-1.5">
                       {stat.label}
                     </span>
@@ -677,40 +680,41 @@ export default function AgriculturePage() {
             </div>
           </div>
 
-          {/* 3x3 Solutions Card Grid */}
+          {/* 3x3 Solutions Card Grid with 3D Tilt Perspective */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mt-10 sm:mt-12 lg:mt-14">
             {agricultureSolutions.map((solution, idx) => (
-              <Link
-                key={idx}
-                href={solution.href}
-                className="agri-catalog-card group bg-[#09150e]/95 hover:bg-[#0d1e15] border border-emerald-900/30 hover:border-emerald-600/50 rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(4,24,14,0.7)] cursor-pointer"
-              >
-                {/* Top Section: Icon, Title, Description */}
-                <div>
-                  {/* Icon Box */}
-                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#040e08] border border-emerald-900/40 flex items-center justify-center mb-5 sm:mb-6 group-hover:scale-105 group-hover:border-emerald-500/50 transition-all">
-                    {solution.icon}
+              <TiltCard key={idx} maxTilt={8} scale={1.018} glare={true} glareOpacity={0.15} className="h-full rounded-2xl">
+                <Link
+                  href={solution.href}
+                  className="agri-catalog-card group bg-[#09150e]/95 hover:bg-[#0d1e15] border border-emerald-900/30 hover:border-emerald-600/50 rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-colors duration-300 shadow-[0_12px_30px_rgba(4,24,14,0.7)] cursor-pointer h-full"
+                >
+                  {/* Top Section: Icon, Title, Description */}
+                  <div>
+                    {/* Icon Box */}
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#040e08] border border-emerald-900/40 flex items-center justify-center mb-5 sm:mb-6 group-hover:scale-105 group-hover:border-emerald-500/50 transition-all">
+                      {solution.icon}
+                    </div>
+
+                    {/* Card Title */}
+                    <h3 className="text-[17px] sm:text-[18px] font-bold text-white tracking-tight leading-snug mb-2.5 group-hover:text-emerald-300 transition-colors">
+                      {solution.title}
+                    </h3>
+
+                    {/* Card Description */}
+                    <p className="text-[13px] sm:text-[13.5px] text-[#8fa89b] leading-[1.65] font-normal">
+                      {solution.description}
+                    </p>
                   </div>
 
-                  {/* Card Title */}
-                  <h3 className="text-[17px] sm:text-[18px] font-bold text-white tracking-tight leading-snug mb-2.5 group-hover:text-emerald-300 transition-colors">
-                    {solution.title}
-                  </h3>
-
-                  {/* Card Description */}
-                  <p className="text-[13px] sm:text-[13.5px] text-[#8fa89b] leading-[1.65] font-normal">
-                    {solution.description}
-                  </p>
-                </div>
-
-                {/* Bottom Row: Explore platform & Arrow */}
-                <div className="mt-6 pt-4 flex items-center justify-between text-emerald-400 border-t border-emerald-950/40">
-                  <span className="text-[13px] sm:text-[13.5px] font-medium text-emerald-400 group-hover:text-emerald-300 transition-colors">
-                    Explore platform
-                  </span>
-                  <ArrowRight className="w-4 h-4 text-emerald-400 group-hover:translate-x-1.5 transition-transform duration-300" />
-                </div>
-              </Link>
+                  {/* Bottom Row: Explore platform & Arrow */}
+                  <div className="mt-6 pt-4 flex items-center justify-between text-emerald-400 border-t border-emerald-950/40">
+                    <span className="text-[13px] sm:text-[13.5px] font-medium text-emerald-400 group-hover:text-emerald-300 transition-colors">
+                      Explore platform
+                    </span>
+                    <ArrowRight className="w-4 h-4 text-emerald-400 group-hover:translate-x-1.5 transition-transform duration-300" />
+                  </div>
+                </Link>
+              </TiltCard>
             ))}
           </div>
         </div>

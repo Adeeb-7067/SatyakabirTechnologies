@@ -2,10 +2,12 @@
 
 import React, { useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Mail } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { getPageTheme } from "../lib/pageThemes";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -89,6 +91,9 @@ const legalLinks = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+  const theme = getPageTheme(pathname);
+
   const footerRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const watermarkRef = useRef<HTMLDivElement>(null);
@@ -140,7 +145,7 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="w-full bg-[#050810] text-white relative overflow-hidden select-none border-t border-[#131b2e] pt-14 sm:pt-16 md:pt-20 pb-4"
+      className={`w-full ${theme.footerBg} text-white relative overflow-hidden select-none border-t ${theme.footerBorder} pt-14 sm:pt-16 md:pt-20 pb-4 transition-colors duration-300`}
     >
       {/* Container matching project standard max-w-[1240px] */}
       <div ref={contentRef} className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -155,7 +160,7 @@ export default function Footer() {
               href="mailto:connect@satyakabir.co.in"
               className="inline-flex items-center gap-2.5 font-mono text-[13px] sm:text-[14px] text-slate-200 hover:text-white transition-colors tracking-tight group"
             >
-              <Mail className="w-4 h-4 text-[#7c9bf5] stroke-[1.8] transition-transform duration-200 group-hover:scale-110" />
+              <Mail className={`w-4 h-4 ${theme.footerAccent} stroke-[1.8] transition-all duration-200 group-hover:scale-110`} />
               <span className="font-mono text-slate-300 group-hover:text-white">
                 connect@satyakabir.co.in
               </span>
@@ -299,7 +304,7 @@ export default function Footer() {
         </div>
 
         {/* Middle Legal Bar with Border */}
-        <div className="border-t border-[#131b2e] pt-6 pb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className={`border-t ${theme.footerLegalBorder} pt-6 pb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-colors duration-300`}>
           <p className="font-mono text-[10.5px] sm:text-[11px] text-[#556075] tracking-tight">
             &copy; 2026 Satyakabir Technologies Pvt. Ltd. All rights reserved.
           </p>
@@ -321,7 +326,7 @@ export default function Footer() {
 
       {/* Giant Architectural Watermark: SATYAKABIR TECHNOLOGIES in brand font Squada One */}
       <div ref={watermarkRef} className="w-full overflow-hidden select-none pointer-events-none mt-2 sm:mt-4">
-        <h2 className="text-[9.5vw] font-[family-name:var(--font-squada-one)] uppercase text-[#101728] leading-none text-center whitespace-nowrap select-none tracking-normal">
+        <h2 className={`text-[9.5vw] font-[family-name:var(--font-squada-one)] uppercase ${theme.footerWatermark} leading-none text-center whitespace-nowrap select-none tracking-normal transition-colors duration-300`}>
           SATYAKABIR TECHNOLOGIES
         </h2>
       </div>

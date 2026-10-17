@@ -6,6 +6,7 @@ import { Users, Archive, RotateCcw, Heart, Award, DollarSign } from "lucide-reac
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import TiltCard from "./ui/TiltCard";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -137,43 +138,49 @@ export default function WhyChooseUsSection() {
             className="lg:col-span-4 flex flex-col justify-between gap-3.5 sm:gap-4 z-10 order-1"
           >
             {/* Card 1 (Blue) - Expert Team */}
-            <div className="why-left-card flex-1 bg-[#1d4ed8] text-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_20px_rgba(29,78,216,0.18)] hover:shadow-[0_12px_28px_rgba(29,78,216,0.25)] hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/20 flex items-center justify-center mb-3 backdrop-blur-sm group-hover:scale-105 transition-transform duration-300">
-                <Users className="w-4.5 h-4.5 text-white" />
+            <TiltCard maxTilt={6} scale={1.02} glare={true} glareOpacity={0.15} className="why-left-card flex-1 rounded-2xl">
+              <div className="h-full bg-[#1d4ed8] text-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_20px_rgba(29,78,216,0.18)] hover:shadow-[0_12px_28px_rgba(29,78,216,0.25)] transition-all duration-300 group flex flex-col justify-center">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/20 flex items-center justify-center mb-3 backdrop-blur-sm group-hover:scale-105 transition-transform duration-300">
+                  <Users className="w-4.5 h-4.5 text-white" />
+                </div>
+                <h3 className="text-[17px] sm:text-[18px] font-bold text-white font-sans tracking-tight mb-1">
+                  Expert Team
+                </h3>
+                <p className="text-[12.5px] sm:text-[13px] text-white/80 leading-relaxed font-normal">
+                  Senior cloud architects and creative digital designers.
+                </p>
               </div>
-              <h3 className="text-[17px] sm:text-[18px] font-bold text-white font-sans tracking-tight mb-1">
-                Expert Team
-              </h3>
-              <p className="text-[12.5px] sm:text-[13px] text-white/80 leading-relaxed font-normal">
-                Senior cloud architects and creative digital designers.
-              </p>
-            </div>
+            </TiltCard>
 
             {/* Card 2 (White) - Scalable Solutions */}
-            <div className="why-left-card flex-1 bg-white text-slate-900 border border-[#c6d3f5] rounded-2xl p-5 sm:p-6 shadow-[0_2px_12px_rgba(29,78,216,0.04)] hover:shadow-[0_8px_24px_rgba(29,78,216,0.08)] hover:border-blue-400 hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#eef2ff] text-[#1d4ed8] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
-                <Archive className="w-4.5 h-4.5 text-[#1d4ed8]" />
+            <TiltCard maxTilt={6} scale={1.02} glare={true} glareOpacity={0.12} className="why-left-card flex-1 rounded-2xl">
+              <div className="h-full bg-white text-slate-900 border border-[#c6d3f5] rounded-2xl p-5 sm:p-6 shadow-[0_2px_12px_rgba(29,78,216,0.04)] hover:shadow-[0_8px_24px_rgba(29,78,216,0.08)] hover:border-blue-400 transition-all duration-300 group flex flex-col justify-center">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#eef2ff] text-[#1d4ed8] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+                  <Archive className="w-4.5 h-4.5 text-[#1d4ed8]" />
+                </div>
+                <h3 className="text-[17px] sm:text-[18px] font-bold text-slate-900 font-sans tracking-tight mb-1">
+                  Scalable Solutions
+                </h3>
+                <p className="text-[12.5px] sm:text-[13px] text-slate-500 leading-relaxed font-normal">
+                  Infrastructure constructed to safely handle massive spikes.
+                </p>
               </div>
-              <h3 className="text-[17px] sm:text-[18px] font-bold text-slate-900 font-sans tracking-tight mb-1">
-                Scalable Solutions
-              </h3>
-              <p className="text-[12.5px] sm:text-[13px] text-slate-500 leading-relaxed font-normal">
-                Infrastructure constructed to safely handle massive spikes.
-              </p>
-            </div>
+            </TiltCard>
 
             {/* Card 3 (Blue) - Agile Process */}
-            <div className="why-left-card flex-1 bg-[#1d4ed8] text-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_20px_rgba(29,78,216,0.18)] hover:shadow-[0_12px_28px_rgba(29,78,216,0.25)] hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/20 flex items-center justify-center mb-3 backdrop-blur-sm group-hover:scale-105 transition-transform duration-300">
-                <RotateCcw className="w-4.5 h-4.5 text-white" />
+            <TiltCard maxTilt={6} scale={1.02} glare={true} glareOpacity={0.15} className="why-left-card flex-1 rounded-2xl">
+              <div className="h-full bg-[#1d4ed8] text-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_20px_rgba(29,78,216,0.18)] hover:shadow-[0_12px_28px_rgba(29,78,216,0.25)] transition-all duration-300 group flex flex-col justify-center">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/20 flex items-center justify-center mb-3 backdrop-blur-sm group-hover:scale-105 transition-transform duration-300">
+                  <RotateCcw className="w-4.5 h-4.5 text-white" />
+                </div>
+                <h3 className="text-[17px] sm:text-[18px] font-bold text-white font-sans tracking-tight mb-1">
+                  Agile Process
+                </h3>
+                <p className="text-[12.5px] sm:text-[13px] text-white/80 leading-relaxed font-normal">
+                  Rigorous weekly sprint reviews and constant deployments.
+                </p>
               </div>
-              <h3 className="text-[17px] sm:text-[18px] font-bold text-white font-sans tracking-tight mb-1">
-                Agile Process
-              </h3>
-              <p className="text-[12.5px] sm:text-[13px] text-white/80 leading-relaxed font-normal">
-                Rigorous weekly sprint reviews and constant deployments.
-              </p>
-            </div>
+            </TiltCard>
           </div>
 
           {/* Center Column: 3D Pillar Sculpture with exact Figma alignment */}
@@ -197,43 +204,49 @@ export default function WhyChooseUsSection() {
             className="lg:col-span-4 flex flex-col justify-between gap-3.5 sm:gap-4 z-10 order-2 lg:order-3"
           >
             {/* Card 4 (White) - 24/7 Support */}
-            <div className="why-right-card flex-1 bg-white text-slate-900 border border-[#c6d3f5] rounded-2xl p-5 sm:p-6 shadow-[0_2px_12px_rgba(29,78,216,0.04)] hover:shadow-[0_8px_24px_rgba(29,78,216,0.08)] hover:border-blue-400 hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#eef2ff] text-[#1d4ed8] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
-                <Heart className="w-4.5 h-4.5 text-[#1d4ed8]" />
+            <TiltCard maxTilt={6} scale={1.02} glare={true} glareOpacity={0.12} className="why-right-card flex-1 rounded-2xl">
+              <div className="h-full bg-white text-slate-900 border border-[#c6d3f5] rounded-2xl p-5 sm:p-6 shadow-[0_2px_12px_rgba(29,78,216,0.04)] hover:shadow-[0_8px_24px_rgba(29,78,216,0.08)] hover:border-blue-400 transition-all duration-300 group flex flex-col justify-center">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#eef2ff] text-[#1d4ed8] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+                  <Heart className="w-4.5 h-4.5 text-[#1d4ed8]" />
+                </div>
+                <h3 className="text-[17px] sm:text-[18px] font-bold text-slate-900 font-sans tracking-tight mb-1">
+                  24/7 Support
+                </h3>
+                <p className="text-[12.5px] sm:text-[13px] text-slate-500 leading-relaxed font-normal">
+                  Live Slack/Discord channel access directly to engineers.
+                </p>
               </div>
-              <h3 className="text-[17px] sm:text-[18px] font-bold text-slate-900 font-sans tracking-tight mb-1">
-                24/7 Support
-              </h3>
-              <p className="text-[12.5px] sm:text-[13px] text-slate-500 leading-relaxed font-normal">
-                Live Slack/Discord channel access directly to engineers.
-              </p>
-            </div>
+            </TiltCard>
 
             {/* Card 5 (Blue) - Proven Results */}
-            <div className="why-right-card flex-1 bg-[#1d4ed8] text-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_20px_rgba(29,78,216,0.18)] hover:shadow-[0_12px_28px_rgba(29,78,216,0.25)] hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/20 flex items-center justify-center mb-3 backdrop-blur-sm group-hover:scale-105 transition-transform duration-300">
-                <Award className="w-4.5 h-4.5 text-white" />
+            <TiltCard maxTilt={6} scale={1.02} glare={true} glareOpacity={0.15} className="why-right-card flex-1 rounded-2xl">
+              <div className="h-full bg-[#1d4ed8] text-white rounded-2xl p-5 sm:p-6 shadow-[0_8px_20px_rgba(29,78,216,0.18)] hover:shadow-[0_12px_28px_rgba(29,78,216,0.25)] transition-all duration-300 group flex flex-col justify-center">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/20 flex items-center justify-center mb-3 backdrop-blur-sm group-hover:scale-105 transition-transform duration-300">
+                  <Award className="w-4.5 h-4.5 text-white" />
+                </div>
+                <h3 className="text-[17px] sm:text-[18px] font-bold text-white font-sans tracking-tight mb-1">
+                  Proven Results
+                </h3>
+                <p className="text-[12.5px] sm:text-[13px] text-white/80 leading-relaxed font-normal">
+                  Empirical success data backed by global software metrics.
+                </p>
               </div>
-              <h3 className="text-[17px] sm:text-[18px] font-bold text-white font-sans tracking-tight mb-1">
-                Proven Results
-              </h3>
-              <p className="text-[12.5px] sm:text-[13px] text-white/80 leading-relaxed font-normal">
-                Empirical success data backed by global software metrics.
-              </p>
-            </div>
+            </TiltCard>
 
             {/* Card 6 (White) - Transparent Pricing */}
-            <div className="why-right-card flex-1 bg-white text-slate-900 border border-[#c6d3f5] rounded-2xl p-5 sm:p-6 shadow-[0_2px_12px_rgba(29,78,216,0.04)] hover:shadow-[0_8px_24px_rgba(29,78,216,0.08)] hover:border-blue-400 hover:-translate-y-0.5 transition-all duration-300 group flex flex-col justify-center">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#eef2ff] text-[#1d4ed8] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
-                <DollarSign className="w-4.5 h-4.5 text-[#1d4ed8]" />
+            <TiltCard maxTilt={6} scale={1.02} glare={true} glareOpacity={0.12} className="why-right-card flex-1 rounded-2xl">
+              <div className="h-full bg-white text-slate-900 border border-[#c6d3f5] rounded-2xl p-5 sm:p-6 shadow-[0_2px_12px_rgba(29,78,216,0.04)] hover:shadow-[0_8px_24px_rgba(29,78,216,0.08)] hover:border-blue-400 transition-all duration-300 group flex flex-col justify-center">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#eef2ff] text-[#1d4ed8] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+                  <DollarSign className="w-4.5 h-4.5 text-[#1d4ed8]" />
+                </div>
+                <h3 className="text-[17px] sm:text-[18px] font-bold text-slate-900 font-sans tracking-tight mb-1">
+                  Transparent Pricing
+                </h3>
+                <p className="text-[12.5px] sm:text-[13px] text-slate-500 leading-relaxed font-normal">
+                  Clear itemized billing tables. No hidden surprises.
+                </p>
               </div>
-              <h3 className="text-[17px] sm:text-[18px] font-bold text-slate-900 font-sans tracking-tight mb-1">
-                Transparent Pricing
-              </h3>
-              <p className="text-[12.5px] sm:text-[13px] text-slate-500 leading-relaxed font-normal">
-                Clear itemized billing tables. No hidden surprises.
-              </p>
-            </div>
+            </TiltCard>
           </div>
 
         </div>

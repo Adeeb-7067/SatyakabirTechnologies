@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import AnimatedMetric from "./ui/AnimatedMetric";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -74,9 +75,10 @@ export default function StatsSection() {
                   : "md:px-8 lg:px-10"
               } ${index % 2 === 0 ? "pr-4 sm:pr-6" : "pl-4 sm:pl-6 md:pl-8"}`}
             >
-              <span className="text-4xl sm:text-5xl md:text-[56px] lg:text-[64px] font-bold text-white tracking-tight leading-none font-sans">
-                {stat.value}
-              </span>
+              <AnimatedMetric
+                value={stat.value}
+                className="text-4xl sm:text-5xl md:text-[56px] lg:text-[64px] font-bold text-white tracking-tight leading-none font-sans"
+              />
               <span className="text-sm sm:text-[15px] md:text-[16px] text-slate-300 font-normal mt-2.5 sm:mt-3 tracking-normal">
                 {stat.label}
               </span>

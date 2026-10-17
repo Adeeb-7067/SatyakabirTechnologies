@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { getPageTheme } from "../lib/pageThemes";
 import {
   Phone,
   ChevronDown,
@@ -177,8 +178,8 @@ const industryItems: IndustryItem[] = [
   {
     id: "live-streaming",
     title: "Live Streaming & Dating",
-    subtitle: "From farm to marketplace",
-    href: "#industries",
+    subtitle: "From cameras to global audience",
+    href: "/industries/live-streaming",
     image: "/images/nav/live-streaming.jpg",
     previewTitle: "INTERACTIVE STREAMING & DATING",
     previewHeadline: "Sub-second live video & next-gen matchmaking",
@@ -193,8 +194,8 @@ const industryItems: IndustryItem[] = [
   {
     id: "security-manpower",
     title: "Security & Manpower",
-    subtitle: "From farm to marketplace",
-    href: "#industries",
+    subtitle: "From perimeter to dispatch command",
+    href: "/industries/security-manpower",
     image: "/images/nav/security-manpower.jpg",
     previewTitle: "SECURITY & WORKFORCE MANAGEMENT",
     previewHeadline: "Next-gen vigilance, access control & dispatch",
@@ -220,6 +221,7 @@ const defaultServingLocations = {
 
 export default function Navbar() {
   const pathname = usePathname();
+  const theme = getPageTheme(pathname);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [hoveredIndustry, setHoveredIndustry] = useState<IndustryItem | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -308,7 +310,7 @@ export default function Navbar() {
     : defaultServingLocations.previewLinkText;
 
   return (
-    <header className="sticky top-0 z-50 w-full pt-3 sm:pt-4 pb-2.5 px-4 sm:px-6 lg:px-8 transition-all duration-300 backdrop-blur-md bg-[#070b16]/80">
+    <header className={`sticky top-0 z-50 w-full pt-3 sm:pt-4 pb-2.5 px-4 sm:px-6 lg:px-8 transition-all duration-300 backdrop-blur-md ${theme.headerBg}`}>
       <div
         ref={navContainerRef}
         className="max-w-[1240px] mx-auto relative"
@@ -318,8 +320,8 @@ export default function Navbar() {
         <nav
           className={`relative flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg border transition-all duration-300 ${
             activeDropdown
-              ? "border-[#2b3a5c] bg-[#070e24] shadow-2xl shadow-blue-950/40"
-              : "border-[#2b3552] bg-[#0c1326]/75 backdrop-blur-md shadow-xl"
+              ? `${theme.navActiveBorder} ${theme.navActiveBg} ${theme.navActiveShadow}`
+              : `${theme.navBorder} ${theme.navBg} backdrop-blur-md ${theme.navShadow}`
           }`}
           aria-label="Global"
         >
@@ -378,7 +380,7 @@ export default function Navbar() {
               >
                 <span>Industries</span>
                 {activeDropdown === "industries" ? (
-                  <ChevronUp className="w-3.5 h-3.5 text-blue-400 stroke-[2.2] transition-transform duration-200" />
+                  <ChevronUp className={`w-3.5 h-3.5 ${theme.accentChevron} stroke-[2.2] transition-transform duration-200`} />
                 ) : (
                   <ChevronDown className="w-3.5 h-3.5 text-slate-400 stroke-[2] transition-transform duration-200" />
                 )}
@@ -402,7 +404,7 @@ export default function Navbar() {
               >
                 <span>Portfolio</span>
                 {activeDropdown === "portfolio" ? (
-                  <ChevronUp className="w-3.5 h-3.5 text-blue-400 stroke-[2.2] transition-transform duration-200" />
+                  <ChevronUp className={`w-3.5 h-3.5 ${theme.accentChevron} stroke-[2.2] transition-transform duration-200`} />
                 ) : (
                   <ChevronDown className="w-3.5 h-3.5 text-slate-400 stroke-[2] transition-transform duration-200" />
                 )}
@@ -426,7 +428,7 @@ export default function Navbar() {
               >
                 <span>Company</span>
                 {activeDropdown === "company" ? (
-                  <ChevronUp className="w-3.5 h-3.5 text-blue-400 stroke-[2.2] transition-transform duration-200" />
+                  <ChevronUp className={`w-3.5 h-3.5 ${theme.accentChevron} stroke-[2.2] transition-transform duration-200`} />
                 ) : (
                   <ChevronDown className="w-3.5 h-3.5 text-slate-400 stroke-[2] transition-transform duration-200" />
                 )}
@@ -483,7 +485,7 @@ export default function Navbar() {
         {activeDropdown === "industries" && (
           <div
             onMouseEnter={() => handleMouseEnterNav("industries")}
-            className="absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-2xl border border-[#1b2744] bg-[#050c20]/98 backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-200"
+            className={`absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-2xl border ${theme.dropdownBorder} ${theme.dropdownBg} backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-200`}
           >
             <div className="flex flex-col lg:flex-row">
               {/* Left Section: Industries Grid (approx 58-60% width) */}
@@ -696,7 +698,7 @@ export default function Navbar() {
 
               {/* Right Section: Dynamic Preview Card (approx 40% width) */}
               <div
-                className="bg-[#030714] border-t lg:border-t-0 lg:border-l border-[#14203a] p-6 sm:p-7 lg:p-8 lg:w-[40%] flex flex-col justify-between"
+                className={`${theme.dropdownRightPanelBg} border-t lg:border-t-0 lg:border-l ${theme.dropdownDivider} p-6 sm:p-7 lg:p-8 lg:w-[40%] flex flex-col justify-between transition-colors duration-300`}
                 onMouseEnter={() => {
                   /* Keep current preview or fallback */
                 }}
@@ -792,7 +794,7 @@ export default function Navbar() {
         {activeDropdown === "portfolio" && (
           <div
             onMouseEnter={() => handleMouseEnterNav("portfolio")}
-            className="absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-2xl border border-[#1b2744] bg-[#050c20]/98 backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-200"
+            className={`absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-2xl border ${theme.dropdownBorder} ${theme.dropdownBg} backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-200`}
           >
             <div className="flex flex-col lg:flex-row">
               <div className="p-6 sm:p-7 lg:p-8 lg:w-[60%]">
@@ -875,7 +877,7 @@ export default function Navbar() {
               </div>
 
               {/* Right Showcase Card */}
-              <div className="bg-[#030714] border-t lg:border-t-0 lg:border-l border-[#14203a] p-6 sm:p-7 lg:p-8 lg:w-[40%] flex flex-col justify-between">
+              <div className={`${theme.dropdownRightPanelBg} border-t lg:border-t-0 lg:border-l ${theme.dropdownDivider} p-6 sm:p-7 lg:p-8 lg:w-[40%] flex flex-col justify-between transition-colors duration-300`}>
                 <div>
                   <h4 className="text-[11px] font-bold tracking-[0.2em] text-[#64748b] uppercase mb-4">
                     FEATURED CASE STUDY
@@ -885,6 +887,7 @@ export default function Navbar() {
                       src="/images/nav/hrm-crm.jpg"
                       alt="Featured Case Study"
                       fill
+                      sizes="(max-width: 1024px) 100vw, 360px"
                       className="object-cover"
                     />
                   </div>
@@ -916,7 +919,7 @@ export default function Navbar() {
         {activeDropdown === "company" && (
           <div
             onMouseEnter={() => handleMouseEnterNav("company")}
-            className="absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-2xl border border-[#1b2744] bg-[#050c20]/98 backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-200"
+            className={`absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-2xl border ${theme.dropdownBorder} ${theme.dropdownBg} backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-200`}
           >
             <div className="flex flex-col lg:flex-row">
               <div className="p-6 sm:p-7 lg:p-8 lg:w-[60%]">
@@ -999,7 +1002,7 @@ export default function Navbar() {
               </div>
 
               {/* Right Global Locations Preview */}
-              <div className="bg-[#030714] border-t lg:border-t-0 lg:border-l border-[#14203a] p-6 sm:p-7 lg:p-8 lg:w-[40%] flex flex-col justify-between">
+              <div className={`${theme.dropdownRightPanelBg} border-t lg:border-t-0 lg:border-l ${theme.dropdownDivider} p-6 sm:p-7 lg:p-8 lg:w-[40%] flex flex-col justify-between transition-colors duration-300`}>
                 <div>
                   <h4 className="text-[11px] font-bold tracking-[0.2em] text-[#64748b] uppercase mb-4">
                     CORPORATE HEADQUARTERS
@@ -1009,6 +1012,7 @@ export default function Navbar() {
                       src="/images/nav/locations-building.jpg"
                       alt="Satya Kabir Corporate Tower"
                       fill
+                      sizes="(max-width: 1024px) 100vw, 360px"
                       className="object-cover"
                     />
                   </div>
@@ -1038,7 +1042,7 @@ export default function Navbar() {
         {/* MOBILE MENU ACCORDION                                     */}
         {/* ========================================================= */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-2 p-4 rounded-xl border border-[#2b3552] bg-[#0c1326]/98 backdrop-blur-2xl shadow-xl flex flex-col gap-3 animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className={`md:hidden mt-2 p-4 rounded-xl border ${theme.mobileMenuBorder} ${theme.mobileMenuBg} backdrop-blur-2xl shadow-xl flex flex-col gap-3 animate-in fade-in slide-in-from-top-2 duration-200`}>
             {/* Home */}
             <Link
               href="/"

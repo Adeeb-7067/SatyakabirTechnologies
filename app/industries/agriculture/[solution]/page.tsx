@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -12,7 +12,8 @@ import {
   defaultSolutionSlug,
   SolutionData,
 } from "../solutionsData";
-
+import TiltCard from "@/app/components/ui/TiltCard";
+import AnimatedMetric from "@/app/components/ui/AnimatedMetric";
 // Generate static params for all solution pages
 export async function generateStaticParams() {
   return Object.keys(agricultureSolutionsData).map((slug) => ({
@@ -34,7 +35,19 @@ export async function generateMetadata({
   };
 }
 
-export default async function AgricultureSolutionPage({
+export default function AgricultureSolutionPage({
+  params,
+}: {
+  params: Promise<{ solution: string }>;
+}) {
+  return (
+    <Suspense fallback={<div className="w-full min-h-screen bg-[#0a1610]" />}>
+      <SolutionContent params={params} />
+    </Suspense>
+  );
+}
+
+async function SolutionContent({
   params,
 }: {
   params: Promise<{ solution: string }>;
@@ -197,20 +210,19 @@ export default async function AgricultureSolutionPage({
             </h2>
           </div>
 
-          {/* 4 Metric Cards matching Figma exactly: #19241e background, #4a514d distinct border, #79db8d number */}
+          {/* 4 Metric Cards matching Figma exactly with 3D Tilt & AnimatedMetric */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 lg:gap-5">
             {data.metrics.map((metric, idx) => (
-              <div
-                key={idx}
-                className="rounded-[16px] py-6 sm:py-7 px-5 sm:px-6 border border-[#4a514d] bg-[#19241e] shadow-[0_8px_24px_rgba(0,0,0,0.35)] flex flex-col justify-center transition-all duration-200 hover:border-[#79db8d] hover:-translate-y-0.5 group min-h-[110px] sm:min-h-[120px]"
-              >
-                <div className="text-[30px] sm:text-[34px] lg:text-[38px] font-bold text-[#79db8d] tracking-tight leading-none font-sans">
-                  {metric.value}
+              <TiltCard key={idx} maxTilt={6} scale={1.02} glare={true} className="h-full rounded-[16px]">
+                <div className="rounded-[16px] py-6 sm:py-7 px-5 sm:px-6 border border-[#4a514d] bg-[#19241e] shadow-[0_8px_24px_rgba(0,0,0,0.35)] flex flex-col justify-center transition-colors duration-200 hover:border-[#79db8d] group min-h-[110px] sm:min-h-[120px] h-full">
+                  <div className="text-[30px] sm:text-[34px] lg:text-[38px] font-bold text-[#79db8d] tracking-tight leading-none font-sans">
+                    <AnimatedMetric value={metric.value} className="text-[#79db8d] font-sans" />
+                  </div>
+                  <div className="text-[11.5px] sm:text-[12.5px] text-[#8c948e] font-medium leading-snug mt-2.5 sm:mt-3">
+                    {metric.label}
+                  </div>
                 </div>
-                <div className="text-[11.5px] sm:text-[12.5px] text-[#8c948e] font-medium leading-snug mt-2.5 sm:mt-3">
-                  {metric.label}
-                </div>
-              </div>
+              </TiltCard>
             ))}
           </div>
         </div>
@@ -297,26 +309,25 @@ export default async function AgricultureSolutionPage({
             </h2>
           </div>
 
-          {/* 6 Feature Cards Grid matching Figma Card CSS: #19241e bg, #4a514d border */}
+          {/* 6 Feature Cards Grid with 3D Tilt Perspective */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {data.features.map((feat, idx) => (
-              <div
-                key={idx}
-                className="rounded-[16px] p-5 sm:p-6 border border-[#4a514d] bg-[#19241e] shadow-[0_8px_24px_rgba(0,0,0,0.35)] flex flex-col justify-between hover:border-[#79db8d] transition-all duration-200 hover:-translate-y-0.5 group"
-              >
-                <div>
-                  {/* Clean Circular Glowing Icon Badge */}
-                  <div className="w-6 h-6 rounded-full bg-[#79db8d]/10 border border-[#79db8d]/30 flex items-center justify-center text-[#79db8d] mb-3.5 group-hover:bg-[#79db8d]/20 transition-colors">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#79db8d]" />
+              <TiltCard key={idx} maxTilt={6} scale={1.018} glare={true} className="h-full rounded-[16px]">
+                <div className="rounded-[16px] p-5 sm:p-6 border border-[#4a514d] bg-[#19241e] shadow-[0_8px_24px_rgba(0,0,0,0.35)] flex flex-col justify-between hover:border-[#79db8d] transition-colors duration-200 group h-full">
+                  <div>
+                    {/* Clean Circular Glowing Icon Badge */}
+                    <div className="w-6 h-6 rounded-full bg-[#79db8d]/10 border border-[#79db8d]/30 flex items-center justify-center text-[#79db8d] mb-3.5 group-hover:bg-[#79db8d]/20 transition-colors">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#79db8d]" />
+                    </div>
+                    <h3 className="text-[16px] font-bold text-white tracking-tight group-hover:text-[#79db8d] transition-colors">
+                      {feat.title}
+                    </h3>
+                    <p className="text-[12.5px] sm:text-[13px] text-[#8c9e93] leading-[1.65] font-normal mt-2">
+                      {feat.description}
+                    </p>
                   </div>
-                  <h3 className="text-[16px] font-bold text-white tracking-tight group-hover:text-[#79db8d] transition-colors">
-                    {feat.title}
-                  </h3>
-                  <p className="text-[12.5px] sm:text-[13px] text-[#8c9e93] leading-[1.65] font-normal mt-2">
-                    {feat.description}
-                  </p>
                 </div>
-              </div>
+              </TiltCard>
             ))}
           </div>
         </div>
@@ -335,23 +346,23 @@ export default async function AgricultureSolutionPage({
             </span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
             
-            {/* Left: App Showcase Visual matching Figma mockup */}
-            <div className="lg:col-span-5 order-2 lg:order-1">
-              <div className="relative w-full rounded-[20px] overflow-hidden border border-[#233529] shadow-[0_20px_50px_rgba(0,0,0,0.6)] bg-[#101a14]">
+            {/* Left: App Showcase Visual taking full height matching Figma */}
+            <div className="lg:col-span-5 order-2 lg:order-1 flex flex-col h-full">
+              <div className="relative w-full h-full min-h-[460px] sm:min-h-[520px] lg:min-h-full rounded-[20px] overflow-hidden border border-[#233529] shadow-[0_20px_50px_rgba(0,0,0,0.6)] bg-[#101a14]">
                 <Image
                   src={data.layersImage || "/images/agri-architecture-mockup.png"}
                   alt={`${data.heroTitle.line1} Architecture Screens`}
-                  width={632}
-                  height={552}
-                  className="w-full h-auto object-cover"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 550px"
+                  className="object-cover object-center"
                   priority
                 />
               </div>
             </div>
 
-            {/* Right: 4 Layer Cards matching Figma: #131c17 bg, #1f2b23 border, green numbers & descriptions */}
+            {/* Right: 4 Layer Cards with 3D Tilt Perspective */}
             <div className="lg:col-span-7 order-1 lg:order-2">
               <div className="mb-6 sm:mb-8">
                 <h2 className="text-[30px] sm:text-[38px] md:text-[44px] font-bold tracking-[-0.03em] leading-[1.12] font-sans">
@@ -362,22 +373,21 @@ export default async function AgricultureSolutionPage({
 
               <div className="space-y-3 sm:space-y-3.5">
                 {data.layers.map((layer, idx) => (
-                  <div
-                    key={idx}
-                    className="rounded-[18px] px-5 sm:px-6 py-4 sm:py-4.5 border border-[#1f2b23] bg-[#131c17] shadow-[0_4px_16px_rgba(0,0,0,0.25)] flex items-start gap-4 sm:gap-5 hover:border-[#6de784]/40 transition-colors"
-                  >
-                    <span className="text-[#6de784] font-mono text-[13px] sm:text-[14px] font-semibold tracking-wider pt-0.5 select-none shrink-0">
-                      {String(idx + 1).padStart(2, "0")}
-                    </span>
-                    <div className="space-y-1">
-                      <h3 className="text-[15px] sm:text-[16px] font-bold text-white tracking-tight">
-                        {layer.title}
-                      </h3>
-                      <p className="text-[12.5px] sm:text-[13px] text-[#69a17a] leading-relaxed">
-                        {layer.description}
-                      </p>
+                  <TiltCard key={idx} maxTilt={5} scale={1.012} glare={true} className="w-full rounded-[18px]">
+                    <div className="rounded-[18px] px-5 sm:px-6 py-4 sm:py-4.5 border border-[#1f2b23] bg-[#131c17] shadow-[0_4px_16px_rgba(0,0,0,0.25)] flex items-start gap-4 sm:gap-5 hover:border-[#6de784]/40 transition-colors w-full">
+                      <span className="text-[#6de784] font-mono text-[13px] sm:text-[14px] font-semibold tracking-wider pt-0.5 select-none shrink-0">
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
+                      <div className="space-y-1">
+                        <h3 className="text-[15px] sm:text-[16px] font-bold text-white tracking-tight">
+                          {layer.title}
+                        </h3>
+                        <p className="text-[12.5px] sm:text-[13px] text-[#69a17a] leading-relaxed">
+                          {layer.description}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  </TiltCard>
                 ))}
               </div>
             </div>
