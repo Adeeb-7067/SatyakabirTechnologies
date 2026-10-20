@@ -61,10 +61,10 @@ const workLinks = [
 
 const industryLinks = [
   { label: "Agriculture", href: "/industries/agriculture" },
-  { label: "Tour & Travels", href: "#industries" },
-  { label: "Security & manpower", href: "#industries" },
-  { label: "Live Streaming & dating", href: "#industries" },
-  { label: "CRM HRM & Automation", href: "#industries" },
+  { label: "Tour & Travels", href: "/industries/tour-travels" },
+  { label: "Security & manpower", href: "/industries/security-manpower" },
+  { label: "Live Streaming & dating", href: "/industries/live-streaming" },
+  { label: "CRM HRM & Automation", href: "/industries/hrm-crm" },
 ];
 
 const actionLinks = [
@@ -100,43 +100,39 @@ export default function Footer() {
 
   useGSAP(
     () => {
-      if (contentRef.current) {
-        gsap.fromTo(
-          contentRef.current,
-          { y: 30, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.85,
-            ease: "power2.out",
-            clearProps: "all",
-            scrollTrigger: {
-              trigger: footerRef.current,
-              start: "top 95%",
-              once: true,
-            },
-          }
-        );
+      if (typeof window !== "undefined") {
+        ScrollTrigger.refresh();
       }
 
-      if (watermarkRef.current) {
-        gsap.fromTo(
-          watermarkRef.current,
-          { y: 35, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.9,
-            ease: "power2.out",
-            delay: 0.1,
-            clearProps: "all",
-            scrollTrigger: {
-              trigger: footerRef.current,
-              start: "top 95%",
-              once: true,
-            },
-          }
-        );
+      if (contentRef.current && footerRef.current) {
+        gsap.from(contentRef.current, {
+          y: 20,
+          opacity: 0,
+          duration: 0.65,
+          ease: "power2.out",
+          clearProps: "all",
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: "top bottom",
+            once: true,
+          },
+        });
+      }
+
+      if (watermarkRef.current && footerRef.current) {
+        gsap.from(watermarkRef.current, {
+          y: 25,
+          opacity: 0,
+          duration: 0.75,
+          ease: "power2.out",
+          delay: 0.08,
+          clearProps: "all",
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: "top bottom",
+            once: true,
+          },
+        });
       }
     },
     { scope: footerRef }

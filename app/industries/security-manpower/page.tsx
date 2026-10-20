@@ -41,26 +41,26 @@ import TiltCard from "@/app/components/ui/TiltCard";
 // 4 Bottom Key Metrics matching user reference screenshot
 const statsData = [
   {
-    value: "120+",
-    label: "Agri Platforms Delivered",
-    icon: <Briefcase className="w-5 h-5 text-white" />,
+    value: "140+",
+    label: "Security Platforms Delivered",
+    icon: <ShieldCheck className="w-5 h-5 text-white" />,
     gradient: "from-teal-400 via-cyan-500 to-blue-600",
   },
   {
-    value: "12,000+",
-    label: "Farmers Onboarded",
-    icon: <Layers className="w-5 h-5 text-white" />,
+    value: "25,000+",
+    label: "Guards & Staff Tracked",
+    icon: <UserCheck className="w-5 h-5 text-white" />,
     gradient: "from-amber-400 via-orange-500 to-rose-500",
   },
   {
-    value: "98%",
-    label: "Client Retention",
+    value: "99.8%",
+    label: "Shift Attendance Rate",
     icon: <Heart className="w-5 h-5 text-white" />,
     gradient: "from-rose-400 via-pink-500 to-amber-400",
   },
   {
-    value: "40+",
-    label: "Districts Covered",
+    value: "180+",
+    label: "Corporate Sites Secured",
     icon: <Globe className="w-5 h-5 text-white" />,
     gradient: "from-cyan-400 via-teal-500 to-emerald-400",
   },
@@ -68,16 +68,16 @@ const statsData = [
 
 // Horizontal Feature Pills matching user reference screenshot
 const featurePills = [
-  { text: "AI Moderation Platform", isPrimary: true },
-  { text: "Live Streaming", isPrimary: false },
-  { text: "Scalable & Secure", isPrimary: false },
-  { text: "1-to-1 Video Calls", isPrimary: false },
-  { text: "Dating & Social Discovery", isPrimary: false },
-  { text: "100% Code Ownership & Git Handover", isPrimary: false },
-  { text: "AI Guard Deployment", isPrimary: false },
+  { text: "AI Guard Deployment", isPrimary: true },
   { text: "Geo-Fenced Attendance", isPrimary: false },
   { text: "Live Incident Response", isPrimary: false },
+  { text: "Biometric Integration", isPrimary: false },
+  { text: "QR & NFC Checkpoints", isPrimary: false },
+  { text: "Automated Shift Rostering", isPrimary: false },
+  { text: "100% Code Ownership & Git Handover", isPrimary: false },
   { text: "Client Billing Portals", isPrimary: false },
+  { text: "Real-Time GPS Tracking", isPrimary: false },
+  { text: "Zero Ghost Guards", isPrimary: false },
 ];
 
 // 6 Core Security & Manpower Solutions matching reference design
@@ -349,7 +349,7 @@ export default function SecurityManpowerIndustryPage() {
       ========================================================================== */}
       <section
         ref={heroRef}
-        className="relative pt-8 sm:pt-12 md:pt-16 pb-0 overflow-hidden min-h-[calc(100vh-80px)] flex flex-col justify-between"
+        className="relative pt-1 sm:pt-2 pb-0 overflow-hidden min-h-[calc(100vh-76px)] lg:h-[calc(100vh-76px)] flex flex-col justify-between"
         style={{
           background:
             "radial-gradient(ellipse at 75% 35%, rgba(14, 116, 144, 0.22) 0%, rgba(8, 47, 73, 0.15) 30%, #060c14 70%)",
@@ -365,15 +365,15 @@ export default function SecurityManpowerIndustryPage() {
           aria-hidden="true"
         />
 
-        <div className="max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex-1 flex flex-col justify-center">
+        <div className="max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex-1 flex flex-col justify-center py-2 sm:py-3">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center pt-2 sm:pt-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
             
             {/* Left Column: Breadcrumb, Main Title, Subtitle, Pills Row */}
             <div className="lg:col-span-7 flex flex-col text-left">
               
               {/* Breadcrumb: HOME > SECURITY & MEN POWER */}
-              <div className="sec-hero-elem flex items-center gap-2 mb-6 sm:mb-8">
+              <div className="sec-hero-elem flex items-center gap-2 mb-2.5 sm:mb-3">
                 <Link
                   href="/"
                   className="text-[11px] sm:text-[12px] font-mono tracking-[0.22em] text-[#8fa2b8] uppercase hover:text-white transition-colors"
@@ -387,33 +387,33 @@ export default function SecurityManpowerIndustryPage() {
               </div>
 
               {/* Main Headline */}
-              <h1 className="sec-hero-elem text-[38px] sm:text-[48px] md:text-[56px] lg:text-[62px] xl:text-[66px] font-bold text-white tracking-[-0.035em] leading-[1.06] font-[family-name:var(--font-space-grotesk)]">
+              <h1 className="sec-hero-elem text-[32px] sm:text-[40px] md:text-[46px] lg:text-[50px] xl:text-[54px] font-bold text-white tracking-[-0.03em] leading-[1.08] font-[family-name:var(--font-space-grotesk)]">
                 <span className="block">Digitally Manage Your</span>
                 <span className="block">Security Operations &</span>
                 <span className="block text-white">Guard Force.</span>
               </h1>
 
               {/* Subtitle Paragraph */}
-              <p className="sec-hero-elem text-[14px] sm:text-[15.5px] md:text-[16px] text-[#93a4b9] leading-[1.65] max-w-[580px] font-normal mt-5 sm:mt-6 font-sans">
+              <p className="sec-hero-elem text-[13px] sm:text-[14px] md:text-[14.5px] text-[#93a4b9] leading-[1.55] max-w-[540px] font-normal mt-3 sm:mt-3.5 font-sans">
                 From guard deployment and geo-fenced attendance to live incident
                 response and client billing portals, Satyakabir builds reliable
                 platforms that eliminate ghost guards.
               </p>
 
               {/* CTA Button + Horizontal Pills Bar (Matching screenshot exactly) */}
-              <div className="sec-hero-elem mt-8 sm:mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="sec-hero-elem mt-5 sm:mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 
                 {/* Discuss Your Project CTA Button */}
                 <Link
                   href="/#contact-cta"
-                  className="bg-[#101b2c]/95 hover:bg-[#16273f] active:scale-95 text-white font-medium text-[13.5px] sm:text-[14px] px-5 sm:px-6 py-2.5 rounded-full border border-[#253956] hover:border-cyan-400/50 inline-flex items-center gap-2 shrink-0 transition-all shadow-md group cursor-pointer font-sans"
+                  className="bg-[#101b2c]/95 hover:bg-[#16273f] active:scale-95 text-white font-medium text-[13px] sm:text-[13.5px] px-5 sm:px-6 py-2.5 rounded-full border border-[#253956] hover:border-cyan-400/50 inline-flex items-center gap-2 shrink-0 transition-all shadow-md group cursor-pointer font-sans"
                 >
                   <span>Discuss Your Project</span>
                   <ArrowRight className="w-3.5 h-3.5 text-cyan-400 group-hover:translate-x-1 transition-transform" />
                 </Link>
 
                 {/* Marquee Ticker of Feature Pills */}
-                <div className="relative w-full max-w-[520px] overflow-hidden py-1">
+                <div className="relative w-full max-w-[500px] overflow-hidden py-1">
                   
                   {/* Left & Right Edge Fades */}
                   <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#060c14] to-transparent z-10" />
@@ -449,7 +449,7 @@ export default function SecurityManpowerIndustryPage() {
 
             {/* Right Column: Hero Visual Showcase (Guard + High-Tech Tablet Dashboard) */}
             <div className="lg:col-span-5 flex justify-center lg:justify-end relative">
-              <div className="sec-hero-visual relative w-full max-w-[540px] lg:max-w-[580px]">
+              <div className="sec-hero-visual relative w-full max-w-[420px] lg:max-w-[460px] xl:max-w-[480px]">
                 
                 {/* 3D Tilt Card Wrapper */}
                 <TiltCard maxTilt={5} scale={1.01} glare={false} className="relative w-full block">
@@ -518,7 +518,6 @@ export default function SecurityManpowerIndustryPage() {
                     </div>
                   </TiltCard>
                 </div>
-
               </div>
             </div>
 
@@ -527,7 +526,7 @@ export default function SecurityManpowerIndustryPage() {
         </div>
 
         {/* 4 Bottom Key Metrics Stats Bar (Matching user screenshot exactly) */}
-        <div className="w-full border-t border-[#132032] bg-[#040810]/95 py-6 sm:py-8 px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
+        <div className="w-full border-t border-[#132032] bg-[#040810]/95 py-3 sm:py-3.5 px-4 sm:px-6 lg:px-8 shrink-0">
           <div className="max-w-[1340px] mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 items-center">
               {statsData.map((stat, idx) => (
@@ -978,79 +977,9 @@ export default function SecurityManpowerIndustryPage() {
       </section>
 
       {/* =========================================================================
-          6. VERIFIED ENTERPRISE CASE STUDY SECTION
+          6. PLATFORM SCREENS SHOWCASE SECTION
       ========================================================================== */}
       <section className="relative w-full py-16 sm:py-24 bg-[#060c14] overflow-hidden text-left">
-        <div className="max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
-          {/* Large Dark Floating Case Study Card */}
-          <div className="relative w-full rounded-[28px] sm:rounded-[36px] bg-[#0c1422]/90 border border-[#1a293e] p-8 sm:p-12 md:p-14 overflow-hidden shadow-2xl">
-            
-            {/* Ambient Emerald/Teal Radial Glow in bottom-left */}
-            <div
-              className="pointer-events-none absolute -left-20 -bottom-20 w-80 h-80 rounded-full opacity-25 blur-[120px] z-0"
-              style={{ background: "#059669" }}
-              aria-hidden="true"
-            />
-
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-              
-              {/* Left Column: Narrative, Quote, Author */}
-              <div className="lg:col-span-7 flex flex-col">
-                <span className="text-[11px] sm:text-[12px] font-mono tracking-[0.22em] font-semibold text-cyan-400 uppercase block mb-3">
-                  VERIFIED ENTERPRISE CASE STUDY
-                </span>
-
-                <h3 className="text-[30px] sm:text-[38px] md:text-[44px] font-bold text-white tracking-tight leading-[1.12] font-[family-name:var(--font-space-grotesk)] mb-4">
-                  Command &amp; Guard Orchestration for 4,500 Security Personnel
-                </h3>
-
-                <p className="text-[14px] sm:text-[15.5px] text-[#93a4b9] font-normal leading-[1.65] font-sans mb-8 max-w-[540px]">
-                  Unified 180 corporate client sites, reducing guard absenteeism from 18% to 1.2%.
-                </p>
-
-                {/* Quote Box */}
-                <div className="border-l-2 border-cyan-500/70 pl-4 py-1">
-                  <p className="text-[13.5px] sm:text-[14.5px] text-[#cbd5e1] font-sans italic mb-2">
-                    “Satyakabir built our flagship security platform that won us three Fortune 500 industrial facility contracts.”
-                  </p>
-                  <p className="text-[12px] sm:text-[12.5px] text-[#8fa0b5] font-normal font-sans">
-                    <strong className="text-white font-semibold">Col. Sanjeev Mehra (Retd.)</strong> • Chief of Operations, Apex Shield
-                  </p>
-                </div>
-              </div>
-
-              {/* Right Column: 3 Stat Cards Stacked Vertically */}
-              <div className="lg:col-span-5 flex flex-col gap-4 sm:gap-4.5">
-                {[
-                  { value: "4,500+", title: "Active Personnel" },
-                  { value: "99.8%", title: "Shift Fill Rate" },
-                  { value: "100%", title: "Digital Audits" },
-                ].map((stat, idx) => (
-                  <TiltCard key={idx} maxTilt={4} scale={1.02} glare={true} glareOpacity={0.08} className="rounded-2xl">
-                    <div className="rounded-2xl bg-[#0a1322]/95 hover:bg-[#0f1b2e] border border-[#18283e] hover:border-cyan-500/40 p-5 sm:p-6 flex flex-col justify-center items-center text-center shadow-lg transition-all group cursor-default">
-                      <span className="text-[24px] sm:text-[28px] font-bold text-[#38bdf8] font-[family-name:var(--font-space-grotesk)] tracking-tight mb-1 group-hover:scale-105 transition-transform">
-                        {`${stat.value} ${stat.title}`}
-                      </span>
-                      <span className="text-[10px] sm:text-[10.5px] font-mono uppercase tracking-[0.2em] text-[#64748b] font-medium">
-                        VERIFIED OUTCOME
-                      </span>
-                    </div>
-                  </TiltCard>
-                ))}
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* =========================================================================
-          7. PLATFORM SCREENS SHOWCASE SECTION
-      ========================================================================== */}
-      <section className="relative w-full py-16 sm:py-24 bg-[#060c14] border-t border-[#121e30] overflow-hidden text-left">
         <div className="max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Section Heading matching reference screenshot */}
@@ -1110,18 +1039,85 @@ export default function SecurityManpowerIndustryPage() {
       </section>
 
       {/* =========================================================================
+          7. VERIFIED ENTERPRISE CASE STUDY SECTION
+      ========================================================================== */}
+      <section className="relative w-full py-16 sm:py-24 bg-[#060c14] overflow-hidden text-left">
+        <div className="max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          {/* Large Dark Floating Case Study Card */}
+          <div className="relative w-full rounded-[28px] sm:rounded-[36px] bg-[#0c1422]/90 border border-[#1a293e] p-8 sm:p-12 md:p-14 overflow-hidden shadow-2xl">
+            
+            {/* Ambient Emerald/Teal Radial Glow in bottom-left */}
+            <div
+              className="pointer-events-none absolute -left-20 -bottom-20 w-80 h-80 rounded-full opacity-25 blur-[120px] z-0"
+              style={{ background: "#059669" }}
+              aria-hidden="true"
+            />
+
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+              
+              {/* Left Column: Narrative, Quote, Author */}
+              <div className="lg:col-span-7 flex flex-col">
+                <span className="text-[11px] sm:text-[12px] font-mono tracking-[0.22em] font-semibold text-[#10b981] uppercase block mb-3">
+                  VERIFIED ENTERPRISE CASE STUDY
+                </span>
+
+                <h3 className="text-[30px] sm:text-[38px] md:text-[44px] font-bold text-white tracking-tight leading-[1.12] font-[family-name:var(--font-space-grotesk)] mb-4">
+                  Command &amp; Guard Orchestration for 4,500 Security Personnel
+                </h3>
+
+                <p className="text-[14px] sm:text-[15.5px] text-[#93a4b9] font-normal leading-[1.65] font-sans mb-8 max-w-[540px]">
+                  Unified 180 corporate client sites, reducing guard absenteeism from 18% to 1.2%.
+                </p>
+
+                {/* Quote Box matching reference screenshot */}
+                <div className="pt-2">
+                  <p className="text-[13.5px] sm:text-[14.5px] text-[#cbd5e1] font-sans mb-2 leading-relaxed">
+                    &ldquo;Satyakabir built our flagship security platform that won us <span className="italic">three</span> Fortune 500 industrial facility contracts.&rdquo;
+                  </p>
+                  <p className="text-[12px] sm:text-[12.5px] text-[#8fa0b5] font-normal font-sans">
+                    <strong className="text-white font-semibold">Col. Sanjeev Mehra (Retd.)</strong> &bull; Chief of Operations, Apex Shield
+                  </p>
+                </div>
+              </div>
+
+              {/* Right Column: 3 Stat Cards Stacked Vertically */}
+              <div className="lg:col-span-5 flex flex-col gap-4 sm:gap-4.5">
+                {[
+                  { value: "4,500+", title: "Active Personnel" },
+                  { value: "99.8%", title: "Shift Fill Rate" },
+                  { value: "100%", title: "Digital Audits" },
+                ].map((stat, idx) => (
+                  <TiltCard key={idx} maxTilt={4} scale={1.02} glare={true} glareOpacity={0.08} className="rounded-2xl">
+                    <div className="rounded-2xl bg-[#091322]/95 hover:bg-[#0f1b2e] border border-[#18283e] hover:border-cyan-500/40 p-5 sm:p-6 flex flex-col justify-center items-center text-center shadow-lg transition-all group cursor-default">
+                      <span className="text-[24px] sm:text-[28px] font-bold text-[#38bdf8] font-[family-name:var(--font-space-grotesk)] tracking-tight mb-1 group-hover:scale-105 transition-transform">
+                        {`${stat.value} ${stat.title}`}
+                      </span>
+                      <span className="text-[10px] sm:text-[10.5px] font-mono uppercase tracking-[0.2em] text-[#64748b] font-medium">
+                        VERIFIED OUTCOME
+                      </span>
+                    </div>
+                  </TiltCard>
+                ))}
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* =========================================================================
           8. OUR DEVELOPMENT PROCESS & SAFE. SMART. SOCIAL. SECTION
       ========================================================================== */}
-      <section className="relative w-full py-16 sm:py-22 bg-[#060c14] border-t border-[#121e30] overflow-hidden text-left">
+      <section className="relative w-full py-16 sm:py-22 bg-[#060c14] overflow-hidden text-left">
         <div className="max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
             {/* Left Column: Our Development Process Flow */}
             <div className="lg:col-span-7 xl:col-span-8 text-left">
-              <span className="text-[11px] sm:text-[12px] font-mono tracking-[0.22em] font-semibold text-cyan-400 uppercase block mb-2.5">
-                WORKFLOW & DEPLOYMENT
-              </span>
               <h3 className="text-[28px] sm:text-[34px] md:text-[40px] font-bold text-white tracking-tight leading-[1.14] font-[family-name:var(--font-space-grotesk)] mb-8 sm:mb-9">
                 Our Development Process
               </h3>
@@ -1142,7 +1138,7 @@ export default function SecurityManpowerIndustryPage() {
 
                     {/* Blue connector line (not after final step) */}
                     {sIdx < processSteps.length - 1 && (
-                      <div className="h-[2px] flex-1 min-w-[10px] max-w-[36px] bg-gradient-to-r from-blue-600 to-cyan-500 mt-5 sm:mt-5.5 shrink-0" />
+                      <div className="h-[2px] flex-1 min-w-[10px] max-w-[36px] bg-[#1d4ed8] sm:bg-gradient-to-r sm:from-blue-600 sm:to-cyan-500 mt-5 sm:mt-5.5 shrink-0" />
                     )}
                   </React.Fragment>
                 ))}
@@ -1158,15 +1154,15 @@ export default function SecurityManpowerIndustryPage() {
                 glareOpacity={0.1}
                 className="h-full rounded-[22px]"
               >
-                <div className="bg-[#091322]/95 hover:bg-[#0c182a] border border-cyan-500/40 hover:border-cyan-400/70 rounded-[22px] p-6 sm:p-7 shadow-xl shadow-black/50 transition-all">
+                <div className="bg-[#081320]/95 hover:bg-[#0a1728] border border-cyan-500/40 hover:border-cyan-400/70 rounded-[22px] p-6 sm:p-7 shadow-[0_15px_35px_rgba(0,0,0,0.6)] transition-all">
                   
                   {/* Top Shield Header */}
                   <div className="flex items-center gap-3.5 mb-5">
-                    <div className="w-11 h-11 rounded-xl bg-cyan-950/60 border border-cyan-500/50 flex items-center justify-center text-cyan-400 shrink-0 shadow-inner">
+                    <div className="w-11 h-11 rounded-xl bg-teal-950/60 border border-teal-500/50 flex items-center justify-center text-teal-400 shrink-0 shadow-inner">
                       <ShieldCheck className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-[18px] sm:text-[19px] font-bold text-white tracking-tight leading-tight font-[family-name:var(--font-space-grotesk)]">
+                      <h4 className="text-[18px] sm:text-[19px] font-bold text-white tracking-tight leading-tight font-sans">
                         Safe. Smart. Social.
                       </h4>
                       <p className="text-[11.5px] sm:text-[12px] text-[#8fa2b8] leading-tight mt-0.5 font-sans">
@@ -1176,13 +1172,13 @@ export default function SecurityManpowerIndustryPage() {
                   </div>
 
                   {/* 2-Column Checklist */}
-                  <div className="grid grid-cols-2 gap-x-3 sm:gap-x-4 gap-y-2.5 pt-4 border-t border-[#16273e]/70">
+                  <div className="grid grid-cols-2 gap-x-3 sm:gap-x-4 gap-y-2.5 pt-4 border-t border-[#142337]">
                     {securityChecklist.map((sec, sIdx) => (
                       <div key={sIdx} className="flex items-center gap-2 text-[11px] sm:text-[11.5px] text-[#cbd5e1] font-sans">
-                        <span className="w-3.5 h-3.5 rounded-[4px] border border-cyan-500/60 bg-cyan-950/50 flex items-center justify-center shrink-0">
+                        <span className="w-3.5 h-3.5 rounded-[4px] border border-cyan-500/70 bg-cyan-950/50 flex items-center justify-center shrink-0">
                           <Check className="w-2.5 h-2.5 text-cyan-400" />
                         </span>
-                        <span className="whitespace-normal leading-tight">{sec}</span>
+                        <span className="whitespace-normal leading-tight font-sans">{sec}</span>
                       </div>
                     ))}
                   </div>
@@ -1199,7 +1195,7 @@ export default function SecurityManpowerIndustryPage() {
       {/* =========================================================================
           9. BOTTOM CTA: LET'S BUILD A SMARTER, SAFER OPERATION TOGETHER
       ========================================================================== */}
-      <section className="relative w-full py-16 sm:py-24 bg-[#060c14] border-t border-[#121e30] overflow-hidden text-left">
+      <section className="relative w-full py-16 sm:py-24 bg-[#060c14] overflow-hidden text-left">
         {/* Soft Ambient Radial Glow behind the right cards */}
         <div
           className="pointer-events-none absolute right-0 bottom-0 w-[500px] h-[500px] rounded-full opacity-15 blur-[130px] z-0"
@@ -1212,10 +1208,6 @@ export default function SecurityManpowerIndustryPage() {
             
             {/* Left Column: Heading, Subtitle, Buttons */}
             <div className="lg:col-span-6 flex flex-col justify-center text-left">
-              <span className="text-[11px] sm:text-[12px] font-mono tracking-[0.22em] font-semibold text-cyan-400 uppercase block mb-3">
-                LET&apos;S CONNECT
-              </span>
-
               <h2 className="text-[30px] sm:text-[38px] md:text-[44px] font-bold text-white tracking-tight leading-[1.12] font-[family-name:var(--font-space-grotesk)] mb-4">
                 Let&apos;s Build a Smarter, Safer Operation{" "}
                 <span className="text-[#38bdf8]">Together.</span>
@@ -1229,14 +1221,14 @@ export default function SecurityManpowerIndustryPage() {
               <div className="flex flex-wrap items-center gap-3.5 sm:gap-4">
                 <Link
                   href="/#contact-cta"
-                  className="bg-gradient-to-r from-[#1d4ed8] via-[#2563eb] to-[#0284c7] hover:from-[#1e40af] hover:to-[#0369a1] text-white font-medium text-[13px] sm:text-[13.5px] px-6 py-3 rounded-full shadow-[0_0_24px_rgba(37,99,235,0.5)] hover:shadow-[0_0_32px_rgba(37,99,235,0.75)] inline-flex items-center gap-2 transition-all cursor-pointer active:scale-95 font-sans"
+                  className="bg-gradient-to-r from-[#1d4ed8] via-[#2563eb] to-[#0284c7] hover:from-[#1e40af] hover:to-[#0369a1] text-white font-medium text-[13px] sm:text-[13.5px] px-6 py-3.5 rounded-[10px] shadow-[0_0_22px_rgba(37,99,235,0.45)] hover:shadow-[0_0_30px_rgba(37,99,235,0.7)] inline-flex items-center gap-2 transition-all cursor-pointer active:scale-95 font-sans"
                 >
                   <span>Book a Free Consultation</span>
                 </Link>
 
                 <Link
                   href="/#contact-cta"
-                  className="bg-[#0b1422] hover:bg-[#111f33] text-white border border-[#1e2f46] hover:border-cyan-500/50 text-[13px] sm:text-[13.5px] font-medium px-6 py-3 rounded-full transition-all shadow-md cursor-pointer active:scale-95 font-sans"
+                  className="bg-[#0b1422] hover:bg-[#111f33] text-white border border-[#1e2f46] hover:border-cyan-500/50 text-[13px] sm:text-[13.5px] font-medium px-6 py-3.5 rounded-[10px] transition-all shadow-md cursor-pointer active:scale-95 font-sans"
                 >
                   <span>Request a Proposal</span>
                 </Link>
@@ -1249,7 +1241,7 @@ export default function SecurityManpowerIndustryPage() {
               {/* Handwritten Script Tagline matching reference screenshot */}
               <div className="flex justify-start sm:justify-end mb-4">
                 <span
-                  className="text-[20px] sm:text-[23px] text-cyan-400 font-bold tracking-wide italic select-none"
+                  className="text-[21px] sm:text-[24px] text-teal-400 font-bold tracking-wide italic select-none"
                   style={{
                     fontFamily: "'Caveat', cursive, sans-serif",
                   }}
@@ -1271,7 +1263,7 @@ export default function SecurityManpowerIndustryPage() {
                   >
                     <div className="rounded-2xl bg-[#0a1322]/90 hover:bg-[#0f1d30] border border-[#1a2b40] hover:border-cyan-500/50 p-5 sm:p-6 flex flex-col items-center justify-center text-center shadow-lg transition-all group cursor-default min-h-[125px] sm:min-h-[135px]">
                       {/* Icon Container with subtle radial glow */}
-                      <div className="w-10 h-10 rounded-xl bg-[#0f2034] border border-[#1d3958] flex items-center justify-center mb-3 group-hover:scale-110 group-hover:border-cyan-400/60 transition-all">
+                      <div className="w-10 h-10 rounded-xl bg-[#0f2034] border border-[#1d3958] flex items-center justify-center mb-3 group-hover:scale-110 group-hover:border-cyan-400/60 transition-all text-cyan-400">
                         {item.icon}
                       </div>
                       

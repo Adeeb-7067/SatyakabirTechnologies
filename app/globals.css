@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -30,4 +31,24 @@ body {
 /* Custom glow and backdrop effects */
 .hero-glow-bg {
   background: radial-gradient(circle at 80% 40%, #1e3894 0%, #112055 35%, #080d1a 70%);
+}
+
+@keyframes techMarquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-tech-marquee {
+  display: flex;
+  width: max-content;
+  animation: techMarquee 25s linear infinite;
+  will-change: transform;
+}
+
+.animate-tech-marquee:hover {
+  animation-play-state: paused;
 }

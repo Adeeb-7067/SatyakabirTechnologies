@@ -178,6 +178,76 @@ export const themes: Record<string, PageThemeConfig> = {
     footerWatermark: "text-[#0b1420]",
     footerAccent: "text-cyan-400",
   },
+
+  tourTravels: {
+    name: "tourTravels",
+    headerBg: "bg-[#060b13]/85",
+    navBorder: "border-[#1a2d46]",
+    navBg: "bg-[#081324]/80",
+    navActiveBorder: "border-[#1d4ed8]",
+    navActiveBg: "bg-[#09182e]",
+    navShadow: "shadow-xl",
+    navActiveShadow: "shadow-2xl shadow-blue-950/40",
+
+    accentChevron: "text-[#38bdf8]",
+    accentText: "text-[#38bdf8]",
+
+    dropdownBg: "bg-[#061020]/98",
+    dropdownBorder: "border-[#162a45]",
+    dropdownDivider: "border-[#112035]",
+    dropdownRightPanelBg: "bg-[#040a14]",
+    dropdownCardBg: "bg-[#0a182c]",
+    dropdownCardBorder: "border-[#1b3456]",
+    dropdownCardHoverBorder: "group-hover:border-cyan-500/40",
+    dropdownHoverBg: "hover:bg-[#0a182c]",
+    dropdownAccentText: "text-[#38bdf8]",
+    dropdownActiveIconBg: "bg-blue-600/20",
+    dropdownActiveIconBorder: "border-blue-500/50",
+
+    mobileMenuBg: "bg-[#071324]/95",
+    mobileMenuBorder: "border-[#1b3456]",
+
+    footerBg: "bg-[#040810]",
+    footerBorder: "border-[#122034]",
+    footerLegalBorder: "border-[#122034]",
+    footerWatermark: "text-[#0a1524]",
+    footerAccent: "text-[#38bdf8]",
+  },
+
+  hrmCrm: {
+    name: "hrmCrm",
+    headerBg: "bg-[#040711]/85",
+    navBorder: "border-[#16233b]",
+    navBg: "bg-[#070e1c]/80",
+    navActiveBorder: "border-[#2563eb]",
+    navActiveBg: "bg-[#0a1428]",
+    navShadow: "shadow-xl",
+    navActiveShadow: "shadow-2xl shadow-blue-950/40",
+
+    accentChevron: "text-[#60a5fa]",
+    accentText: "text-[#60a5fa]",
+
+    dropdownBg: "bg-[#050a16]/98",
+    dropdownBorder: "border-[#15233c]",
+    dropdownDivider: "border-[#0e182b]",
+    dropdownRightPanelBg: "bg-[#03060e]",
+    dropdownCardBg: "bg-[#091224]",
+    dropdownCardBorder: "border-[#172744]",
+    dropdownCardHoverBorder: "group-hover:border-blue-500/40",
+    dropdownHoverBg: "hover:bg-[#091224]",
+    dropdownAccentText: "text-[#60a5fa]",
+    dropdownActiveIconBg: "bg-blue-600/20",
+    dropdownActiveIconBorder: "border-blue-500/50",
+
+    mobileMenuBg: "bg-[#050a16]/95",
+    mobileMenuBorder: "border-[#172744]",
+
+    footerBg: "bg-[#03060c]",
+    footerBorder: "border-[#111c2e]",
+    footerLegalBorder: "border-[#111c2e]",
+    footerWatermark: "text-[#08101e]",
+    footerAccent: "text-[#60a5fa]",
+  },
 };
 
 /**
@@ -200,6 +270,19 @@ export function getPageTheme(pathname: string | null): PageThemeConfig {
   // Match security & manpower pages (/industries/security-manpower and any sub-routes)
   if (pathname.startsWith("/industries/security-manpower")) {
     return themes.securityManpower;
+  }
+
+  // Match tour & travels pages (/industries/tour-travels and any sub-routes)
+  if (pathname.startsWith("/industries/tour-travels")) {
+    return themes.tourTravels;
+  }
+
+  // Match HRM, CRM & AI Automation pages (/industries/hrm-crm and any sub-routes)
+  if (
+    pathname.startsWith("/industries/hrm-crm") ||
+    pathname.startsWith("/industries/crm-hrm-automation")
+  ) {
+    return themes.hrmCrm;
   }
 
   return themes.default;
