@@ -357,7 +357,7 @@ export default function SolutionClient({ data }: { data: SecuritySolutionData })
       ====================================================================== */}
       <section
         ref={modulesRef}
-        className="relative w-full py-16 sm:py-24 bg-[#060c14] border-t border-[#121e30] overflow-hidden text-left"
+        className="relative w-full py-16 sm:py-24 bg-[#060c14] overflow-hidden text-left"
       >
         {/* Soft Ambient Radial Glow */}
         <div
@@ -452,7 +452,7 @@ export default function SolutionClient({ data }: { data: SecuritySolutionData })
       ====================================================================== */}
       <section
         ref={hardwareRef}
-        className="relative w-full py-16 sm:py-24 bg-[#060c14] border-t border-[#121e30] overflow-hidden text-left"
+        className="relative w-full py-16 sm:py-24 bg-[#060c14] overflow-hidden text-left"
       >
         {/* Soft Ambient Radial Glow */}
         <div
@@ -558,7 +558,7 @@ export default function SolutionClient({ data }: { data: SecuritySolutionData })
       ====================================================================== */}
       <section
         ref={viewsRef}
-        className="relative w-full py-16 sm:py-24 bg-[#060c14] border-t border-[#121e30] overflow-hidden text-left"
+        className="relative w-full py-16 sm:py-24 bg-[#060c14] overflow-hidden text-left"
       >
         {/* Soft Ambient Radial Glow */}
         <div
@@ -648,7 +648,7 @@ export default function SolutionClient({ data }: { data: SecuritySolutionData })
       ====================================================================== */}
       <section
         ref={ctaRef}
-        className="relative w-full py-16 sm:py-24 bg-[#060c14] border-t border-[#121e30] overflow-hidden text-center"
+        className="relative w-full py-16 sm:py-24 bg-[#060c14] overflow-hidden text-center"
       >
         {/* Soft Ambient Radial Glow behind Center Card */}
         <div

@@ -696,7 +696,7 @@ export default function TourTravelsPage() {
       {/* =========================================================================
           SECTION 2: OUR POWERFUL PLATFORMS (Matching reference screenshot exactly)
       ========================================================================== */}
-      <section className="relative py-20 sm:py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-[#060c14] overflow-hidden border-t border-[#101b2a]">
+      <section className="relative py-20 sm:py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-[#060c14] overflow-hidden">
         {/* Soft radial ambient glow */}
         <div
           className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 w-[650px] h-[300px] rounded-full opacity-15 blur-[120px]"
@@ -763,7 +763,7 @@ export default function TourTravelsPage() {
       {/* =========================================================================
           SECTION 3: CASE STUDY (Matching user reference screenshot exactly)
       ========================================================================== */}
-      <section className="case-study-section relative py-20 sm:py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-[#060c14] overflow-hidden border-t border-[#101b2a]">
+      <section className="case-study-section relative py-20 sm:py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-[#060c14] overflow-hidden">
         <div className="max-w-[1080px] mx-auto relative z-10">
           {/* Section Heading with flanking horizontal lines: —— CASE STUDY —— */}
           <div className="flex items-center justify-center gap-5 sm:gap-6 mb-16 sm:mb-20">
@@ -878,7 +878,7 @@ export default function TourTravelsPage() {
       {/* =========================================================================
           SECTION 4: COMPLETE MOBILITY ECOSYSTEM & KEY FEATURES (Matching screenshot)
       ========================================================================== */}
-      <section className="ecosystem-section relative py-20 sm:py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-[#060c14] overflow-hidden border-t border-[#101b2a]">
+      <section className="ecosystem-section relative py-20 sm:py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-[#060c14] overflow-hidden">
         {/* Soft radial ambient background glow */}
         <div
           className="pointer-events-none absolute right-10 top-20 w-[600px] h-[350px] rounded-full opacity-20 blur-[130px]"
@@ -975,7 +975,7 @@ export default function TourTravelsPage() {
       {/* =========================================================================
           SECTION 5: OUR POPULAR PLATFORM WITH AMAZING SCREENS (Matching screenshot)
       ========================================================================== */}
-      <section className="popular-screens-section relative py-20 sm:py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-[#060c14] overflow-hidden border-t border-[#101b2a]">
+      <section className="popular-screens-section relative py-20 sm:py-24 md:py-28 px-4 sm:px-6 lg:px-8 bg-[#060c14] overflow-hidden">
         {/* Soft Ambient Glows in background */}
         <div
           className="pointer-events-none absolute left-1/4 top-1/2 -translate-y-1/2 w-[550px] h-[350px] rounded-full opacity-15 blur-[130px]"
@@ -1047,7 +1047,7 @@ export default function TourTravelsPage() {
       {/* =========================================================================
           SECTION 6: OUR DEVELOPMENT PROCESS & SAFE. SMART. SOCIAL.
       ========================================================================== */}
-      <section className="process-section relative w-full pt-16 sm:pt-20 pb-12 sm:pb-16 bg-[#060c14] border-t border-[#121e30] overflow-hidden text-left">
+      <section className="process-section relative w-full pt-16 sm:pt-20 pb-12 sm:pb-16 bg-[#060c14] overflow-hidden text-left">
         {/* Soft Ambient Radial Glow */}
         <div
           className="pointer-events-none absolute right-1/4 top-1/2 -translate-y-1/2 w-[450px] h-[300px] rounded-full opacity-10 blur-[120px] bg-cyan-500"

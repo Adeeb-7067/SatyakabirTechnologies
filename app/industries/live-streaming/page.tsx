@@ -701,7 +701,7 @@ export default function LiveStreamingIndustryPage() {
       <section
         ref={solutionsRef}
         id="solutions"
-        className="relative w-full py-20 sm:py-24 lg:py-28 overflow-hidden border-t border-[#1d0b23]/70"
+        className="relative w-full py-20 sm:py-24 lg:py-28 overflow-hidden"
         style={{
           background:
             "radial-gradient(ellipse at 50% 0%, rgba(255, 42, 133, 0.07) 0%, rgba(168, 85, 247, 0.04) 30%, #08030b 70%)",
@@ -805,7 +805,7 @@ export default function LiveStreamingIndustryPage() {
       <section
         ref={featuredRef}
         id="featured-product"
-        className="relative w-full py-20 sm:py-24 lg:py-28 overflow-hidden border-t border-[#1d0b23]/70"
+        className="relative w-full py-20 sm:py-24 lg:py-28 overflow-hidden"
         style={{
           background:
             "radial-gradient(ellipse at 50% 15%, rgba(56, 189, 248, 0.05) 0%, rgba(255, 42, 133, 0.04) 40%, #08030b 75%)",
@@ -1061,7 +1061,7 @@ export default function LiveStreamingIndustryPage() {
       <section
         ref={caseStudyRef}
         id="case-study"
-        className="relative w-full py-20 sm:py-24 lg:py-28 overflow-hidden border-t border-[#1d0b23]/70"
+        className="relative w-full py-20 sm:py-24 lg:py-28 overflow-hidden"
         style={{
           background:
             "radial-gradient(ellipse at 50% 10%, rgba(255, 42, 133, 0.06) 0%, rgba(168, 85, 247, 0.04) 35%, #08030b 75%)",

@@ -300,7 +300,7 @@ async function SolutionContent({
       {/* =====================================================================
           2. THE ULTIMATE BROADCASTING ECOSYSTEM SECTION
       ====================================================================== */}
-      <section className="relative w-full py-16 sm:py-20 lg:py-24 bg-[#08030b] border-t border-[#1a0c20]/70 overflow-hidden text-left">
+      <section className="relative w-full py-16 sm:py-20 lg:py-24 bg-[#08030b] overflow-hidden text-left">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Top Row: Left Narrative & Checklist, Right Image Showcase */}
@@ -422,7 +422,7 @@ async function SolutionContent({
       {/* =====================================================================
           3. CORE ARCHITECTURE / CREATOR ENGAGEMENT SECTION
       ====================================================================== */}
-      <section className="relative w-full py-16 sm:py-24 bg-[#08030b] border-t border-[#1a0c20]/70 overflow-hidden text-center">
+      <section className="relative w-full py-16 sm:py-24 bg-[#08030b] overflow-hidden text-center">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Header */}
@@ -480,7 +480,7 @@ async function SolutionContent({
       {/* =====================================================================
           4. MODERN INTERFACE / APP SCREENSHOTS & ENTERPRISE TECH STACK SECTION
       ====================================================================== */}
-      <section className="relative w-full pt-20 sm:pt-28 pb-16 sm:pb-24 bg-[#08030b] border-t border-[#1a0c20]/70 overflow-hidden text-center">
+      <section className="relative w-full pt-20 sm:pt-28 pb-16 sm:pb-24 bg-[#08030b] overflow-hidden text-center">
         
         {/* Style block for continuous smooth infinite tech stack marquee */}
         <style>{`

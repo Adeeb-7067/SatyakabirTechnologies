@@ -564,7 +564,7 @@ export default function SecurityManpowerIndustryPage() {
       ========================================================================== */}
       <section
         id="solutions"
-        className="relative w-full py-20 sm:py-28 bg-[#060c14] border-t border-[#121e30] overflow-hidden text-left"
+        className="relative w-full py-20 sm:py-28 bg-[#060c14] overflow-hidden text-left"
       >
         {/* Soft Ambient Corner Glows */}
         <div
@@ -678,7 +678,7 @@ export default function SecurityManpowerIndustryPage() {
           3. COMPLETE SECURITY ECOSYSTEM SECTION
       ========================================================================== */}
       <section
-        className="relative w-full py-16 sm:py-24 bg-[#060c14] border-t border-[#121e30] overflow-hidden text-left"
+        className="relative w-full py-16 sm:py-24 bg-[#060c14] overflow-hidden text-left"
       >
         {/* Soft Ambient Glow */}
         <div
@@ -831,7 +831,7 @@ export default function SecurityManpowerIndustryPage() {
       {/* =========================================================================
           5. FEATURED PRODUCT / SEAMLESS PRODUCTIVITY SECTION
       ========================================================================== */}
-      <section className="relative w-full py-16 sm:py-24 bg-[#060c14] border-t border-[#121e30] overflow-hidden text-left">
+      <section className="relative w-full py-16 sm:py-24 bg-[#060c14] overflow-hidden text-left">
         <div className="max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-stretch">

@@ -175,6 +175,24 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
             clearProps: "all",
           }
         );
+
+        gsap.fromTo(
+          ".crm-bench-arc",
+          { strokeDashoffset: 141.4 },
+          {
+            scrollTrigger: {
+              trigger: benchRef.current,
+              start: "top 80%",
+            },
+            strokeDashoffset: (i, el) => {
+              const target = el.getAttribute("data-target-offset");
+              return target ? parseFloat(target) : 0;
+            },
+            duration: 1.2,
+            stagger: 0.12,
+            ease: "power2.out",
+          }
+        );
       }
 
       if (velocityRef.current) {
@@ -330,7 +348,7 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
       <section
         ref={aboutRef}
         id="architecture"
-        className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-left border-t border-[#121c2a]"
+        className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-left"
       >
         <div className="max-w-[1360px] mx-auto relative z-10">
           
@@ -348,24 +366,24 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
           {/* 4 Process Steps Flow with Connecting Dashed Lines */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-8">
             {data.aboutModule.steps.map((step, idx) => (
-              <div key={idx} className="crm-about-step flex flex-col items-start group text-left">
+              <div key={idx} className="crm-about-step flex flex-col items-start group text-left cursor-default">
                 
                 {/* Step Circle Indicator & Connecting Line */}
                 <div className="flex items-center gap-3 w-full mb-5">
-                  <div className="w-4 h-4 rounded-full border-2 border-[#2563eb] bg-black shrink-0 relative flex items-center justify-center shadow-[0_0_10px_rgba(37,99,235,0.4)]">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#2563eb]" />
+                  <div className="w-4 h-4 rounded-full border-2 border-[#2563eb] bg-black shrink-0 relative flex items-center justify-center shadow-[0_0_10px_rgba(37,99,235,0.4)] group-hover:scale-110 group-hover:border-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.6)] transition-all duration-300">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#2563eb] group-hover:bg-cyan-400 transition-colors duration-300" />
                   </div>
                   {/* Subtle connecting dashed rule extending to next step */}
-                  <div className="flex-1 border-t border-dashed border-[#23354d]" />
+                  <div className="flex-1 border-t border-dashed border-[#23354d] group-hover:border-cyan-500/40 transition-colors duration-300" />
                 </div>
 
                 {/* Step Title */}
-                <h3 className="text-[15px] sm:text-[16px] font-bold text-white tracking-tight mb-2 font-sans group-hover:text-cyan-400 transition-colors">
+                <h3 className="text-[15px] sm:text-[16px] font-bold text-white tracking-tight mb-2 font-sans group-hover:text-cyan-400 transition-colors duration-300">
                   {step.title}
                 </h3>
 
                 {/* Step Description */}
-                <p className="text-[12.5px] sm:text-[13px] text-[#8fa2b8] leading-[1.65] font-sans font-normal max-w-[280px]">
+                <p className="text-[12.5px] sm:text-[13px] text-[#8fa2b8] group-hover:text-slate-300 leading-[1.65] font-sans font-normal max-w-[280px] transition-colors duration-300">
                   {step.description}
                 </p>
 
@@ -381,7 +399,7 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
       ========================================================================== */}
       <section
         ref={specRef}
-        className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-left border-t border-[#121c2a]"
+        className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-left"
       >
         {/* Soft Ambient Radial Glow */}
         <div
@@ -408,19 +426,19 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
             
             {/* Left Column: Dark Technical Specification Card */}
             <div className="crm-spec-elem lg:col-span-5 xl:col-span-5">
-              <div className="rounded-[24px] sm:rounded-[28px] bg-[#0c121d]/90 border border-[#1b2b40] p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-md">
+              <div className="rounded-[24px] sm:rounded-[28px] bg-[#0c121d]/90 hover:bg-[#0e1624] border border-[#1b2b40] hover:border-cyan-500/40 p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-md transition-all duration-300">
                 <div className="divide-y divide-[#16253a]/70">
                   {data.specifications.items.map((item, idx) => {
                     if (item.isTimeline) {
                       return (
                         <div
                           key={idx}
-                          className="pt-4 sm:pt-5 flex items-center justify-between font-sans"
+                          className="pt-4 sm:pt-5 flex items-center justify-between font-sans -mx-2 px-2 py-1.5 rounded-lg hover:bg-[#121e30]/60 transition-colors duration-200 cursor-default group"
                         >
-                          <span className="text-[13.5px] sm:text-[14px] font-bold text-white tracking-tight">
+                          <span className="text-[13.5px] sm:text-[14px] font-bold text-white tracking-tight group-hover:text-cyan-400 transition-colors">
                             {item.label}
                           </span>
-                          <span className="text-[14px] sm:text-[15px] font-bold text-[#2563eb] tracking-tight">
+                          <span className="text-[14px] sm:text-[15px] font-bold text-[#2563eb] group-hover:text-cyan-300 tracking-tight transition-colors">
                             {item.value}
                           </span>
                         </div>
@@ -430,12 +448,12 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
                     return (
                       <div
                         key={idx}
-                        className="py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4 font-mono text-[12.5px] sm:text-[13px]"
+                        className="py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4 font-mono text-[12.5px] sm:text-[13px] -mx-2 px-2 rounded-lg hover:bg-[#121e30]/60 transition-colors duration-200 cursor-default group"
                       >
-                        <span className="text-[#7e92a8] shrink-0 font-normal">
+                        <span className="text-[#7e92a8] shrink-0 font-normal group-hover:text-slate-300 transition-colors">
                           {item.label}
                         </span>
-                        <span className="text-white text-left sm:text-right font-medium truncate sm:max-w-[280px]">
+                        <span className="text-white text-left sm:text-right font-medium truncate sm:max-w-[280px] group-hover:text-cyan-200 transition-colors">
                           {item.value}
                         </span>
                       </div>
@@ -472,7 +490,7 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
       ========================================================================== */}
       <section
         ref={scopeRef}
-        className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-left border-t border-[#121c2a]"
+        className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-left"
       >
         <div className="max-w-[1360px] mx-auto relative z-10">
           
@@ -497,12 +515,12 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
             {data.scopeSection.cards.map((card, idx) => (
               <div
                 key={idx}
-                className="crm-scope-card rounded-[20px] bg-[#0c121d]/90 hover:bg-[#0f1725] border border-[#1b2b40] hover:border-cyan-500/40 p-7 sm:p-8 text-center transition-all duration-300 group shadow-lg flex flex-col items-center justify-center"
+                className="crm-scope-card rounded-[20px] bg-[#0c121d]/90 hover:bg-[#0f1725] border border-[#1b2b40] hover:border-cyan-500/50 p-7 sm:p-8 text-center transition-all duration-300 group shadow-lg hover:shadow-[0_15px_30px_rgba(0,0,0,0.6)] hover:-translate-y-1 active:scale-[0.99] cursor-pointer flex flex-col items-center justify-center"
               >
-                <h3 className="text-[15px] sm:text-[16px] font-bold text-white mb-2 font-sans tracking-tight group-hover:text-cyan-400 transition-colors">
+                <h3 className="text-[15px] sm:text-[16px] font-bold text-white mb-2 font-sans tracking-tight group-hover:text-cyan-400 transition-colors duration-300">
                   {card.title}
                 </h3>
-                <p className="text-[12.5px] sm:text-[13px] text-[#8fa2b8] leading-[1.65] font-sans font-normal max-w-[280px]">
+                <p className="text-[12.5px] sm:text-[13px] text-[#8fa2b8] group-hover:text-slate-300 leading-[1.65] font-sans font-normal max-w-[280px] transition-colors duration-300">
                   {card.description}
                 </p>
               </div>
@@ -517,7 +535,7 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
       ========================================================================== */}
       <section
         ref={archRef}
-        className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-left border-t border-[#121c2a]"
+        className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-left"
       >
         <div className="max-w-[1360px] mx-auto relative z-10">
           
@@ -527,13 +545,13 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
             <div className="crm-arch-elem lg:col-span-5 xl:col-span-5 flex justify-center lg:justify-start">
               <div className="relative w-full max-w-[480px]">
                 <TiltCard maxTilt={4} scale={1.01} glare={false} className="rounded-[24px] sm:rounded-[28px] overflow-hidden">
-                  <div className="rounded-[24px] sm:rounded-[28px] overflow-hidden border border-[#1b2b40] bg-[#0c121d] shadow-[0_25px_60px_rgba(0,0,0,0.85)]">
+                  <div className="rounded-[24px] sm:rounded-[28px] overflow-hidden border border-[#1b2b40] bg-[#0c121d] shadow-[0_25px_60px_rgba(0,0,0,0.85)] group">
                     <Image
                       src={data.architectureSection.image}
                       alt="Enterprise Architecture Workflow"
                       width={960}
                       height={640}
-                      className="w-full h-auto object-cover transform hover:scale-[1.02] transition-transform duration-700"
+                      className="w-full h-auto object-cover transform group-hover:scale-[1.02] transition-transform duration-700"
                     />
                   </div>
                 </TiltCard>
@@ -560,18 +578,18 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
                 <div className="absolute left-[9px] top-3 bottom-3 w-[1px] border-l border-dashed border-[#23354d] pointer-events-none" />
 
                 {data.architectureSection.points.map((point, idx) => (
-                  <div key={idx} className="relative flex items-start gap-4 sm:gap-5 group">
+                  <div key={idx} className="relative flex items-start gap-4 sm:gap-5 group cursor-default">
                     {/* Circle Icon with Center Dot */}
-                    <div className="w-4 h-4 rounded-full border-2 border-[#2563eb] bg-black shrink-0 relative flex items-center justify-center mt-1 z-10 shadow-[0_0_10px_rgba(37,99,235,0.4)]">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#2563eb]" />
+                    <div className="w-4 h-4 rounded-full border-2 border-[#2563eb] bg-black shrink-0 relative flex items-center justify-center mt-1 z-10 shadow-[0_0_10px_rgba(37,99,235,0.4)] group-hover:scale-110 group-hover:border-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.7)] transition-all duration-300">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#2563eb] group-hover:bg-cyan-400 transition-colors duration-300" />
                     </div>
 
                     {/* Text Content */}
                     <div className="flex flex-col text-left">
-                      <h3 className="text-[15px] sm:text-[16px] font-bold text-white tracking-tight mb-1.5 font-sans group-hover:text-cyan-400 transition-colors">
+                      <h3 className="text-[15px] sm:text-[16px] font-bold text-white tracking-tight mb-1.5 font-sans group-hover:text-cyan-400 transition-colors duration-300">
                         {point.title}
                       </h3>
-                      <p className="text-[12.5px] sm:text-[13px] text-[#8fa2b8] leading-[1.65] font-sans font-normal max-w-[480px]">
+                      <p className="text-[12.5px] sm:text-[13px] text-[#8fa2b8] group-hover:text-slate-300 leading-[1.65] font-sans font-normal max-w-[480px] transition-colors duration-300">
                         {point.description}
                       </p>
                     </div>
@@ -591,7 +609,7 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
       ========================================================================== */}
       <section
         ref={benchRef}
-        className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-left border-t border-[#121c2a]"
+        className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-left"
       >
         <div className="max-w-[1360px] mx-auto relative z-10">
           
@@ -617,7 +635,7 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
               return (
                 <div
                   key={idx}
-                  className="crm-bench-card rounded-[20px] bg-[#0c121d]/90 hover:bg-[#0f1725] border border-[#1b2b40] hover:border-cyan-500/40 py-7 px-6 flex flex-col items-center justify-center text-center shadow-lg transition-all duration-300 group"
+                  className="crm-bench-card rounded-[20px] bg-[#0c121d]/90 hover:bg-[#0f1725] border border-[#1b2b40] hover:border-cyan-500/50 py-7 px-6 flex flex-col items-center justify-center text-center shadow-lg hover:shadow-[0_15px_30px_rgba(0,0,0,0.6)] hover:-translate-y-1 active:scale-[0.99] transition-all duration-300 group cursor-pointer"
                 >
                   {/* Semi-circular Gauge Arc with Glowing Progress */}
                   <div className="relative w-36 h-20 flex items-end justify-center mb-1">
@@ -644,19 +662,20 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
                         strokeWidth="5.5"
                         strokeDasharray={totalLength}
                         strokeDashoffset={strokeOffset}
+                        data-target-offset={strokeOffset}
                         strokeLinecap="round"
-                        className="drop-shadow-[0_0_10px_rgba(37,99,235,0.7)]"
+                        className="crm-bench-arc drop-shadow-[0_0_10px_rgba(37,99,235,0.7)] group-hover:drop-shadow-[0_0_15px_rgba(56,189,248,0.9)] transition-all duration-300"
                       />
                     </svg>
 
                     {/* Metric Value inside Arc */}
-                    <span className="absolute bottom-1 text-[22px] sm:text-[24px] font-bold text-white tracking-tight leading-none font-sans">
+                    <span className="absolute bottom-1 text-[22px] sm:text-[24px] font-bold text-white tracking-tight leading-none font-sans group-hover:text-cyan-300 group-hover:scale-105 transition-all duration-300">
                       {metric.value}
                     </span>
                   </div>
 
                   {/* Metric Label */}
-                  <span className="text-[12px] sm:text-[12.5px] text-[#8fa2b8] font-medium font-sans mt-3">
+                  <span className="text-[12px] sm:text-[12.5px] text-[#8fa2b8] font-medium font-sans mt-3 group-hover:text-slate-200 transition-colors duration-300">
                     {metric.label}
                   </span>
                 </div>
@@ -673,7 +692,7 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
       {data.highVelocitySection && (
         <section
           ref={velocityRef}
-          className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-left border-t border-[#121c2a]"
+          className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-left"
         >
           <div className="max-w-[1360px] mx-auto relative z-10">
             
@@ -688,20 +707,20 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
               {data.highVelocitySection.cards.map((card, idx) => (
                 <div
                   key={idx}
-                  className="crm-velocity-card rounded-[22px] bg-[#0c121d]/90 hover:bg-[#0f1725] border border-[#1b2b40] hover:border-cyan-500/40 p-6 sm:p-7 flex flex-col items-start text-left transition-all duration-300 group shadow-lg min-h-[220px]"
+                  className="crm-velocity-card rounded-[22px] bg-[#0c121d]/90 hover:bg-[#0f1725] border border-[#1b2b40] hover:border-cyan-500/50 p-6 sm:p-7 flex flex-col items-start text-left transition-all duration-300 group shadow-lg hover:shadow-[0_15px_30px_rgba(0,0,0,0.6)] hover:-translate-y-1 active:scale-[0.99] cursor-pointer min-h-[220px]"
                 >
                   {/* Icon Box */}
-                  <div className="w-11 h-11 rounded-[14px] bg-[#0b1f36] border border-[#1d3f66] flex items-center justify-center mb-6 text-[#38bdf8] group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(6,182,212,0.15)]">
+                  <div className="w-11 h-11 rounded-[14px] bg-[#0b1f36] group-hover:bg-[#0e2a4a] border border-[#1d3f66] group-hover:border-cyan-400/60 flex items-center justify-center mb-6 text-[#38bdf8] group-hover:scale-110 transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.15)] group-hover:shadow-[0_0_20px_rgba(6,182,212,0.35)]">
                     {renderVelocityIcon(card.icon)}
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-[16px] sm:text-[17px] font-bold text-white tracking-tight mb-2.5 font-sans group-hover:text-cyan-400 transition-colors">
+                  <h3 className="text-[16px] sm:text-[17px] font-bold text-white tracking-tight mb-2.5 font-sans group-hover:text-cyan-400 transition-colors duration-300">
                     {card.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-[12.5px] sm:text-[13px] text-[#8fa2b8] leading-[1.65] font-sans font-normal">
+                  <p className="text-[12.5px] sm:text-[13px] text-[#8fa2b8] group-hover:text-slate-300 leading-[1.65] font-sans font-normal transition-colors duration-300">
                     {card.description}
                   </p>
                 </div>
@@ -718,7 +737,7 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
       {data.finalCtaSection && (
         <section
           ref={ctaRef}
-          className="relative w-full py-24 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-center border-t border-[#121c2a]"
+          className="relative w-full py-24 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black text-center"
         >
           {/* Subtle Ambient Radial Glow */}
           <div
@@ -741,14 +760,14 @@ export default function HrmSolutionClient({ data }: { data: HrmSolutionData }) {
             <div className="crm-cta-elem flex flex-wrap items-center justify-center gap-4 sm:gap-5">
               <Link
                 href={data.finalCtaSection.primaryButtonLink || "/#contact-cta"}
-                className="px-7 py-3.5 sm:px-8 sm:py-4 rounded-[14px] bg-[#009de0] hover:bg-[#0284c7] text-white font-semibold text-[14px] sm:text-[15px] font-sans shadow-[0_0_30px_rgba(0,157,224,0.45)] hover:shadow-[0_0_40px_rgba(0,157,224,0.65)] hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                className="px-7 py-3.5 sm:px-8 sm:py-4 rounded-[14px] bg-[#009de0] hover:bg-[#0284c7] text-white font-semibold text-[14px] sm:text-[15px] font-sans shadow-[0_0_30px_rgba(0,157,224,0.45)] hover:shadow-[0_0_45px_rgba(0,157,224,0.7)] hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer"
               >
                 {data.finalCtaSection.primaryButtonText}
               </Link>
 
               <Link
                 href={data.finalCtaSection.secondaryButtonLink || "/industries/tour-travels"}
-                className="px-7 py-3.5 sm:px-8 sm:py-4 rounded-[14px] bg-[#060b12] hover:bg-[#0e1624] border border-[#1b2b40] hover:border-cyan-500/50 text-white font-medium text-[14px] sm:text-[15px] font-sans hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer shadow-md"
+                className="px-7 py-3.5 sm:px-8 sm:py-4 rounded-[14px] bg-[#060b12] hover:bg-[#0e1624] border border-[#1b2b40] hover:border-cyan-500/50 text-white font-medium text-[14px] sm:text-[15px] font-sans hover:scale-[1.03] active:scale-[0.98] hover:text-cyan-300 hover:shadow-[0_0_25px_rgba(6,182,212,0.15)] transition-all cursor-pointer shadow-md"
               >
                 {data.finalCtaSection.secondaryButtonText}
               </Link>

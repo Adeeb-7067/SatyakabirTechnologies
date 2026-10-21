@@ -189,7 +189,9 @@ const industryItems: IndustryItem[] = [
       "Virtual Gifting & Monetization",
     ],
     previewLinkText: "Explore Streaming Platforms",
-    icon: <LiveStreamingIcon className="w-4 h-4 sm:w-5 sm:h-5 text-[#60a5fa]" />,
+    icon: (
+      <LiveStreamingIcon className="w-4 h-4 sm:w-5 sm:h-5 text-[#60a5fa]" />
+    ),
   },
   {
     id: "security-manpower",
@@ -223,7 +225,9 @@ export default function Navbar() {
   const pathname = usePathname();
   const theme = getPageTheme(pathname);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [hoveredIndustry, setHoveredIndustry] = useState<IndustryItem | null>(null);
+  const [hoveredIndustry, setHoveredIndustry] = useState<IndustryItem | null>(
+    null,
+  );
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
 
@@ -234,8 +238,10 @@ export default function Navbar() {
   useEffect(() => {
     if (!pathname) return;
     const pathLower = pathname.toLowerCase();
-    const match = industryItems.find((item) =>
-      pathLower.includes(item.id) || pathLower.includes(item.title.toLowerCase())
+    const match = industryItems.find(
+      (item) =>
+        pathLower.includes(item.id) ||
+        pathLower.includes(item.title.toLowerCase()),
     );
     if (match) {
       setHoveredIndustry(match);
@@ -310,7 +316,9 @@ export default function Navbar() {
     : defaultServingLocations.previewLinkText;
 
   return (
-    <header className={`sticky top-0 z-50 w-full pt-3 sm:pt-4 pb-2.5 px-4 sm:px-6 lg:px-8 transition-all duration-300 backdrop-blur-md ${theme.headerBg}`}>
+    <header
+      className={`sticky top-0 z-50 w-full pt-3 sm:pt-4 pb-2.5 px-4 sm:px-6 lg:px-8 transition-all duration-300 backdrop-blur-md ${theme.headerBg}`}
+    >
       <div
         ref={navContainerRef}
         className="max-w-[1240px] mx-auto relative"
@@ -380,7 +388,9 @@ export default function Navbar() {
               >
                 <span>Industries</span>
                 {activeDropdown === "industries" ? (
-                  <ChevronUp className={`w-3.5 h-3.5 ${theme.accentChevron} stroke-[2.2] transition-transform duration-200`} />
+                  <ChevronUp
+                    className={`w-3.5 h-3.5 ${theme.accentChevron} stroke-[2.2] transition-transform duration-200`}
+                  />
                 ) : (
                   <ChevronDown className="w-3.5 h-3.5 text-slate-400 stroke-[2] transition-transform duration-200" />
                 )}
@@ -404,7 +414,9 @@ export default function Navbar() {
               >
                 <span>Portfolio</span>
                 {activeDropdown === "portfolio" ? (
-                  <ChevronUp className={`w-3.5 h-3.5 ${theme.accentChevron} stroke-[2.2] transition-transform duration-200`} />
+                  <ChevronUp
+                    className={`w-3.5 h-3.5 ${theme.accentChevron} stroke-[2.2] transition-transform duration-200`}
+                  />
                 ) : (
                   <ChevronDown className="w-3.5 h-3.5 text-slate-400 stroke-[2] transition-transform duration-200" />
                 )}
@@ -428,7 +440,9 @@ export default function Navbar() {
               >
                 <span>Company</span>
                 {activeDropdown === "company" ? (
-                  <ChevronUp className={`w-3.5 h-3.5 ${theme.accentChevron} stroke-[2.2] transition-transform duration-200`} />
+                  <ChevronUp
+                    className={`w-3.5 h-3.5 ${theme.accentChevron} stroke-[2.2] transition-transform duration-200`}
+                  />
                 ) : (
                   <ChevronDown className="w-3.5 h-3.5 text-slate-400 stroke-[2] transition-transform duration-200" />
                 )}
@@ -474,7 +488,11 @@ export default function Navbar() {
               className="p-2 rounded-lg text-slate-300 hover:text-white bg-white/5 border border-white/10 focus:outline-none cursor-pointer"
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
             </button>
           </div>
         </nav>
@@ -772,7 +790,11 @@ export default function Navbar() {
                       {/* See All or Explore CTA Link */}
                       <div className="mt-4 pt-2">
                         <Link
-                          href={hoveredIndustry ? hoveredIndustry.href : defaultServingLocations.href}
+                          href={
+                            hoveredIndustry
+                              ? hoveredIndustry.href
+                              : defaultServingLocations.href
+                          }
                           onClick={() => setActiveDropdown(null)}
                           className="inline-flex items-center gap-1.5 text-[12px] sm:text-[12.5px] font-semibold text-white hover:text-blue-400 transition-colors group cursor-pointer"
                         >
@@ -877,7 +899,9 @@ export default function Navbar() {
               </div>
 
               {/* Right Showcase Card */}
-              <div className={`${theme.dropdownRightPanelBg} border-t lg:border-t-0 lg:border-l ${theme.dropdownDivider} p-6 sm:p-7 lg:p-8 lg:w-[40%] flex flex-col justify-between transition-colors duration-300`}>
+              <div
+                className={`${theme.dropdownRightPanelBg} border-t lg:border-t-0 lg:border-l ${theme.dropdownDivider} p-6 sm:p-7 lg:p-8 lg:w-[40%] flex flex-col justify-between transition-colors duration-300`}
+              >
                 <div>
                   <h4 className="text-[11px] font-bold tracking-[0.2em] text-[#64748b] uppercase mb-4">
                     FEATURED CASE STUDY
@@ -895,7 +919,8 @@ export default function Navbar() {
                     Nexus Global Enterprise ERP
                   </h5>
                   <p className="text-[12px] text-[#7d8b9f] leading-snug">
-                    Deployed across 18 countries, achieving 99.99% uptime and 40% reduction in query latency.
+                    Deployed across 18 countries, achieving 99.99% uptime and
+                    40% reduction in query latency.
                   </p>
                 </div>
                 <div className="mt-4 pt-2">
@@ -928,7 +953,7 @@ export default function Navbar() {
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <Link
-                    href="#about"
+                    href="/about"
                     onClick={() => setActiveDropdown(null)}
                     className="flex items-start gap-3.5 group p-2.5 rounded-lg hover:bg-white/5 transition-colors"
                   >
@@ -946,7 +971,7 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    href="#company"
+                    href="/about"
                     onClick={() => setActiveDropdown(null)}
                     className="flex items-start gap-3.5 group p-2.5 rounded-lg hover:bg-white/5 transition-colors"
                   >
@@ -964,7 +989,7 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    href="#company"
+                    href="/about"
                     onClick={() => setActiveDropdown(null)}
                     className="flex items-start gap-3.5 group p-2.5 rounded-lg hover:bg-white/5 transition-colors"
                   >
@@ -982,7 +1007,7 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    href="#contact"
+                    href="/about"
                     onClick={() => setActiveDropdown(null)}
                     className="flex items-start gap-3.5 group p-2.5 rounded-lg hover:bg-white/5 transition-colors"
                   >
@@ -1002,7 +1027,9 @@ export default function Navbar() {
               </div>
 
               {/* Right Global Locations Preview */}
-              <div className={`${theme.dropdownRightPanelBg} border-t lg:border-t-0 lg:border-l ${theme.dropdownDivider} p-6 sm:p-7 lg:p-8 lg:w-[40%] flex flex-col justify-between transition-colors duration-300`}>
+              <div
+                className={`${theme.dropdownRightPanelBg} border-t lg:border-t-0 lg:border-l ${theme.dropdownDivider} p-6 sm:p-7 lg:p-8 lg:w-[40%] flex flex-col justify-between transition-colors duration-300`}
+              >
                 <div>
                   <h4 className="text-[11px] font-bold tracking-[0.2em] text-[#64748b] uppercase mb-4">
                     CORPORATE HEADQUARTERS
@@ -1020,7 +1047,8 @@ export default function Navbar() {
                     Satya Kabir Technologies
                   </h5>
                   <p className="text-[12px] text-[#7d8b9f] leading-snug">
-                    Offices in Bhopal, Indore & Uttar Pradesh. Serving clients globally.
+                    Offices in Bhopal, Indore & Uttar Pradesh. Serving clients
+                    globally.
                   </p>
                 </div>
                 <div className="mt-4 pt-2">
@@ -1042,7 +1070,9 @@ export default function Navbar() {
         {/* MOBILE MENU ACCORDION                                     */}
         {/* ========================================================= */}
         {mobileMenuOpen && (
-          <div className={`md:hidden mt-2 p-4 rounded-xl border ${theme.mobileMenuBorder} ${theme.mobileMenuBg} backdrop-blur-2xl shadow-xl flex flex-col gap-3 animate-in fade-in slide-in-from-top-2 duration-200`}>
+          <div
+            className={`md:hidden mt-2 p-4 rounded-xl border ${theme.mobileMenuBorder} ${theme.mobileMenuBg} backdrop-blur-2xl shadow-xl flex flex-col gap-3 animate-in fade-in slide-in-from-top-2 duration-200`}
+          >
             {/* Home */}
             <Link
               href="/"
@@ -1057,14 +1087,18 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() =>
-                  setMobileAccordion(mobileAccordion === "industries" ? null : "industries")
+                  setMobileAccordion(
+                    mobileAccordion === "industries" ? null : "industries",
+                  )
                 }
                 className="w-full py-2 px-3 rounded-md text-sm text-slate-300 hover:text-white flex items-center justify-between"
               >
                 <span>Industries</span>
                 <ChevronDown
                   className={`w-4 h-4 text-slate-400 transition-transform ${
-                    mobileAccordion === "industries" ? "rotate-180 text-blue-400" : ""
+                    mobileAccordion === "industries"
+                      ? "rotate-180 text-blue-400"
+                      : ""
                   }`}
                 />
               </button>
@@ -1092,7 +1126,9 @@ export default function Navbar() {
                     </Link>
                   ))}
                   <div className="pt-2 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-[11px] text-slate-400">Locations: Bhopal, Indore, UP</span>
+                    <span className="text-[11px] text-slate-400">
+                      Locations: Bhopal, Indore, UP
+                    </span>
                     <Link
                       href="#contact"
                       onClick={() => setMobileMenuOpen(false)}
@@ -1116,7 +1152,7 @@ export default function Navbar() {
 
             {/* Company Link */}
             <Link
-              href="#company"
+              href="/about"
               onClick={() => setMobileMenuOpen(false)}
               className="py-2 px-3 rounded-md text-sm text-slate-300 hover:bg-white/5 hover:text-white"
             >
