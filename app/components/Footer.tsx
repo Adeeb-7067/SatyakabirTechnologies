@@ -96,13 +96,13 @@ const actionLinks = [
   { label: "Book strategic call", href: "#contact" },
   { label: "Talk To Assitance", href: "#contact" },
   { label: "Infrastructure", href: "/about" },
-  { label: "Leadership", href: "/about" },
+  { label: "Leadership", href: "/leadership" },
   { label: "Get Quote", href: "#contact" },
 ];
 
 const companyLinks = [
   { label: "About Satyakabir", href: "/about" },
-  { label: "Lifestyle at Satyakabir", href: "/about" },
+  { label: "Lifestyle at Satyakabir", href: "/lifestyle" },
   { label: "Awards & cerification", href: "/about" },
   { label: "Careers & Culture", href: "/about" },
   { label: "Contact & Locations", href: "/about" },

@@ -1,6 +1,10 @@
 import React from "react";
 import type { Metadata } from "next";
 import AboutHeroSection from "../components/AboutHeroSection";
+import AboutIndustriesSection from "./AboutIndustriesSection";
+import AboutWhyChooseUsSection from "./AboutWhyChooseUsSection";
+import AboutCompanyStandardsSection from "./AboutCompanyStandardsSection";
+import AboutReadyToDiscussSection from "./AboutReadyToDiscussSection";
 import AboutLocationsGallerySection from "../components/AboutLocationsGallerySection";
 import AboutMilestonesSection from "../components/AboutMilestonesSection";
 import AboutKeepReadingSection from "../components/AboutKeepReadingSection";
@@ -17,14 +21,27 @@ export default function AboutPage() {
       {/* SECTION 01: Global Operations & Core Pillars */}
       <AboutHeroSection />
 
-      {/* SECTION 02: 5 Global Engineering Hubs Gallery */}
+      {/* SECTION 03: 5 Global Engineering Hubs Gallery */}
+      
       <AboutLocationsGallerySection />
 
-      {/* SECTION 03: Overview, Milestones & Engineering Philosophy */}
+      {/* SECTION 04: Overview, Milestones & Engineering Philosophy */}
       <AboutMilestonesSection />
 
-      {/* SECTION 04: More About Us - Keep Reading (Interactive Tabs & Globe) */}
+      {/* SECTION 05: More About Us - Keep Reading (Interactive Tabs & Globe) */}
       <AboutKeepReadingSection />
+
+      {/* SECTION 06: Industries We Serve */}
+      <AboutIndustriesSection />
+
+      {/* SECTION 07: Why Choose Us */}
+      <AboutWhyChooseUsSection />
+
+      {/* SECTION 08: Company Standards */}
+      <AboutCompanyStandardsSection />
+
+      {/* SECTION 09: Ready To Discuss CTA */}
+      <AboutReadyToDiscussSection />
     </main>
   );
 }

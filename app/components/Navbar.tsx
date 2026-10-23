@@ -19,6 +19,9 @@ import {
   Users,
   Award,
   Sparkles,
+  Layers,
+  FileText,
+  Rocket,
 } from "lucide-react";
 
 // Custom SVG Icons matching the reference screenshot design
@@ -235,7 +238,10 @@ export default function Navbar() {
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Automatically select matching industry preview if current route / pathname matches
+  // and close any open mobile or desktop menus on route change
   useEffect(() => {
+    setMobileMenuOpen(false);
+    setActiveDropdown(null);
     if (!pathname) return;
     const pathLower = pathname.toLowerCase();
     const match = industryItems.find(
@@ -248,7 +254,21 @@ export default function Navbar() {
     }
   }, [pathname]);
 
-  // Handle click outside to close dropdowns
+  // Clean up open dropdowns on viewport resize across breakpoints
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth >= 1024) {
+        setMobileMenuOpen(false);
+      } else {
+        setActiveDropdown(null);
+        setHoveredIndustry(null);
+      }
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Handle click outside to close dropdowns & mobile menu
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -257,6 +277,7 @@ export default function Navbar() {
       ) {
         setActiveDropdown(null);
         setHoveredIndustry(null);
+        setMobileMenuOpen(false);
       }
     }
 
@@ -292,6 +313,7 @@ export default function Navbar() {
   };
 
   const toggleDropdown = (key: string) => {
+    setMobileMenuOpen(false);
     if (activeDropdown === key) {
       setActiveDropdown(null);
       setHoveredIndustry(null);
@@ -317,7 +339,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full pt-3 sm:pt-4 pb-2.5 px-4 sm:px-6 lg:px-8 transition-all duration-300 backdrop-blur-md ${theme.headerBg}`}
+      className={`sticky top-0 z-[100] w-full pt-3 sm:pt-4 pb-2.5 px-4 sm:px-6 lg:px-8 transition-all duration-300 backdrop-blur-md ${theme.headerBg}`}
     >
       <div
         ref={navContainerRef}
@@ -484,7 +506,11 @@ export default function Navbar() {
           <div className="flex lg:hidden items-center gap-2">
             <button
               type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={() => {
+                setMobileMenuOpen(!mobileMenuOpen);
+                setActiveDropdown(null);
+                setHoveredIndustry(null);
+              }}
               className="p-2 rounded-lg text-slate-300 hover:text-white bg-white/5 border border-white/10 focus:outline-none cursor-pointer"
               aria-label="Toggle navigation menu"
             >
@@ -503,7 +529,7 @@ export default function Navbar() {
         {activeDropdown === "industries" && (
           <div
             onMouseEnter={() => handleMouseEnterNav("industries")}
-            className={`absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-2xl border ${theme.dropdownBorder} ${theme.dropdownBg} backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-200`}
+            className={`hidden lg:block absolute top-[calc(100%+6px)] left-0 right-0 z-[110] rounded-2xl border ${theme.dropdownBorder} ${theme.dropdownBg} backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-200`}
           >
             <div className="flex flex-col lg:flex-row">
               {/* Left Section: Industries Grid (approx 58-60% width) */}
@@ -816,16 +842,17 @@ export default function Navbar() {
         {activeDropdown === "portfolio" && (
           <div
             onMouseEnter={() => handleMouseEnterNav("portfolio")}
-            className={`absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-2xl border ${theme.dropdownBorder} ${theme.dropdownBg} backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-200`}
+            className={`hidden lg:block absolute top-[calc(100%+6px)] left-0 right-0 z-[110] rounded-2xl border ${theme.dropdownBorder} ${theme.dropdownBg} backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-200`}
           >
             <div className="flex flex-col lg:flex-row">
               <div className="p-6 sm:p-7 lg:p-8 lg:w-[60%]">
                 <h3 className="text-[11px] font-bold tracking-[0.2em] text-[#64748b] uppercase mb-6">
-                  PORTFOLIO SHOWCASE
+                  PORTFOLIO & DELIVERABLES
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* 1. Portfolio */}
                   <Link
-                    href="#portfolio"
+                    href="/portfolio"
                     onClick={() => setActiveDropdown(null)}
                     className="flex items-start gap-3.5 group p-2.5 rounded-lg hover:bg-white/5 transition-colors"
                   >
@@ -834,64 +861,67 @@ export default function Navbar() {
                     </div>
                     <div>
                       <h4 className="text-[14.5px] font-semibold text-white group-hover:text-blue-400 leading-tight">
-                        Fintech & Banking Suites
+                        Portfolio
                       </h4>
                       <p className="text-[12px] text-[#7d8b9f] mt-1">
-                        Ultra-secure payment rails & microservices
+                        Comprehensive client & product showcase
                       </p>
                     </div>
                   </Link>
 
+                  {/* 2. Our Work */}
                   <Link
-                    href="#portfolio"
+                    href="/work"
                     onClick={() => setActiveDropdown(null)}
                     className="flex items-start gap-3.5 group p-2.5 rounded-lg hover:bg-white/5 transition-colors"
                   >
                     <div className="w-10 h-10 rounded-lg bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0 text-blue-400 group-hover:border-blue-500">
-                      <Sparkles className="w-5 h-5" />
+                      <Layers className="w-5 h-5" />
                     </div>
                     <div>
                       <h4 className="text-[14.5px] font-semibold text-white group-hover:text-blue-400 leading-tight">
-                        AI & Automation Platforms
+                        Our Work
                       </h4>
                       <p className="text-[12px] text-[#7d8b9f] mt-1">
-                        Autonomous agentic workflows & LLM pipelines
+                        Enterprise deployments & client solutions
                       </p>
                     </div>
                   </Link>
 
+                  {/* 3. Case Studies */}
                   <Link
-                    href="#portfolio"
+                    href="/case-study"
                     onClick={() => setActiveDropdown(null)}
                     className="flex items-start gap-3.5 group p-2.5 rounded-lg hover:bg-white/5 transition-colors"
                   >
                     <div className="w-10 h-10 rounded-lg bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0 text-blue-400 group-hover:border-blue-500">
-                      <AgricultureIcon className="w-5 h-5 text-blue-400" />
+                      <FileText className="w-5 h-5" />
                     </div>
                     <div>
                       <h4 className="text-[14.5px] font-semibold text-white group-hover:text-blue-400 leading-tight">
-                        Agritech Ecosystems
+                        Case Studies
                       </h4>
                       <p className="text-[12px] text-[#7d8b9f] mt-1">
-                        Supply chain traceability & IoT telemetry
+                        Engineering deep-dives & architecture
                       </p>
                     </div>
                   </Link>
 
+                  {/* 4. Featured Projects */}
                   <Link
-                    href="#portfolio"
+                    href="/projects"
                     onClick={() => setActiveDropdown(null)}
                     className="flex items-start gap-3.5 group p-2.5 rounded-lg hover:bg-white/5 transition-colors"
                   >
                     <div className="w-10 h-10 rounded-lg bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0 text-blue-400 group-hover:border-blue-500">
-                      <Building2 className="w-5 h-5" />
+                      <Rocket className="w-5 h-5" />
                     </div>
                     <div>
                       <h4 className="text-[14.5px] font-semibold text-white group-hover:text-blue-400 leading-tight">
-                        Enterprise SaaS Portals
+                        Featured Projects
                       </h4>
                       <p className="text-[12px] text-[#7d8b9f] mt-1">
-                        Global high-throughput cloud dashboards
+                        Digital products & breakthrough software
                       </p>
                     </div>
                   </Link>
@@ -925,7 +955,7 @@ export default function Navbar() {
                 </div>
                 <div className="mt-4 pt-2">
                   <Link
-                    href="#portfolio"
+                    href="/case-study"
                     onClick={() => setActiveDropdown(null)}
                     className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-white hover:text-blue-400 transition-colors group"
                   >
@@ -944,7 +974,7 @@ export default function Navbar() {
         {activeDropdown === "company" && (
           <div
             onMouseEnter={() => handleMouseEnterNav("company")}
-            className={`absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-2xl border ${theme.dropdownBorder} ${theme.dropdownBg} backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-200`}
+            className={`hidden lg:block absolute top-[calc(100%+6px)] left-0 right-0 z-[110] rounded-2xl border ${theme.dropdownBorder} ${theme.dropdownBg} backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-200`}
           >
             <div className="flex flex-col lg:flex-row">
               <div className="p-6 sm:p-7 lg:p-8 lg:w-[60%]">
@@ -971,7 +1001,7 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    href="/about"
+                    href="/leadership"
                     onClick={() => setActiveDropdown(null)}
                     className="flex items-start gap-3.5 group p-2.5 rounded-lg hover:bg-white/5 transition-colors"
                   >
@@ -989,19 +1019,19 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    href="/about"
+                    href="/lifestyle"
                     onClick={() => setActiveDropdown(null)}
                     className="flex items-start gap-3.5 group p-2.5 rounded-lg hover:bg-white/5 transition-colors"
                   >
                     <div className="w-10 h-10 rounded-lg bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0 text-blue-400 group-hover:border-blue-500">
-                      <Award className="w-5 h-5" />
+                      <Sparkles className="w-5 h-5" />
                     </div>
                     <div>
                       <h4 className="text-[14.5px] font-semibold text-white group-hover:text-blue-400 leading-tight">
-                        Awards & Certification
+                        Lifestyle & Culture
                       </h4>
                       <p className="text-[12px] text-[#7d8b9f] mt-1">
-                        ISO 27001, SOC-2 compliant engineering
+                        Work hard. Live well. Grow faster.
                       </p>
                     </div>
                   </Link>
@@ -1067,17 +1097,18 @@ export default function Navbar() {
         )}
 
         {/* ========================================================= */}
-        {/* MOBILE MENU ACCORDION                                     */}
+        {/* ========================================================= */}
+        {/* MOBILE MENU ACCORDION (Phones, Tablets & Small Laptops)   */}
         {/* ========================================================= */}
         {mobileMenuOpen && (
           <div
-            className={`md:hidden mt-2 p-4 rounded-xl border ${theme.mobileMenuBorder} ${theme.mobileMenuBg} backdrop-blur-2xl shadow-xl flex flex-col gap-3 animate-in fade-in slide-in-from-top-2 duration-200`}
+            className={`lg:hidden mt-2 p-4 sm:p-5 rounded-2xl border ${theme.mobileMenuBorder} ${theme.mobileMenuBg} backdrop-blur-2xl shadow-2xl shadow-black/80 flex flex-col gap-3 max-h-[80vh] overflow-y-auto no-scrollbar animate-in fade-in slide-in-from-top-2 duration-200`}
           >
             {/* Home */}
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-2 px-3 rounded-md text-sm text-white font-semibold bg-white/10"
+              className="py-2.5 px-3.5 rounded-lg text-sm text-white font-semibold bg-white/10 hover:bg-white/15 transition-colors"
             >
               Home
             </Link>
@@ -1086,16 +1117,18 @@ export default function Navbar() {
             <div>
               <button
                 type="button"
+                data-accordion-trigger="industries"
+                aria-expanded={mobileAccordion === "industries"}
                 onClick={() =>
                   setMobileAccordion(
                     mobileAccordion === "industries" ? null : "industries",
                   )
                 }
-                className="w-full py-2 px-3 rounded-md text-sm text-slate-300 hover:text-white flex items-center justify-between"
+                className="w-full py-2.5 px-3.5 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-white/5 flex items-center justify-between transition-colors cursor-pointer"
               >
-                <span>Industries</span>
+                <span className="font-medium">Industries</span>
                 <ChevronDown
-                  className={`w-4 h-4 text-slate-400 transition-transform ${
+                  className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
                     mobileAccordion === "industries"
                       ? "rotate-180 text-blue-400"
                       : ""
@@ -1104,15 +1137,15 @@ export default function Navbar() {
               </button>
 
               {mobileAccordion === "industries" && (
-                <div className="pl-3 pr-2 py-2 flex flex-col gap-3 border-l-2 border-blue-500/30 ml-3 mt-1">
+                <div className="pl-3 pr-2 py-2 flex flex-col gap-3 border-l-2 border-blue-500/40 ml-4 mt-1 animate-in fade-in duration-150">
                   {industryItems.map((item) => (
                     <Link
                       key={item.id}
                       href={item.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-3 py-1 group"
+                      className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 group transition-colors"
                     >
-                      <div className="w-7 h-7 rounded bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0">
+                      <div className="w-8 h-8 rounded-lg bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0 group-hover:border-blue-500/50">
                         {item.icon}
                       </div>
                       <div className="flex flex-col">
@@ -1125,14 +1158,14 @@ export default function Navbar() {
                       </div>
                     </Link>
                   ))}
-                  <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+                  <div className="pt-2 border-t border-white/5 flex items-center justify-between px-2">
                     <span className="text-[11px] text-slate-400">
                       Locations: Bhopal, Indore, UP
                     </span>
                     <Link
                       href="#contact"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="text-[11px] text-blue-400 font-semibold"
+                      className="text-[11px] text-blue-400 font-semibold hover:underline"
                     >
                       See all &rarr;
                     </Link>
@@ -1141,38 +1174,233 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Portfolio Link */}
-            <Link
-              href="#portfolio"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 px-3 rounded-md text-sm text-slate-300 hover:bg-white/5 hover:text-white"
-            >
-              Portfolio
-            </Link>
+            {/* Portfolio Accordion */}
+            <div>
+              <button
+                type="button"
+                data-accordion-trigger="portfolio"
+                aria-expanded={mobileAccordion === "portfolio"}
+                onClick={() =>
+                  setMobileAccordion(
+                    mobileAccordion === "portfolio" ? null : "portfolio",
+                  )
+                }
+                className="w-full py-2.5 px-3.5 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-white/5 flex items-center justify-between transition-colors cursor-pointer"
+              >
+                <span className="font-medium">Portfolio</span>
+                <ChevronDown
+                  className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
+                    mobileAccordion === "portfolio"
+                      ? "rotate-180 text-blue-400"
+                      : ""
+                  }`}
+                />
+              </button>
 
-            {/* Company Link */}
-            <Link
-              href="/about"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 px-3 rounded-md text-sm text-slate-300 hover:bg-white/5 hover:text-white"
-            >
-              Company
-            </Link>
+              {mobileAccordion === "portfolio" && (
+                <div className="pl-3 pr-2 py-2 flex flex-col gap-2.5 border-l-2 border-blue-500/40 ml-4 mt-1 animate-in fade-in duration-150">
+                  <Link
+                    href="/portfolio"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 group transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0 text-blue-400 group-hover:border-blue-500">
+                      <Briefcase className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold text-slate-200 group-hover:text-blue-400">
+                        Portfolio
+                      </span>
+                      <span className="text-[10.5px] text-slate-400">
+                        Complete solutions catalogue
+                      </span>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/work"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 group transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0 text-blue-400 group-hover:border-blue-500">
+                      <Layers className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold text-slate-200 group-hover:text-blue-400">
+                        Our Work
+                      </span>
+                      <span className="text-[10.5px] text-slate-400">
+                        Client platforms & deliverables
+                      </span>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/case-study"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 group transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0 text-blue-400 group-hover:border-blue-500">
+                      <FileText className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold text-slate-200 group-hover:text-blue-400">
+                        Case Studies
+                      </span>
+                      <span className="text-[10.5px] text-slate-400">
+                        Engineering architecture deep-dives
+                      </span>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/projects"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 group transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0 text-blue-400 group-hover:border-blue-500">
+                      <Rocket className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold text-slate-200 group-hover:text-blue-400">
+                        Featured Projects
+                      </span>
+                      <span className="text-[10.5px] text-slate-400">
+                        Active breakthrough products
+                      </span>
+                    </div>
+                  </Link>
+
+                  <div className="pt-2 border-t border-white/5 flex items-center justify-between px-2">
+                    <span className="text-[11px] text-slate-400">
+                      Explore our engineering work
+                    </span>
+                    <Link
+                      href="/portfolio"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[11px] text-blue-400 font-semibold hover:underline"
+                    >
+                      See all &rarr;
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Company Accordion */}
+            <div>
+              <button
+                type="button"
+                data-accordion-trigger="company"
+                aria-expanded={mobileAccordion === "company"}
+                onClick={() =>
+                  setMobileAccordion(
+                    mobileAccordion === "company" ? null : "company",
+                  )
+                }
+                className="w-full py-2.5 px-3.5 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-white/5 flex items-center justify-between transition-colors cursor-pointer"
+              >
+                <span className="font-medium">Company</span>
+                <ChevronDown
+                  className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
+                    mobileAccordion === "company"
+                      ? "rotate-180 text-blue-400"
+                      : ""
+                  }`}
+                />
+              </button>
+
+              {mobileAccordion === "company" && (
+                <div className="pl-3 pr-2 py-2 flex flex-col gap-2.5 border-l-2 border-blue-500/40 ml-4 mt-1 animate-in fade-in duration-150">
+                  <Link
+                    href="/about"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 group transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0 text-blue-400 group-hover:border-blue-500">
+                      <Building2 className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold text-slate-200 group-hover:text-blue-400">
+                        Our Vision & Story
+                      </span>
+                      <span className="text-[10.5px] text-slate-400">
+                        About Satyakabir
+                      </span>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/leadership"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 group transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0 text-blue-400 group-hover:border-blue-500">
+                      <Users className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold text-slate-200 group-hover:text-blue-400">
+                        Leadership & Team
+                      </span>
+                      <span className="text-[10.5px] text-slate-400">
+                        Engineering architects
+                      </span>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/lifestyle"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 group transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0 text-blue-400 group-hover:border-blue-500">
+                      <Sparkles className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold text-slate-200 group-hover:text-blue-400">
+                        Lifestyle & Culture
+                      </span>
+                      <span className="text-[10.5px] text-slate-400">
+                        Life at Satyakabir
+                      </span>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/about"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 group transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-[#0c1630] border border-[#1c2b50] flex items-center justify-center flex-shrink-0 text-blue-400 group-hover:border-blue-500">
+                      <Award className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold text-slate-200 group-hover:text-blue-400">
+                        Awards & Recognition
+                      </span>
+                      <span className="text-[10.5px] text-slate-400">
+                        ISO 27001, SOC-2 compliant
+                      </span>
+                    </div>
+                  </Link>
+                </div>
+              )}
+            </div>
 
             {/* Contact Link */}
             <Link
               href="#contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-2 px-3 rounded-md text-sm text-slate-300 hover:bg-white/5 hover:text-white"
+              className="py-2.5 px-3.5 rounded-lg text-sm text-slate-300 hover:bg-white/5 hover:text-white font-medium transition-colors"
             >
               Contact
             </Link>
 
             {/* Mobile Actions: Phone & Request Demo */}
-            <div className="pt-3 border-t border-white/10 flex flex-col gap-2">
+            <div className="pt-3 border-t border-white/10 flex flex-col gap-2.5">
               <a
                 href="tel:+91234567890"
-                className="flex items-center justify-center gap-2 py-2 px-3 rounded-md bg-white/5 text-slate-200 text-sm font-medium"
+                className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 text-slate-200 text-sm font-medium transition-colors"
               >
                 <Phone className="w-4 h-4 text-blue-400" />
                 <span>+91 234 567890</span>
@@ -1181,7 +1409,7 @@ export default function Navbar() {
               <Link
                 href="#contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="bg-white text-[#070f24] font-semibold text-center text-sm py-2.5 rounded-lg shadow-md"
+                className="bg-white hover:bg-slate-100 text-[#070f24] font-semibold text-center text-sm py-2.5 rounded-lg shadow-md transition-colors"
               >
                 Request a Demo
               </Link>

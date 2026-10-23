@@ -133,14 +133,14 @@ export default function ShowreelSection() {
           role="dialog"
           aria-modal="true"
           aria-label="Platform Showcase Video"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-xl p-4 sm:p-6 lg:p-12 animate-in fade-in duration-300"
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4 sm:p-6 lg:p-12 animate-in fade-in duration-300"
           onClick={() => setIsPlaying(false)}
         >
           {/* Close Button */}
           <button
             onClick={() => setIsPlaying(false)}
             aria-label="Close video"
-            className="absolute top-6 right-6 z-50 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-md border border-white/20 flex items-center justify-center text-white transition-all hover:scale-110 cursor-pointer"
+            className="absolute top-6 right-6 z-[210] w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-md border border-white/20 flex items-center justify-center text-white transition-all hover:scale-110 cursor-pointer"
           >
             <X className="w-6 h-6" />
           </button>
